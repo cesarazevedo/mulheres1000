@@ -150,6 +150,8 @@
       z-index: 1000;
       background: var(--bg);
     }
+    body.slide-active .exercise-card,
+    body.slide-active .section-card.no-slide { display: none !important; }
     body.slide-active .section-card {
       display: none;
       position: absolute;
@@ -931,7 +933,7 @@
   </div>
 
   <!-- AGENDA DO DIA -->
-  <div class="section-card" style="padding: 0; overflow:hidden; margin-bottom: 1.5rem;">
+  <div class="section-card no-slide" style="padding: 0; overflow:hidden; margin-bottom: 1.5rem;">
     <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display:flex; align-items:center; gap:.6rem;">
       <span style="font-size:1.1rem;">📋</span>
       <span style="font-size:.92rem; font-weight:700;">Agenda do Dia</span>
@@ -1572,8 +1574,8 @@
     titleBar.textContent = '🖥️ Dia 1 — Conhecendo o Computador';
     document.body.appendChild(titleBar);
 
-    // Slides = section-cards (excluindo exercise e nav-footer)
-    slides = Array.from(document.querySelectorAll('.section-card'));
+    // Slides = section-cards, excluindo marcados com .no-slide
+    slides = Array.from(document.querySelectorAll('.section-card:not(.no-slide)'));
 
     document.getElementById('slidePrev').addEventListener('click', prevSlide);
     document.getElementById('slideNext').addEventListener('click', nextSlide);
