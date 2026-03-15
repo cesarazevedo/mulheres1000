@@ -41,6 +41,7 @@
       box-shadow: var(--shadow);
     }
     .topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+    .topbar-right { display: flex; align-items: center; gap: 0.6rem; }
     .back-btn {
       display: flex;
       align-items: center;
@@ -64,6 +65,185 @@
       color: #fff;
       padding: 0.2rem 0.6rem;
       border-radius: 20px;
+    }
+
+    /* ── SLIDE TOGGLE BTN ── */
+    .slide-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.85rem;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .slide-toggle:hover { background: var(--accent); color: #fff; }
+
+    /* ── FONT SIZE CONTROLS ── */
+    .font-controls { display: flex; gap: 4px; }
+    .font-btn {
+      padding: 0.3rem 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .font-btn:hover { background: var(--tag-bg); border-color: var(--accent); }
+
+    /* ── DARK MODE TOGGLE ── */
+    .dark-toggle {
+      padding: 0.3rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      line-height: 1;
+    }
+    .dark-toggle:hover { background: var(--tag-bg); border-color: var(--accent); }
+
+    /* ── DARK MODE ── */
+    body.dark-mode {
+      --bg: #0f172a; --card: #1e293b; --text: #e2e8f0;
+      --text-muted: #94a3b8; --border: #334155;
+      --tag-bg: #1e3a5f; --tag-text: #93c5fd;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    body.dark-mode .hero { background: linear-gradient(135deg, #1e3a8a 0%, #5b21b6 100%); }
+    body.dark-mode .compare-table th { background: #1e3a5f; }
+    body.dark-mode .compare-table tr:nth-child(even) td { background: #1a2535; }
+    body.dark-mode .key { background: #1e293b; border-color: #475569; border-bottom-color: #64748b; color: #e2e8f0; }
+    body.dark-mode .key.important { background: #1e3a5f; border-color: #3b82f6; color: #93c5fd; }
+    body.dark-mode .accent-card { background: #1e293b; border-color: #334155; }
+    body.dark-mode .exercise-card { background: linear-gradient(135deg, #0369a1 0%, #4c1d95 100%); }
+    body.dark-mode .slide-toggle { border-color: #60a5fa; color: #60a5fa; }
+    body.dark-mode .slide-toggle:hover { background: #60a5fa; color: #0f172a; }
+    body.dark-mode .font-btn { background: #334155; border-color: #475569; color: #93c5fd; }
+    body.dark-mode .dark-toggle { background: #334155; border-color: #475569; }
+    body.dark-mode .nav-link { background: #1e293b; }
+    body.dark-mode .nav-link:hover { background: #243148; }
+
+    /* ── SLIDE MODE ── */
+    body.slide-active { overflow: hidden; }
+    body.slide-active .topbar,
+    body.slide-active .nav-footer,
+    body.slide-active .hero,
+    body.slide-active .agenda { display: none; }
+    body.slide-active .wrapper {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 1000;
+      background: var(--bg);
+    }
+    body.slide-active .section-card {
+      display: none;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 85vw;
+      max-width: 1050px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 48px 56px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      animation: slideIn 0.32s ease;
+      margin-bottom: 0;
+    }
+    body.slide-active .section-card.slide-visible { display: block; }
+    body.slide-active .section-card h2 { font-size: 2em; margin-bottom: 1.1rem; }
+    body.slide-active .section-card p  { font-size: 1.2em; line-height: 1.75; }
+    body.slide-active .section-card li { font-size: 1.15em; line-height: 1.8; margin-bottom: 8px; }
+    body.slide-active .section-card .step-desc,
+    body.slide-active .section-card .mouse-btn-desc,
+    body.slide-active .section-card .key-desc { font-size: 1em; }
+    body.slide-active .section-card .hw-grid { gap: 1.2rem; }
+    body.slide-active .section-card .hw-icon { font-size: 2.5rem; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+      to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* HUD (controles) */
+    .slide-hud {
+      display: none;
+      position: fixed;
+      bottom: 28px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 1001;
+      background: var(--card);
+      padding: 10px 24px;
+      border-radius: 50px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+      align-items: center;
+      gap: 18px;
+      user-select: none;
+      border: 1px solid var(--border);
+    }
+    body.slide-active .slide-hud { display: flex; }
+    .slide-hud-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: transparent;
+      font-size: 1.1em;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .slide-hud-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .slide-counter { font-weight: 700; font-size: 1em; color: var(--accent); min-width: 56px; text-align: center; }
+    .slide-hud-close {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 2px solid #fecaca;
+      background: transparent;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #ef4444;
+      margin-left: 6px;
+      transition: all 0.2s;
+    }
+    .slide-hud-close:hover { background: #ef4444; border-color: #ef4444; color: #fff; }
+
+    /* Title bar no topo */
+    .slide-title-bar {
+      display: none;
+      position: fixed;
+      top: 18px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 1001;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 8px 28px;
+      border-radius: 50px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      font-weight: 600;
+      font-size: 0.9em;
+      color: var(--accent);
+    }
+    body.slide-active .slide-title-bar { display: block; }
+
+    @media (max-width: 768px) {
+      body.slide-active .section-card { width: 95vw; padding: 28px 22px; max-height: 82vh; }
+      body.slide-active .section-card h2 { font-size: 1.5em; }
     }
 
     /* ── WRAPPER ── */
@@ -709,7 +889,15 @@
     <a href="index.html" class="back-btn">← Dashboard</a>
     <span class="topbar-title">Dia 1 — Conhecendo o Computador</span>
   </div>
-  <span class="topbar-badge">16 de março · 13h–17h</span>
+  <div class="topbar-right">
+    <span class="topbar-badge">16 de março · 13h–17h</span>
+    <div class="font-controls">
+      <button class="font-btn" id="fontDec" title="Diminuir fonte">A−</button>
+      <button class="font-btn" id="fontInc" title="Aumentar fonte">A+</button>
+    </div>
+    <button class="dark-toggle" id="darkToggleBtn" title="Alternar modo escuro">🌙</button>
+    <button class="slide-toggle" id="slideToggleBtn">📺 Modo Slide</button>
+  </div>
 </div>
 
 <div class="wrapper">
@@ -1354,5 +1542,109 @@
   </div>
 
 </div>
+<script>
+(function() {
+  // Aplica dark mode antes de renderizar (evita flash)
+  if (localStorage.getItem('darkMode') === '1') {
+    document.body.classList.add('dark-mode');
+    var btn = document.getElementById('darkToggleBtn');
+    if (btn) btn.textContent = '☀️';
+  }
+
+  var currentSlide = 0;
+  var slides = [];
+
+  function initSlideMode() {
+    // HUD
+    var hud = document.createElement('div');
+    hud.className = 'slide-hud';
+    hud.innerHTML =
+      '<button class="slide-hud-btn" id="slidePrev" title="Anterior (←)">&#x2B05;</button>' +
+      '<span class="slide-counter" id="slideCounter">1 / 1</span>' +
+      '<button class="slide-hud-btn" id="slideNext" title="Próximo (→)">&#x27A1;</button>' +
+      '<button class="slide-hud-close" id="slideClose" title="Sair (ESC)">&#x2716;</button>';
+    document.body.appendChild(hud);
+
+    // Title bar
+    var titleBar = document.createElement('div');
+    titleBar.className = 'slide-title-bar';
+    titleBar.id = 'slideTitleBar';
+    titleBar.textContent = '🖥️ Dia 1 — Conhecendo o Computador';
+    document.body.appendChild(titleBar);
+
+    // Slides = section-cards (excluindo exercise e nav-footer)
+    slides = Array.from(document.querySelectorAll('.section-card'));
+
+    document.getElementById('slidePrev').addEventListener('click', prevSlide);
+    document.getElementById('slideNext').addEventListener('click', nextSlide);
+    document.getElementById('slideClose').addEventListener('click', exitSlideMode);
+    document.addEventListener('keydown', handleKey);
+  }
+
+  function handleKey(e) {
+    if (!document.body.classList.contains('slide-active')) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  { e.preventDefault(); nextSlide(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    { e.preventDefault(); prevSlide(); }
+    if (e.key === 'Escape') { e.preventDefault(); exitSlideMode(); }
+  }
+
+  function enterSlideMode() {
+    if (!slides.length) return;
+    currentSlide = 0;
+    document.body.classList.add('slide-active');
+    showSlide(0);
+  }
+
+  function exitSlideMode() {
+    document.body.classList.remove('slide-active');
+    slides.forEach(function(s) { s.classList.remove('slide-visible'); });
+  }
+
+  function showSlide(i) {
+    slides.forEach(function(s) { s.classList.remove('slide-visible'); });
+    slides[i].classList.add('slide-visible');
+    slides[i].scrollTop = 0;
+    document.getElementById('slideCounter').textContent = (i + 1) + ' / ' + slides.length;
+  }
+
+  function nextSlide() { if (currentSlide < slides.length - 1) showSlide(++currentSlide); }
+  function prevSlide() { if (currentSlide > 0) showSlide(--currentSlide); }
+
+  // Font size
+  function initFontSize() {
+    var size = parseFloat(localStorage.getItem('lessonFontSize') || '16');
+    document.documentElement.style.fontSize = size + 'px';
+    document.getElementById('fontDec').addEventListener('click', function() {
+      size = Math.max(13, size - 1);
+      document.documentElement.style.fontSize = size + 'px';
+      localStorage.setItem('lessonFontSize', size);
+    });
+    document.getElementById('fontInc').addEventListener('click', function() {
+      size = Math.min(22, size + 1);
+      document.documentElement.style.fontSize = size + 'px';
+      localStorage.setItem('lessonFontSize', size);
+    });
+  }
+
+  // Dark mode
+  function initDarkMode() {
+    var btn = document.getElementById('darkToggleBtn');
+    if (!btn) return;
+    if (document.body.classList.contains('dark-mode')) btn.textContent = '☀️';
+    btn.addEventListener('click', function() {
+      var dark = document.body.classList.toggle('dark-mode');
+      btn.textContent = dark ? '☀️' : '🌙';
+      localStorage.setItem('darkMode', dark ? '1' : '0');
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    initSlideMode();
+    initFontSize();
+    initDarkMode();
+    document.getElementById('slideToggleBtn').addEventListener('click', enterSlideMode);
+  });
+})();
+</script>
 </body>
 </html>
