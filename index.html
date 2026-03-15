@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Informática Básica · Mulheres 1000</title>
+  <style>
+    :root {
+      --bg: #f0f4f8;
+      --card: #ffffff;
+      --sidebar: #1e293b;
+      --sidebar-text: #94a3b8;
+      --sidebar-active: #ffffff;
+      --sidebar-active-bg: #3b82f6;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #3b82f6;
+      --accent2: #8b5cf6;
+      --done: #10b981;
+      --coming: #94a3b8;
+      --tag-bg: #eff6ff;
+      --tag-text: #1d4ed8;
+      --progress-bg: #dbeafe;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+    }
+    body.dark-mode {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --sidebar: #0f172a;
+      --sidebar-text: #64748b;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --tag-bg: #1e3a5f;
+      --tag-text: #93c5fd;
+      --progress-bg: #1e3a5f;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 240px;
+      background: var(--sidebar);
+      color: var(--sidebar-text);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+    .sidebar-header {
+      padding: 1.5rem 1.25rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .sidebar-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+    .sidebar-logo span {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--sidebar-text);
+      margin-top: 2px;
+    }
+    .sidebar-prof {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: #fff;
+      flex-shrink: 0;
+    }
+    .prof-info { line-height: 1.3; }
+    .prof-name { font-size: 0.8rem; font-weight: 600; color: #e2e8f0; }
+    .prof-role { font-size: 0.68rem; color: var(--sidebar-text); }
+    nav { padding: 0.75rem 0; flex: 1; }
+    .nav-section {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #475569;
+      padding: 0.75rem 1.25rem 0.25rem;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 1.25rem;
+      font-size: 0.82rem;
+      cursor: pointer;
+      border-radius: 0;
+      color: var(--sidebar-text);
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: #e2e8f0; }
+    .nav-item.active {
+      background: var(--sidebar-active-bg);
+      color: #fff;
+      font-weight: 600;
+    }
+    .nav-item .icon { font-size: 1rem; }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: 240px;
+      flex: 1;
+      min-height: 100vh;
+    }
+    .topbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .topbar-title { font-size: 0.95rem; font-weight: 600; }
+    .topbar-actions { display: flex; align-items: center; gap: 0.75rem; }
+    #globalSearch {
+      padding: 0.4rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.82rem;
+      width: 200px;
+      outline: none;
+    }
+    #globalSearch:focus { border-color: var(--accent); }
+    #darkToggleBtn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.35rem 0.6rem;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    /* ── CONTENT ── */
+    .content { padding: 2rem; max-width: 1100px; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── OVERVIEW ── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+    }
+    .stat-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; margin-bottom: 0.4rem; }
+    .stat-value { font-size: 1.75rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .stat-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+    /* Círculo de progresso */
+    .progress-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 1.75rem;
+    }
+    .progress-ring-wrap { position: relative; width: 100px; height: 100px; flex-shrink: 0; }
+    .progress-ring-wrap svg { transform: rotate(-90deg); }
+    .progress-ring-bg { fill: none; stroke: var(--progress-bg); stroke-width: 8; }
+    .progress-ring-fill {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 283;
+      stroke-dashoffset: 283;
+      transition: stroke-dashoffset 1s ease;
+    }
+    .progress-ring-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #progText { font-size: 1.3rem; font-weight: 700; color: var(--text); }
+    #progLabel { font-size: 0.65rem; color: var(--text-muted); }
+    .progress-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .progress-info p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* Status bimestres */
+    .bim-status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 1.75rem;
+    }
+    .bim-status-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .bim-check { flex-shrink: 0; accent-color: var(--done); width: 16px; height: 16px; }
+    .bim-status-info { line-height: 1.35; }
+    .bim-status-name { font-size: 0.82rem; font-weight: 600; }
+    .bim-status-desc { font-size: 0.72rem; color: var(--text-muted); }
+
+    /* Dica motivacional */
+    .tip-card {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 12px;
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 1.75rem;
+      color: #fff;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .tip-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .tip-text { font-size: 0.85rem; line-height: 1.6; font-style: italic; }
+
+    /* Contato */
+    .contact-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.75rem;
+    }
+    .contact-card h3 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .contact-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.35rem; }
+    .contact-row a { color: var(--accent); text-decoration: none; }
+
+    /* ── LESSON CARDS ── */
+    .section-header {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin: 1.5rem 0 0.85rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    a.lesson-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem;
+      display: block;
+      text-decoration: none;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      position: relative;
+      cursor: pointer;
+    }
+    a.lesson-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+    a.lesson-card.done { border-left: 3px solid var(--done); }
+    a.lesson-card.coming-soon {
+      opacity: 0.55;
+      cursor: default;
+      pointer-events: none;
+    }
+    .lesson-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .lesson-num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.5rem;
+      border-radius: 20px;
+    }
+    .lesson-status { font-size: 1rem; }
+    .lesson-icon { font-size: 1.4rem; margin-bottom: 0.4rem; }
+    .lesson-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+      line-height: 1.35;
+    }
+    .lesson-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 0.6rem;
+    }
+    .lesson-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .lesson-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .tag {
+      font-size: 0.68rem;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.15rem 0.55rem;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .content { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      💻 Mulheres 1000
+      <span>Informática Básica</span>
+    </div>
+  </div>
+  <div class="sidebar-prof">
+    <div class="avatar">CA</div>
+    <div class="prof-info">
+      <div class="prof-name">Prof. César Azevedo</div>
+      <div class="prof-role">IFRN — João Câmara</div>
+    </div>
+  </div>
+  <nav>
+    <div class="nav-section">Menu</div>
+    <button class="nav-item active" data-target="overview">
+      <span class="icon">📊</span> Visão Geral
+    </button>
+    <div class="nav-section">Encontros</div>
+    <button class="nav-item" data-target="dia1">
+      <span class="icon">🖥️</span> Dia 1 — 16/mar
+    </button>
+    <button class="nav-item" data-target="dia2">
+      <span class="icon">📁</span> Dia 2 — 23/mar
+    </button>
+    <button class="nav-item" data-target="dia3">
+      <span class="icon">🌐</span> Dia 3 — 30/mar
+    </button>
+    <button class="nav-item" data-target="dia4">
+      <span class="icon">🛠️</span> Dia 4 — 06/abr
+    </button>
+  </nav>
+</aside>
+
+<!-- ══ MAIN ══ -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">IFRN · Programa Mulheres 1000 · Informática Básica</div>
+    <div class="topbar-actions">
+      <input type="text" id="globalSearch" placeholder="🔍  Buscar aula…" oninput="performSearch(this.value)">
+      <button id="darkToggleBtn" title="Alternar modo escuro">🌙</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ════ VISÃO GERAL ════ -->
+    <div class="tab-content active" id="overview">
+
+      <div class="overview-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total de encontros</div>
+          <div class="stat-value">4</div>
+          <div class="stat-sub">16 horas de curso</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Aulas planejadas</div>
+          <div class="stat-value">16</div>
+          <div class="stat-sub">4 por encontro</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Horário</div>
+          <div class="stat-value" style="font-size:1.2rem">13h–17h</div>
+          <div class="stat-sub">Intervalo 14h30–14h50</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Público</div>
+          <div class="stat-value" style="font-size:1rem;padding-top:4px">Iniciante</div>
+          <div class="stat-sub">Sem conhecimento prévio</div>
+        </div>
+      </div>
+
+      <!-- Progresso -->
+      <div class="progress-card">
+        <div class="progress-ring-wrap">
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle class="progress-ring-bg" cx="50" cy="50" r="45"/>
+            <circle class="progress-ring-fill" id="progCircle" cx="50" cy="50" r="45"/>
+          </svg>
+          <div class="progress-ring-text">
+            <span id="progText">0%</span>
+            <span id="progLabel">0 de 4 dias</span>
+          </div>
+        </div>
+        <div class="progress-info">
+          <h3>📈 Progresso do Curso</h3>
+          <p>Acompanhe aqui o andamento dos encontros.<br>
+          O percentual atualiza conforme as aulas são concluídas.</p>
+        </div>
+      </div>
+
+      <!-- Status dos dias -->
+      <div class="bim-status-grid">
+        <div class="bim-status-card">
+          <input class="bim-check chapter-check" type="checkbox" id="ch1">
+          <div class="bim-status-info">
+            <div class="bim-status-name">Dia 1 — 16/mar</div>
+            <div class="bim-status-desc">Conhecendo o computador</div>
+          </div>
+        </div>
+        <div class="bim-status-card">
+          <input class="bim-check chapter-check" type="checkbox" id="ch2">
+          <div class="bim-status-info">
+            <div class="bim-status-name">Dia 2 — 23/mar</div>
+            <div class="bim-status-desc">Windows e arquivos</div>
+          </div>
+        </div>
+        <div class="bim-status-card">
+          <input class="bim-check chapter-check" type="checkbox" id="ch3">
+          <div class="bim-status-info">
+            <div class="bim-status-name">Dia 3 — 30/mar</div>
+            <div class="bim-status-desc">Internet e comunicação</div>
+          </div>
+        </div>
+        <div class="bim-status-card">
+          <input class="bim-check chapter-check" type="checkbox" id="ch4">
+          <div class="bim-status-info">
+            <div class="bim-status-name">Dia 4 — 06/abr</div>
+            <div class="bim-status-desc">Ferramentas do dia a dia</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dica motivacional -->
+      <div class="tip-card">
+        <span class="tip-icon">💡</span>
+        <span class="tip-text" id="motivationText">Carregando dica...</span>
+      </div>
+
+      <!-- Contato -->
+      <div class="contact-card">
+        <h3>👨‍🏫 Contato do Professor</h3>
+        <div class="contact-row">👤 César Azevedo</div>
+        <div class="contact-row">📧 <a href="mailto:cesar.augusto@ifrn.edu.br">cesar.augusto@ifrn.edu.br</a></div>
+        <div class="contact-row">🏫 IFRN — Campus João Câmara</div>
+      </div>
+
+      <p style="font-size:0.78rem;color:var(--text-muted);text-align:center">
+        📅 4 encontros · 16/mar, 23/mar, 30/mar e 06/abr · 13h às 17h
+      </p>
+    </div>
+
+    <!-- ════ DIA 1 ════ -->
+    <div class="tab-content" id="dia1">
+      <div class="section-header">🖥️ Dia 1 — 16 de março · Conhecendo o computador</div>
+      <div class="lessons-grid">
+
+        <a class="lesson-card" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#01 · 13h–13h30</span>
+            <span class="lesson-status">⏳</span>
+          </div>
+          <div class="lesson-icon">🤝</div>
+          <div class="lesson-title">Apresentação e boas-vindas</div>
+          <div class="lesson-desc">Cada aluna se apresenta: nome, onde mora e o que espera aprender. O professor apresenta a proposta dos 4 encontros.</div>
+          <div class="lesson-tags">
+            <span class="tag">Apresentação</span>
+            <span class="tag">Dinâmica</span>
+          </div>
+        </a>
+
+        <a class="lesson-card" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#02 · 13h30–14h</span>
+            <span class="lesson-status">⏳</span>
+          </div>
+          <div class="lesson-icon">🧠</div>
+          <div class="lesson-title">O que é um computador?</div>
+          <div class="lesson-desc">Partes do computador explicadas com analogias do dia a dia: CPU = cérebro, HD = armário, RAM = mesa de trabalho, Monitor = janela.</div>
+          <div class="lesson-tags">
+            <span class="tag">Hardware</span>
+            <span class="tag">CPU</span>
+            <span class="tag">RAM</span>
+            <span class="tag">HD</span>
+          </div>
+        </a>
+
+        <a class="lesson-card" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#03 · 14h–14h30</span>
+            <span class="lesson-status">⏳</span>
+          </div>
+          <div class="lesson-icon">🖱️</div>
+          <div class="lesson-title">Ligando e usando o mouse</div>
+          <div class="lesson-desc">Ligar e desligar corretamente. Usar o mouse: clicar, clicar com botão direito, arrastar e rolar. Área de trabalho, ícones e janelas.</div>
+          <div class="lesson-tags">
+            <span class="tag">Mouse</span>
+            <span class="tag">Windows</span>
+            <span class="tag">Prática</span>
+          </div>
+        </a>
+
+        <a class="lesson-card" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#04 · 14h50–17h</span>
+            <span class="lesson-status">⏳</span>
+          </div>
+          <div class="lesson-icon">⌨️</div>
+          <div class="lesson-title">Usando o teclado</div>
+          <div class="lesson-desc">Letras, números, Backspace, Enter, Maiúscula (Shift/Caps Lock) e acentos. Exercício prático: digitar nome e endereço no Bloco de Notas.</div>
+          <div class="lesson-meta">📝 Exercício: digitar no Bloco de Notas</div>
+          <div class="lesson-tags">
+            <span class="tag">Teclado</span>
+            <span class="tag">Bloco de Notas</span>
+            <span class="tag">Prática</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ════ DIA 2 ════ -->
+    <div class="tab-content" id="dia2">
+      <div class="section-header">📁 Dia 2 — 23 de março · Windows e arquivos</div>
+      <div class="lessons-grid">
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#01 · 13h–13h20</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">🔄</div>
+          <div class="lesson-title">Revisão do Dia 1</div>
+          <div class="lesson-desc">Recapitulando o que aprendemos: partes do computador, mouse e teclado. Dúvidas da semana.</div>
+          <div class="lesson-tags">
+            <span class="tag">Revisão</span>
+          </div>
+        </a>
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#02 · 13h20–14h30</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">📂</div>
+          <div class="lesson-title">Pastas e arquivos</div>
+          <div class="lesson-desc">Criar, renomear, mover, copiar e deletar. Analogia: pasta = caixa, arquivo = papel dentro da caixa.</div>
+          <div class="lesson-tags">
+            <span class="tag">Pastas</span>
+            <span class="tag">Arquivos</span>
+            <span class="tag">Windows</span>
+          </div>
+        </a>
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#03 · 14h50–15h50</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">📝</div>
+          <div class="lesson-title">Word básico</div>
+          <div class="lesson-desc">Abrir, digitar, formatar (negrito, itálico, fonte) e salvar. Diferença entre Salvar e Salvar Como. Salvar como PDF.</div>
+          <div class="lesson-tags">
+            <span class="tag">Word</span>
+            <span class="tag">Formatação</span>
+            <span class="tag">PDF</span>
+          </div>
+        </a>
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#04 · 15h50–17h</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">✍️</div>
+          <div class="lesson-title">Exercício: meu primeiro documento</div>
+          <div class="lesson-desc">Criar um documento com nome, endereço e uma frase sobre si mesma. Salvar na pasta com o próprio nome.</div>
+          <div class="lesson-meta">📝 Exercício avaliativo</div>
+          <div class="lesson-tags">
+            <span class="tag">Atividade</span>
+            <span class="tag">Word</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ════ DIA 3 ════ -->
+    <div class="tab-content" id="dia3">
+      <div class="section-header">🌐 Dia 3 — 30 de março · Internet e comunicação</div>
+      <div class="lessons-grid">
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#01 · 13h–13h30</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">🌍</div>
+          <div class="lesson-title">O que é a internet?</div>
+          <div class="lesson-desc">Analogia: internet = rede de estradas. Diferença entre Wi-Fi e internet. O que é um navegador (Chrome, Firefox)?</div>
+          <div class="lesson-tags">
+            <span class="tag">Internet</span>
+            <span class="tag">Wi-Fi</span>
+            <span class="tag">Navegador</span>
+          </div>
+        </a>
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#02 · 13h30–14h30</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">🔍</div>
+          <div class="lesson-title">Usando o Google</div>
+          <div class="lesson-desc">Fazer buscas eficientes. Abrir e fechar abas. Identificar sites confiáveis vs suspeitos. Dicas de pesquisa.</div>
+          <div class="lesson-tags">
+            <span class="tag">Google</span>
+            <span class="tag">Busca</span>
+            <span class="tag">Segurança</span>
+          </div>
+        </a>
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#03 · 14h50–15h50</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">📧</div>
+          <div class="lesson-title">E-mail com Gmail</div>
+          <div class="lesson-desc">Criar conta, enviar, responder e encaminhar mensagens. Como anexar um arquivo. Organizar a caixa de entrada.</div>
+          <div class="lesson-tags">
+            <span class="tag">Gmail</span>
+            <span class="tag">E-mail</span>
+            <span class="tag">Anexo</span>
+          </div>
+        </a>
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#04 · 15h50–17h</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">🔐</div>
+          <div class="lesson-title">Segurança na internet</div>
+          <div class="lesson-desc">Senha forte (analogia: chave de casa). Não clicar em links suspeitos. Fake news: como identificar. Exercício: enviar e-mail com anexo.</div>
+          <div class="lesson-meta">📝 Exercício: enviar e-mail para o professor</div>
+          <div class="lesson-tags">
+            <span class="tag">Segurança</span>
+            <span class="tag">Senha</span>
+            <span class="tag">Fake News</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ════ DIA 4 ════ -->
+    <div class="tab-content" id="dia4">
+      <div class="section-header">🛠️ Dia 4 — 06 de abril · Ferramentas do dia a dia</div>
+      <div class="lessons-grid">
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#01 · 13h–13h30</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">🔄</div>
+          <div class="lesson-title">Revisão geral do curso</div>
+          <div class="lesson-desc">Recapitulando os 3 dias anteriores. Perguntas abertas da turma. O que aprendemos até aqui?</div>
+          <div class="lesson-tags">
+            <span class="tag">Revisão</span>
+          </div>
+        </a>
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#02 · 13h30–14h30</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">💬</div>
+          <div class="lesson-title">WhatsApp Web</div>
+          <div class="lesson-desc">Usar o WhatsApp no computador. Enviar mensagens de texto, fotos e documentos. Diferença entre WhatsApp e WhatsApp Web.</div>
+          <div class="lesson-tags">
+            <span class="tag">WhatsApp</span>
+            <span class="tag">Comunicação</span>
+          </div>
+        </a>
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#03 · 14h50–15h40</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">☁️</div>
+          <div class="lesson-title">Google Drive — a nuvem</div>
+          <div class="lesson-desc">O que é a nuvem? Analogia: pen drive gigante na internet. Enviar arquivos, acessar de qualquer lugar. Compartilhar documentos.</div>
+          <div class="lesson-tags">
+            <span class="tag">Google Drive</span>
+            <span class="tag">Nuvem</span>
+            <span class="tag">Backup</span>
+          </div>
+        </a>
+
+        <a class="lesson-card coming-soon" href="#">
+          <div class="lesson-header">
+            <span class="lesson-num">#04 · 15h40–17h</span>
+            <span class="lesson-status">🔒</span>
+          </div>
+          <div class="lesson-icon">🏆</div>
+          <div class="lesson-title">Projeto final + encerramento</div>
+          <div class="lesson-desc">Cada aluna cria um mini currículo no Word, salva na nuvem e envia por e-mail. Certificado, dicas para continuar aprendendo e roda de depoimentos.</div>
+          <div class="lesson-meta">🎓 Atividade integradora final</div>
+          <div class="lesson-tags">
+            <span class="tag">Projeto Final</span>
+            <span class="tag">Currículo</span>
+            <span class="tag">Certificado</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+// ── NAVEGAÇÃO ──
+document.addEventListener('DOMContentLoaded', function () {
+  const navBtns = document.querySelectorAll('.nav-item[data-target]');
+  const tabs = document.querySelectorAll('.tab-content');
+
+  function activateTab(id) {
+    navBtns.forEach(b => b.classList.remove('active'));
+    tabs.forEach(t => t.classList.remove('active'));
+    const btn = document.querySelector('.nav-item[data-target="' + id + '"]');
+    const tab = document.getElementById(id);
+    if (btn) btn.classList.add('active');
+    if (tab) tab.classList.add('active');
+    history.replaceState(null, '', '#' + id);
+  }
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      activateTab(this.getAttribute('data-target'));
+    });
+  });
+
+  const hash = location.hash.slice(1);
+  if (hash && document.getElementById(hash)) activateTab(hash);
+
+  // Checkboxes readonly
+  document.querySelectorAll('.chapter-check').forEach(cb => cb.disabled = true);
+
+  updateProgress();
+});
+
+// ── PROGRESSO ──
+function updateProgress() {
+  const days = ['dia1','dia2','dia3','dia4'];
+  let done = 0;
+  days.forEach(function(id, i) {
+    const tab = document.getElementById(id);
+    if (!tab) return;
+    const cards = tab.querySelectorAll('a.lesson-card:not(.coming-soon)');
+    const donec = tab.querySelectorAll('a.lesson-card.done');
+    const cb = document.getElementById('ch' + (i + 1));
+    if (cb) cb.checked = (cards.length > 0 && donec.length === cards.length);
+    if (cards.length > 0 && donec.length === cards.length) done++;
+  });
+  const total = 4;
+  const pct = Math.round(done / total * 100);
+  const circle = document.getElementById('progCircle');
+  const circumference = 283;
+  if (circle) circle.style.strokeDashoffset = circumference - (circumference * pct / 100);
+  const pt = document.getElementById('progText');
+  const pl = document.getElementById('progLabel');
+  if (pt) pt.textContent = pct + '%';
+  if (pl) pl.textContent = done + ' de ' + total + ' dias';
+}
+
+// ── MODO ESCURO ──
+(function () {
+  if (localStorage.getItem('darkMode') === '1') document.body.classList.add('dark-mode');
+  document.addEventListener('DOMContentLoaded', function () {
+    const btn = document.getElementById('darkToggleBtn');
+    if (!btn) return;
+    btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+    btn.addEventListener('click', function () {
+      const dark = document.body.classList.toggle('dark-mode');
+      btn.textContent = dark ? '☀️' : '🌙';
+      localStorage.setItem('darkMode', dark ? '1' : '0');
+    });
+  });
+})();
+
+// ── DICAS ──
+(function () {
+  const dicas = [
+    "O computador é uma ferramenta — assim como um celular ou uma TV. Com um pouco de prática, ele se torna um grande aliado no trabalho e no dia a dia.",
+    "Não existe pergunta boba na informática. Todo especialista já foi iniciante um dia e cometeu os mesmos erros.",
+    "Digitar parece difícil no começo, mas é como andar de bicicleta: treinar todos os dias por 15 minutinhos faz muita diferença.",
+    "Uma senha forte é como a chave da sua casa: quanto mais complexa, mais difícil de ser copiada. Use letras, números e símbolos.",
+    "Salvar o arquivo é como guardar seu trabalho numa gaveta. Se você não salvar, quando o computador desligar, o trabalho some.",
+    "A nuvem (Google Drive, OneDrive) é como um pen drive gigante na internet. Você pode acessar seus arquivos de qualquer celular ou computador.",
+    "E-mail é o 'correio digital'. É formal, profissional e essencial para trabalho. Aprender a usá-lo bem abre muitas portas.",
+    "Não clique em links de mensagens desconhecidas no WhatsApp ou e-mail — é como abrir a porta de casa para um estranho.",
+    "O Word é o caderno digital. Tudo que você faz no papel, pode fazer nele — e ainda salvar, enviar e imprimir facilmente.",
+    "Google é como uma biblioteca infinita. Quanto melhor você souber o que buscar, mais rápido encontra o que precisa.",
+    "Ter um currículo no Word salvo na nuvem significa que você pode atualizá-lo e enviá-lo de qualquer lugar, na hora que precisar.",
+    "Fake news se espalham rápido porque emocionam. Antes de compartilhar, pergunte: de onde vem essa informação? Tem fonte?"
+  ];
+  document.addEventListener('DOMContentLoaded', function () {
+    const el = document.getElementById('motivationText');
+    if (el) el.textContent = dicas[Math.floor(Math.random() * dicas.length)];
+  });
+})();
+
+// ── BUSCA ──
+function performSearch(val) {
+  const f = val.toUpperCase().trim();
+  document.querySelectorAll('a.lesson-card').forEach(card => {
+    const title = (card.querySelector('.lesson-title') || {}).innerText || '';
+    const desc  = (card.querySelector('.lesson-desc')  || {}).innerText || '';
+    const tags  = (card.querySelector('.lesson-tags')  || {}).innerText || '';
+    const match = !f || title.toUpperCase().includes(f) || desc.toUpperCase().includes(f) || tags.toUpperCase().includes(f);
+    card.style.display = match ? '' : 'none';
+  });
+}
+</script>
+</body>
+</html>
