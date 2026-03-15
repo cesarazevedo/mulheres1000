@@ -949,6 +949,27 @@
     }
     .pc-check-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
 
+    .btn-print {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .65rem 1.6rem;
+      background: #1e40af;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      font-family: inherit;
+      box-shadow: 0 2px 8px rgba(30,64,175,.25);
+    }
+    .btn-print:hover { background: #1d4ed8; transform: translateY(-1px); }
+    .btn-print:active { transform: translateY(0); }
+    body.dark-mode .btn-print { background: #2563eb; }
+    body.dark-mode .btn-print:hover { background: #3b82f6; }
+
     body.dark-mode .pc-how-to { background: #0f172a; }
     body.dark-mode .pc-checkpoint { background: #0f2318; border-color: #334155; border-left-color: #10b981; color: #cbd5e1; }
     body.dark-mode .prat-card.pc-blue  .pc-header { background: #1e3a5f; border-bottom-color: #1e40af; }
@@ -1622,13 +1643,28 @@
       </div>
       <ol class="pc-steps">
         <li>Digite seu <strong>nome completo</strong>. Use <kbd>Shift</kbd> para a primeira letra maiúscula. Pressione <kbd>Enter</kbd> para pular de linha.</li>
-        <li>Digite seu <strong>endereço</strong> completo (rua, número, bairro, cidade). Tente usar acentos: <em>não, ação, João Câmara, água, ônibus</em>.</li>
-        <li>Digite a frase: <em>"Hoje aprendi a usar o computador e o teclado."</em> Corrija os erros com <kbd>Backspace</kbd>.</li>
+        <li>Digite seu <strong>endereço</strong> completo (rua, número, bairro, cidade).</li>
+        <li>
+          Digite o texto abaixo, <strong>linha por linha</strong>. Use <kbd>Enter</kbd> no final de cada linha. Corrija erros com <kbd>Backspace</kbd>.
+          <div style="margin:.6rem 0 0; background:#eff6ff; border-left:3px solid #93c5fd; border-radius:0 6px 6px 0; padding:.65rem .9rem; font-family:Georgia,serif; font-size:.85rem; line-height:1.9; color:#1e3a5f;">
+            João Câmara é uma cidade do Rio Grande do Norte.<br>
+            O computador é uma ferramenta muito útil no dia a dia.<br>
+            Com ele, podemos escrever textos e criar documentos.<br>
+            Também é possível enviar mensagens e acessar a internet.<br>
+            Aprender informática não é difícil — é só prática!<br>
+            Hoje dei meu primeiro passo no mundo digital.<br>
+            Posso usar o teclado para escrever o meu nome.<br>
+            Ação, coração, ônibus, mamãe, café — eu consigo!<br>
+            O Bloco de Notas é um programa simples e útil.<br>
+            Vou continuar praticando em casa todos os dias.
+          </div>
+          <div style="font-size:.75rem; color:#64748b; margin-top:.4rem;">💡 Preste atenção nos acentos. Não precisa ser rápida — precisa ser correta!</div>
+        </li>
         <li>Use <kbd>Ctrl</kbd> + <kbd>S</kbd> para <strong>salvar</strong> o arquivo. Dê o nome <strong>"dia1_meu_nome"</strong>.</li>
       </ol>
       <div class="pc-checkpoint">
         <span class="pc-check-icon">✅</span>
-        <span><strong>Mostre ao professor:</strong> o arquivo salvo aberto na tela com seu nome, endereço e a frase digitados.</span>
+        <span><strong>Mostre ao professor:</strong> o arquivo salvo com seu nome, endereço e o texto das 10 linhas digitados.</span>
       </div>
     </div>
 
@@ -1722,6 +1758,13 @@
         <span class="pc-check-icon">✅</span>
         <span><strong>Mostre ao professor:</strong> os dois programas abertos e visíveis ao mesmo tempo na tela.</span>
       </div>
+    </div>
+
+    <!-- BOTÃO IMPRIMIR -->
+    <div style="text-align:center; margin-top:1.5rem; padding-bottom:.5rem;">
+      <button class="btn-print" onclick="printActivities()" title="Gerar PDF para impressão">
+        🖨️ Imprimir Roteiro de Atividades
+      </button>
     </div>
 
   </div>
@@ -1896,6 +1939,110 @@
     document.getElementById('slideToggleBtn').addEventListener('click', enterSlideMode);
   });
 })();
+
+// ── IMPRESSÃO DE ATIVIDADES ──
+function printActivities() {
+  var section = document.querySelector('.prat-section');
+  if (!section) return;
+
+  var clone = section.cloneNode(true);
+  // Remove o botão imprimir do clone
+  clone.querySelectorAll('.btn-print, [onclick]').forEach(function(el) { el.remove(); });
+
+  var css = [
+    '* { margin:0; padding:0; box-sizing:border-box; }',
+    'body { font-family:Arial,Helvetica,sans-serif; color:#111; background:white; padding:24px 32px; font-size:12.5px; line-height:1.6; }',
+
+    /* cabeçalho */
+    '.ph { border-bottom:2px solid #1e40af; padding-bottom:9px; margin-bottom:14px; }',
+    '.ph-school { font-size:10px; color:#555; text-transform:uppercase; letter-spacing:.5px; }',
+    '.ph-title { font-size:16px; font-weight:700; color:#1e40af; margin-top:3px; }',
+    '.ph-sub { font-size:11.5px; color:#444; margin-top:2px; }',
+
+    /* campos do aluno */
+    '.student-box { display:flex; gap:16px; flex-wrap:wrap; background:#f5f5f5; border:1px solid #ddd; border-radius:5px; padding:8px 12px; margin-bottom:18px; font-size:11.5px; }',
+    '.student-box span { display:flex; align-items:center; gap:4px; }',
+    '.sline { display:inline-block; border-bottom:1px solid #555; }',
+
+    /* seção de atividades */
+    '.prat-section-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; }',
+    '.prat-section-icon { font-size:1.4em; }',
+    '.prat-section-title { font-size:14px; font-weight:700; color:#1e40af; }',
+    '.prat-section-sub { font-size:11px; color:#555; }',
+
+    /* cards */
+    '.prat-card { border:1px solid #dde; border-radius:8px; margin-bottom:14px; overflow:hidden; page-break-inside:avoid; }',
+    '.pc-header { display:flex; align-items:center; gap:10px; padding:8px 12px; background:#f0f4ff; border-bottom:1px solid #c7d2fe; }',
+    '.pc-num { width:22px; height:22px; border-radius:50%; background:#1e40af; color:white; font-weight:700; font-size:11px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }',
+    '.pc-app-icon { font-size:1.2em; }',
+    '.pc-title { font-weight:700; font-size:12.5px; }',
+    '.pc-meta { display:flex; gap:5px; flex-wrap:wrap; margin-top:2px; }',
+    '.pc-badge { background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:1px 7px; font-size:10px; color:#1d4ed8; }',
+    '.pc-badge.pc-easy { background:#f0fdf4; border-color:#bbf7d0; color:#166534; }',
+    '.pc-badge.pc-medium { background:#fffbeb; border-color:#fde68a; color:#92400e; }',
+    '.pc-how-to { padding:6px 12px; font-size:11px; background:#fafafa; border-bottom:1px solid #eee; color:#444; }',
+    '.pc-how-label { font-weight:700; color:#1e40af; margin-right:4px; }',
+    '.pc-steps { padding:10px 12px 10px 30px; }',
+    '.pc-steps li { margin-bottom:7px; font-size:12px; }',
+    'kbd { display:inline-block; background:#eee; border:1px solid #aaa; border-bottom-width:2px; border-radius:3px; padding:0 4px; font-size:10.5px; font-family:monospace; color:#111; }',
+    '.pc-checkpoint { display:flex; gap:7px; align-items:flex-start; margin:8px 12px 10px; background:#f0fdf4; border:1px solid #bbf7d0; border-left:3px solid #10b981; border-radius:0 5px 5px 0; padding:7px 10px; font-size:11.5px; }',
+    '.pc-card.pc-pink .pc-header { background:#fff0f6; border-bottom-color:#fbcfe8; }',
+    '.pc-card.pc-green .pc-header { background:#f0fdf4; border-bottom-color:#bbf7d0; }',
+    '.pc-card.pc-orange .pc-header { background:#fff7ed; border-bottom-color:#fed7aa; }',
+    '.prat-card.pc-pink .pc-num { background:#9d174d; }',
+    '.prat-card.pc-green .pc-num { background:#166534; }',
+    '.prat-card.pc-orange .pc-num { background:#9a3412; }',
+
+    /* texto de digitação */
+    '.typing-text { background:#eff6ff; border-left:3px solid #93c5fd; border-radius:0 5px 5px 0; padding:8px 11px; font-family:Georgia,serif; font-size:11.5px; line-height:2; color:#1e3a5f; margin-top:5px; }',
+
+    /* rodapé */
+    '.pf { margin-top:16px; border-top:1px solid #ddd; padding-top:6px; font-size:10px; color:#888; display:flex; justify-content:space-between; }',
+
+    '@media print { body { padding:12px 18px; } }'
+  ].join('\n');
+
+  // Converte o texto de digitação inline para classe print-friendly
+  clone.querySelectorAll('[style*="Georgia"]').forEach(function(el) {
+    el.removeAttribute('style');
+    el.className = 'typing-text';
+  });
+
+  var html = '<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n' +
+    '<meta charset="UTF-8">\n' +
+    '<title>Atividades Pr\u00e1ticas \u2014 Dia 1 \u00b7 Mulheres 1000</title>\n' +
+    '<style>' + css + '</style>\n</head>\n<body>\n' +
+
+    '<div class="ph">\n' +
+    '  <div class="ph-school">IFRN Jo\u00e3o C\u00e2mara &mdash; Programa Mulheres 1000 &middot; Inform\u00e1tica B\u00e1sica</div>\n' +
+    '  <div class="ph-title">Dia 1 &mdash; Conhecendo o Computador</div>\n' +
+    '  <div class="ph-sub">Roteiro de Atividades Pr\u00e1ticas</div>\n' +
+    '</div>\n' +
+
+    '<div class="student-box">\n' +
+    '  <span>Nome:&nbsp;<span class="sline" style="width:160px"></span></span>\n' +
+    '  <span>Turma:&nbsp;<span class="sline" style="width:70px"></span></span>\n' +
+    '  <span>Data:&nbsp;<span class="sline" style="width:80px"></span></span>\n' +
+    '</div>\n' +
+
+    clone.innerHTML + '\n' +
+
+    '<div class="pf">\n' +
+    '  <span>Programa Mulheres 1000 &mdash; IFRN Jo\u00e3o C\u00e2mara</span>\n' +
+    '  <span>cesarazevedo.github.io/mulheres1000</span>\n' +
+    '</div>\n' +
+
+    '<script>window.onload=function(){window.print();}<\/script>\n' +
+    '</body>\n</html>';
+
+  var win = window.open('', '_blank');
+  if (!win) {
+    alert('Permita pop-ups nesta p\u00e1gina para gerar o roteiro.');
+    return;
+  }
+  win.document.write(html);
+  win.document.close();
+}
 </script>
 </body>
 </html>
