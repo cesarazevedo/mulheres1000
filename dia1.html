@@ -151,6 +151,7 @@
       background: var(--bg);
     }
     body.slide-active .exercise-card,
+    body.slide-active .prat-section,
     body.slide-active .section-card.no-slide { display: none !important; }
     body.slide-active .section-card {
       display: none;
@@ -807,6 +808,159 @@
     }
     .ex-step-text strong { color: #fff; }
 
+    /* ── ATIVIDADES PRÁTICAS ── */
+    .prat-section {
+      margin-bottom: 1.5rem;
+    }
+    .prat-section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.1rem;
+      padding: 1rem 1.25rem;
+      background: linear-gradient(135deg, #1e40af, #6d28d9);
+      border-radius: 12px;
+      color: #fff;
+    }
+    .prat-section-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .prat-section-title { font-size: 1rem; font-weight: 700; }
+    .prat-section-sub { font-size: 0.75rem; color: rgba(255,255,255,0.75); margin-top: 2px; }
+
+    .prat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .pc-header {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .prat-card.pc-blue  .pc-header { background: #eff6ff; border-bottom-color: #bfdbfe; }
+    .prat-card.pc-pink  .pc-header { background: #fdf2f8; border-bottom-color: #fbcfe8; }
+    .prat-card.pc-green .pc-header { background: #f0fdf4; border-bottom-color: #bbf7d0; }
+    .prat-card.pc-orange .pc-header { background: #fff7ed; border-bottom-color: #fed7aa; }
+
+    .pc-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      font-size: 0.88rem;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: #fff;
+    }
+    .prat-card.pc-blue   .pc-num { background: #3b82f6; }
+    .prat-card.pc-pink   .pc-num { background: #ec4899; }
+    .prat-card.pc-green  .pc-num { background: #10b981; }
+    .prat-card.pc-orange .pc-num { background: #f97316; }
+
+    .pc-app-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .pc-info { flex: 1; }
+    .pc-title { font-size: 0.92rem; font-weight: 700; color: var(--text); }
+    .pc-meta { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.3rem; }
+    .pc-badge {
+      font-size: 0.67rem;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 0.15rem 0.55rem;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+    }
+    .pc-badge.pc-easy   { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
+    .pc-badge.pc-medium { background: #fef9c3; color: #92400e; border-color: #fde68a; }
+
+    .pc-how-to {
+      margin: 0.85rem 1.25rem 0;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.85rem;
+      line-height: 1.5;
+    }
+    .pc-how-label {
+      font-weight: 700;
+      color: var(--text);
+      margin-right: 0.3rem;
+    }
+    .pc-how-to kbd {
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-bottom: 2px solid #94a3b8;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 0.78em;
+      font-family: 'Segoe UI', sans-serif;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .pc-steps {
+      margin: 0.85rem 1.25rem 0;
+      padding-left: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .pc-steps li {
+      font-size: 0.84rem;
+      color: var(--text);
+      line-height: 1.6;
+      padding-left: 0.3rem;
+    }
+    .pc-steps li::marker { font-weight: 700; }
+    .prat-card.pc-blue   .pc-steps li::marker { color: #3b82f6; }
+    .prat-card.pc-pink   .pc-steps li::marker { color: #ec4899; }
+    .prat-card.pc-green  .pc-steps li::marker { color: #10b981; }
+    .prat-card.pc-orange .pc-steps li::marker { color: #f97316; }
+    .pc-steps kbd {
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-bottom: 2px solid #94a3b8;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 0.78em;
+      font-family: 'Segoe UI', sans-serif;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .pc-checkpoint {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin: 0.85rem 1.25rem 1.1rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-left: 4px solid #10b981;
+      border-radius: 0 8px 8px 0;
+      padding: 0.65rem 0.9rem;
+      font-size: 0.82rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .pc-check-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    body.dark-mode .pc-how-to { background: #0f172a; }
+    body.dark-mode .pc-checkpoint { background: #0f2318; border-color: #334155; border-left-color: #10b981; color: #cbd5e1; }
+    body.dark-mode .prat-card.pc-blue  .pc-header { background: #1e3a5f; border-bottom-color: #1e40af; }
+    body.dark-mode .prat-card.pc-pink  .pc-header { background: #3b1230; border-bottom-color: #9d174d; }
+    body.dark-mode .prat-card.pc-green .pc-header { background: #052e16; border-bottom-color: #166534; }
+    body.dark-mode .prat-card.pc-orange .pc-header { background: #431407; border-bottom-color: #9a3412; }
+    body.dark-mode .pc-steps kbd,
+    body.dark-mode .pc-how-to kbd { background: #1e293b; border-color: #475569; color: #e2e8f0; }
+    body.dark-mode .pc-badge { background: #1e293b; color: #94a3b8; border-color: #334155; }
+    body.dark-mode .pc-badge.pc-easy   { background: #052e16; color: #86efac; border-color: #166534; }
+    body.dark-mode .pc-badge.pc-medium { background: #3f2a00; color: #fde68a; border-color: #854d0e; }
+
     /* ── NAV FOOTER ── */
     .nav-footer {
       display: flex;
@@ -1438,43 +1592,138 @@
     </div>
   </div>
 
-  <!-- EXERCÍCIO PRÁTICO -->
-  <div class="exercise-card">
-    <h2>✍️ Exercício Prático — Bloco de Notas</h2>
-    <p>Vamos praticar tudo que aprendemos hoje! Abra o Bloco de Notas e siga os passos abaixo. Tire uma foto ou screenshot para mostrar que completou.</p>
-
-    <div class="exercise-steps">
-      <div class="ex-step">
-        <div class="ex-step-num">1</div>
-        <div class="ex-step-text">
-          <strong>Abra o Bloco de Notas:</strong> Clique em Iniciar → escreva "Bloco de Notas" → pressione Enter para abrir.
-        </div>
-      </div>
-      <div class="ex-step">
-        <div class="ex-step-num">2</div>
-        <div class="ex-step-text">
-          <strong>Digite seu nome completo.</strong> Use Shift para a primeira letra maiúscula. Pressione Enter para pular de linha.
-        </div>
-      </div>
-      <div class="ex-step">
-        <div class="ex-step-num">3</div>
-        <div class="ex-step-text">
-          <strong>Digite seu endereço</strong> (rua, número, bairro, cidade). Tente escrever com acentos corretos: <em>João Câmara, não, ação, água</em>.
-        </div>
-      </div>
-      <div class="ex-step">
-        <div class="ex-step-num">4</div>
-        <div class="ex-step-text">
-          <strong>Escreva uma frase sobre o que você espera aprender</strong> neste curso. Pode ser com suas palavras, sem preocupar com erros.
-        </div>
-      </div>
-      <div class="ex-step">
-        <div class="ex-step-num">5</div>
-        <div class="ex-step-text">
-          <strong>Mostre para o professor</strong> e para a colega ao lado. 🎉 Parabéns — você acabou de usar o computador!
-        </div>
+  <!-- ATIVIDADES PRÁTICAS -->
+  <div class="prat-section">
+    <div class="prat-section-header">
+      <div class="prat-section-icon">🛠️</div>
+      <div>
+        <div class="prat-section-title">Atividades Práticas — Mão na Massa!</div>
+        <div class="prat-section-sub">4 atividades · faça no seu próprio computador · mostre ao professor ao terminar</div>
       </div>
     </div>
+
+    <!-- ATIVIDADE 1 — Bloco de Notas -->
+    <div class="prat-card pc-blue">
+      <div class="pc-header">
+        <div class="pc-num">1</div>
+        <div class="pc-app-icon">📝</div>
+        <div class="pc-info">
+          <div class="pc-title">Bloco de Notas — Digitação</div>
+          <div class="pc-meta">
+            <span class="pc-badge">⌨️ Teclado</span>
+            <span class="pc-badge">⏱ ~15 min</span>
+            <span class="pc-badge pc-easy">Fácil</span>
+          </div>
+        </div>
+      </div>
+      <div class="pc-how-to">
+        <span class="pc-how-label">Como abrir:</span>
+        Clique em <strong>Iniciar</strong> → digite <strong>"Bloco de Notas"</strong> → pressione <strong>Enter</strong>
+      </div>
+      <ol class="pc-steps">
+        <li>Digite seu <strong>nome completo</strong>. Use <kbd>Shift</kbd> para a primeira letra maiúscula. Pressione <kbd>Enter</kbd> para pular de linha.</li>
+        <li>Digite seu <strong>endereço</strong> completo (rua, número, bairro, cidade). Tente usar acentos: <em>não, ação, João Câmara, água, ônibus</em>.</li>
+        <li>Digite a frase: <em>"Hoje aprendi a usar o computador e o teclado."</em> Corrija os erros com <kbd>Backspace</kbd>.</li>
+        <li>Use <kbd>Ctrl</kbd> + <kbd>S</kbd> para <strong>salvar</strong> o arquivo. Dê o nome <strong>"dia1_meu_nome"</strong>.</li>
+      </ol>
+      <div class="pc-checkpoint">
+        <span class="pc-check-icon">✅</span>
+        <span><strong>Mostre ao professor:</strong> o arquivo salvo aberto na tela com seu nome, endereço e a frase digitados.</span>
+      </div>
+    </div>
+
+    <!-- ATIVIDADE 2 — Paint -->
+    <div class="prat-card pc-pink">
+      <div class="pc-header">
+        <div class="pc-num">2</div>
+        <div class="pc-app-icon">🎨</div>
+        <div class="pc-info">
+          <div class="pc-title">Paint — Prática com o Mouse</div>
+          <div class="pc-meta">
+            <span class="pc-badge">🖱️ Mouse</span>
+            <span class="pc-badge">⏱ ~20 min</span>
+            <span class="pc-badge pc-medium">Médio</span>
+          </div>
+        </div>
+      </div>
+      <div class="pc-how-to">
+        <span class="pc-how-label">Como abrir:</span>
+        Clique em <strong>Iniciar</strong> → digite <strong>"Paint"</strong> → pressione <strong>Enter</strong>
+      </div>
+      <ol class="pc-steps">
+        <li>Escolha o <strong>Lápis</strong> (ícone de lápis) e desenhe uma <strong>casa simples</strong>: um quadrado com um triângulo em cima.</li>
+        <li>Clique em <strong>Formas</strong> e use o <strong>Retângulo</strong> para desenhar uma porta e o <strong>Oval</strong> para o sol.</li>
+        <li>Use o <strong>Balde de tinta</strong> para colorir cada parte com uma cor diferente. Clique dentro da forma para colorir.</li>
+        <li>Use a ferramenta <strong>Texto (A)</strong> para escrever seu nome embaixo do desenho.</li>
+        <li>Salve com <kbd>Ctrl</kbd> + <kbd>S</kbd> e nomeie o arquivo <strong>"minha_casa"</strong>.</li>
+      </ol>
+      <div class="pc-checkpoint">
+        <span class="pc-check-icon">✅</span>
+        <span><strong>Mostre ao professor:</strong> o desenho colorido com seu nome escrito dentro do Paint.</span>
+      </div>
+    </div>
+
+    <!-- ATIVIDADE 3 — Calculadora -->
+    <div class="prat-card pc-green">
+      <div class="pc-header">
+        <div class="pc-num">3</div>
+        <div class="pc-app-icon">🔢</div>
+        <div class="pc-info">
+          <div class="pc-title">Calculadora — Cliques de Precisão</div>
+          <div class="pc-meta">
+            <span class="pc-badge">🖱️ Mouse</span>
+            <span class="pc-badge">⏱ ~10 min</span>
+            <span class="pc-badge pc-easy">Fácil</span>
+          </div>
+        </div>
+      </div>
+      <div class="pc-how-to">
+        <span class="pc-how-label">Como abrir:</span>
+        Clique em <strong>Iniciar</strong> → digite <strong>"Calculadora"</strong> → pressione <strong>Enter</strong>
+      </div>
+      <ol class="pc-steps">
+        <li>Clique nos botões para resolver: <strong>25 + 37 = ?</strong> Anote o resultado no Bloco de Notas.</li>
+        <li>Calcule: <strong>100 − 43 = ?</strong> Use o botão <strong>CE</strong> para apagar se errar.</li>
+        <li>Calcule: <strong>12 × 5 = ?</strong> (o botão de multiplicar é <strong>×</strong>).</li>
+        <li>Calcule a sua <strong>idade</strong>: ano atual (2026) menos o seu ano de nascimento.</li>
+      </ol>
+      <div class="pc-checkpoint">
+        <span class="pc-check-icon">✅</span>
+        <span><strong>Mostre ao professor:</strong> os 4 resultados anotados no Bloco de Notas.</span>
+      </div>
+    </div>
+
+    <!-- ATIVIDADE 4 — Área de Trabalho -->
+    <div class="prat-card pc-orange">
+      <div class="pc-header">
+        <div class="pc-num">4</div>
+        <div class="pc-app-icon">🖥️</div>
+        <div class="pc-info">
+          <div class="pc-title">Área de Trabalho — Janelas e Ícones</div>
+          <div class="pc-meta">
+            <span class="pc-badge">🖱️ Mouse</span>
+            <span class="pc-badge">⏱ ~10 min</span>
+            <span class="pc-badge pc-medium">Médio</span>
+          </div>
+        </div>
+      </div>
+      <div class="pc-how-to">
+        <span class="pc-how-label">Objetivo:</span>
+        Explorar a área de trabalho e aprender a controlar janelas
+      </div>
+      <ol class="pc-steps">
+        <li>Abra o <strong>Bloco de Notas</strong> e o <strong>Paint</strong> ao mesmo tempo. Você verá os dois na barra de tarefas.</li>
+        <li>Clique em cada programa na barra de tarefas para <strong>alternar</strong> entre eles.</li>
+        <li>Clique no botão <strong>—</strong> (minimizar) de uma janela. Ela some da tela mas continua na barra de tarefas. Clique nela para trazer de volta.</li>
+        <li>Clique no botão <strong>□</strong> (maximizar) para ocupar a tela toda. Clique de novo para restaurar.</li>
+        <li><strong>Arraste</strong> a barra de título de uma janela para movê-la pela tela. Tente colocar as duas janelas lado a lado.</li>
+      </ol>
+      <div class="pc-checkpoint">
+        <span class="pc-check-icon">✅</span>
+        <span><strong>Mostre ao professor:</strong> os dois programas abertos e visíveis ao mesmo tempo na tela.</span>
+      </div>
+    </div>
+
   </div>
 
   <!-- RECAP DO DIA -->
