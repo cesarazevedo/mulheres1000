@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dia 2 — Windows e Arquivos · Mulheres 1000</title>
+  <style>
+    :root {
+      --bg: #f0f4f8;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #3b82f6;
+      --accent2: #8b5cf6;
+      --done: #10b981;
+      --tag-bg: #eff6ff;
+      --tag-text: #1d4ed8;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: var(--shadow);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+    .topbar-right { display: flex; align-items: center; gap: 0.6rem; }
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      color: var(--accent);
+      text-decoration: none;
+      background: var(--tag-bg);
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 0.3rem 0.7rem;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .back-btn:hover { background: #dbeafe; }
+    .topbar-title { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+    .topbar-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+    }
+
+    /* ── SLIDE TOGGLE BTN ── */
+    .slide-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.35rem 0.85rem;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .slide-toggle:hover { background: var(--accent); color: #fff; }
+
+    /* ── FONT SIZE CONTROLS ── */
+    .font-controls { display: flex; gap: 4px; }
+    .font-btn {
+      padding: 0.3rem 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .font-btn:hover { background: var(--tag-bg); border-color: var(--accent); }
+
+    /* ── DARK MODE TOGGLE ── */
+    .dark-toggle {
+      padding: 0.3rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      line-height: 1;
+    }
+    .dark-toggle:hover { background: var(--tag-bg); border-color: var(--accent); }
+
+    /* ── DARK MODE ── */
+    body.dark-mode {
+      --bg: #0f172a; --card: #1e293b; --text: #e2e8f0;
+      --text-muted: #94a3b8; --border: #334155;
+      --tag-bg: #1e3a5f; --tag-text: #93c5fd;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    body.dark-mode .hero { background: linear-gradient(135deg, #1e3a8a 0%, #5b21b6 100%); }
+    body.dark-mode .compare-table th { background: #1e3a5f; }
+    body.dark-mode .compare-table tr:nth-child(even) td { background: #1a2535; }
+    body.dark-mode .key { background: #1e293b; border-color: #475569; border-bottom-color: #64748b; color: #e2e8f0; }
+    body.dark-mode .key.important { background: #1e3a5f; border-color: #3b82f6; color: #93c5fd; }
+    body.dark-mode .accent-card { background: #1e293b; border-color: #334155; }
+    body.dark-mode .exercise-card { background: linear-gradient(135deg, #0369a1 0%, #4c1d95 100%); }
+    body.dark-mode .slide-toggle { border-color: #60a5fa; color: #60a5fa; }
+    body.dark-mode .slide-toggle:hover { background: #60a5fa; color: #0f172a; }
+    body.dark-mode .font-btn { background: #334155; border-color: #475569; color: #93c5fd; }
+    body.dark-mode .dark-toggle { background: #334155; border-color: #475569; }
+    body.dark-mode .nav-link { background: #1e293b; }
+    body.dark-mode .nav-link:hover { background: #243148; }
+    body.dark-mode .recap-item { background: #1a2535; }
+    body.dark-mode .quiz-option { background: #1a2535; border-color: #334155; }
+    body.dark-mode .quiz-option:hover { background: #243148; border-color: #3b82f6; }
+    body.dark-mode .quiz-option.correct { background: #052e16; border-color: #10b981; }
+    body.dark-mode .quiz-option.wrong { background: #450a0a; border-color: #ef4444; }
+
+    /* ── SLIDE MODE ── */
+    body.slide-active { overflow: hidden; }
+    body.slide-active .topbar,
+    body.slide-active .nav-footer,
+    body.slide-active .hero,
+    body.slide-active .agenda { display: none; }
+    body.slide-active .wrapper {
+      max-width: 100%;
+      margin: 0;
+      padding: 0;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 1000;
+      background: var(--bg);
+    }
+    body.slide-active .section-card.no-slide { display: none !important; }
+    body.slide-active .coming-soon-card { display: none !important; }
+    body.slide-active .section-card {
+      display: none;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 85vw;
+      max-width: 1050px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 48px 56px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      animation: slideIn 0.32s ease;
+      margin-bottom: 0;
+    }
+    body.slide-active .section-card.slide-visible { display: block; }
+    body.slide-active .section-card h2 { font-size: 2em; margin-bottom: 1.1rem; }
+    body.slide-active .section-card p  { font-size: 1.2em; line-height: 1.75; }
+    body.slide-active .section-card li { font-size: 1.15em; line-height: 1.8; margin-bottom: 8px; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+      to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    /* HUD (controles) */
+    .slide-hud {
+      display: none;
+      position: fixed;
+      bottom: 28px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 1001;
+      background: var(--card);
+      padding: 10px 24px;
+      border-radius: 50px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+      align-items: center;
+      gap: 18px;
+      user-select: none;
+      border: 1px solid var(--border);
+    }
+    body.slide-active .slide-hud { display: flex; }
+    .hud-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 1.3rem; padding: 4px 8px; border-radius: 8px;
+      transition: background 0.15s; color: var(--text);
+    }
+    .hud-btn:hover { background: var(--bg); }
+    .hud-counter { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); min-width: 56px; text-align: center; }
+    .hud-exit {
+      font-size: 0.75rem; font-weight: 700; color: var(--accent);
+      background: var(--tag-bg); border: 1px solid #bfdbfe;
+      border-radius: 20px; padding: 4px 14px; cursor: pointer;
+    }
+    .hud-exit:hover { background: #dbeafe; }
+
+    /* ── WRAPPER ── */
+    .wrapper { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1d4ed8 0%, #7c3aed 100%);
+      border-radius: 16px;
+      padding: 2rem;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.18);
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      margin-bottom: 0.85rem;
+    }
+    .hero h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: 0.6rem; line-height: 1.2; }
+    .hero p { font-size: 0.88rem; color: rgba(255,255,255,0.85); line-height: 1.7; max-width: 640px; }
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat-val { display: block; font-size: 1.25rem; font-weight: 800; }
+    .hero-stat-label { font-size: 0.68rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.05em; }
+    .hero-stat-sep { opacity: 0.3; font-size: 1.3rem; }
+
+    /* ── AGENDA ── */
+    .agenda { }
+    .agenda-item {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+    }
+    .agenda-item:last-child { border-bottom: none; }
+    .agenda-time {
+      min-width: 68px;
+      padding: 0.9rem 1rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      line-height: 1.4;
+      border-right: 1px solid var(--border);
+      text-align: right;
+    }
+    .break-time { color: #f97316; background: #fff7ed; }
+    .agenda-body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+    }
+    .agenda-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .agenda-info { flex: 1; }
+    .agenda-title { font-size: 0.84rem; font-weight: 700; }
+    .agenda-desc { font-size: 0.73rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+    .agenda-num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .break-badge { background: #fff7ed; color: #9a3412; }
+
+    /* ── SECTION CARD ── */
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .section-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-card-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .icon-blue   { background: #dbeafe; }
+    .icon-purple { background: #ede9fe; }
+    .icon-green  { background: #dcfce7; }
+    .icon-orange { background: #ffedd5; }
+    .section-card-title h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .section-card-title .time-badge {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* ── HIGHLIGHT BOX ── */
+    .highlight-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 0.9rem 1.1rem;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      color: #1d4ed8;
+      line-height: 1.6;
+    }
+    .highlight-box strong { color: #1e40af; }
+    .tip-box {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid var(--done);
+      border-radius: 0 10px 10px 0;
+      padding: 0.9rem 1.1rem;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      color: #166534;
+      line-height: 1.6;
+    }
+    .tip-box strong { color: #15803d; }
+    .warn-box {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-left: 4px solid #f97316;
+      border-radius: 0 10px 10px 0;
+      padding: 0.9rem 1.1rem;
+      margin: 1rem 0;
+      font-size: 0.85rem;
+      color: #9a3412;
+      line-height: 1.6;
+    }
+    body.dark-mode .highlight-box { background: #1e3a5f; border-color: #1e40af; color: #93c5fd; }
+    body.dark-mode .tip-box { background: #052e16; border-color: #166534; color: #86efac; }
+    body.dark-mode .warn-box { background: #431407; border-color: #9a3412; color: #fdba74; }
+
+    /* ── RECAP GRID ── */
+    .recap-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin: 1rem 0;
+    }
+    .recap-item {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.83rem;
+    }
+    .recap-item .ri-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .recap-item .ri-title { font-weight: 700; color: var(--text); }
+    .recap-item .ri-desc { font-size: 0.72rem; color: var(--text-muted); margin-top: 1px; }
+
+    /* ── STEPS ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin: 1.1rem 0;
+    }
+    .step {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+    }
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-body { flex: 1; }
+    .step-title { font-size: 0.84rem; font-weight: 700; margin-bottom: 3px; }
+    .step-desc { font-size: 0.76rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── QUIZ ── */
+    .quiz-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin: 1.2rem 0 0.5rem;
+    }
+    .quiz-q {
+      font-size: 0.84rem;
+      color: var(--text);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      line-height: 1.5;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.1rem;
+    }
+    .quiz-option {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.65rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.82rem;
+      cursor: pointer;
+      background: var(--bg);
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .quiz-option:hover { border-color: var(--accent); background: #eff6ff; }
+    .quiz-option.correct { border-color: #10b981; background: #f0fdf4; color: #166534; font-weight: 600; }
+    .quiz-option.wrong   { border-color: #ef4444; background: #fef2f2; color: #991b1b; }
+    .quiz-option .opt-letter {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .quiz-option.correct .opt-letter { background: #10b981; color: #fff; }
+    .quiz-option.wrong   .opt-letter { background: #ef4444; color: #fff; }
+
+    /* ── TAG ROW ── */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0; }
+    .tag {
+      font-size: 0.68rem;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      padding: 0.15rem 0.55rem;
+      border-radius: 20px;
+      font-weight: 500;
+      border: 1px solid #bfdbfe;
+    }
+
+    /* ── COMPARE TABLE ── */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.84rem;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .compare-table th {
+      background: #1e3a5f;
+      color: #e2e8f0;
+      padding: 0.65rem 1rem;
+      text-align: left;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .compare-table td {
+      padding: 0.6rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table tr:nth-child(even) td { background: #f8fafc; }
+    .compare-table td:first-child { font-weight: 600; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; padding: 2px 8px; border-radius: 20px; font-size: 0.72em; font-weight: 600; }
+    .badge-green  { background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 20px; font-size: 0.72em; font-weight: 600; }
+    .badge-orange { background: #ffedd5; color: #9a3412; padding: 2px 8px; border-radius: 20px; font-size: 0.72em; font-weight: 600; }
+
+    /* ── COMING SOON CARDS ── */
+    .coming-soon-card {
+      background: var(--card);
+      border: 2px dashed var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      opacity: 0.6;
+    }
+    .cs-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .cs-body {}
+    .cs-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
+    .cs-desc { font-size: 0.78rem; color: var(--text-muted); }
+    .cs-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #64748b;
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.6rem;
+      border-radius: 20px;
+      display: inline-block;
+      margin-top: 6px;
+    }
+
+    /* ── NAV FOOTER ── */
+    .nav-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      gap: 1rem;
+    }
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      box-shadow: var(--shadow);
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .nav-link:hover { background: #eff6ff; box-shadow: var(--shadow-md); }
+    .nav-link.disabled {
+      color: var(--text-muted);
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 680px) {
+      .recap-grid   { grid-template-columns: 1fr; }
+      .hero h1      { font-size: 1.5rem; }
+      .wrapper      { padding: 1rem; }
+      .coming-soon-card { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="back-btn">← Dashboard</a>
+    <span class="topbar-title">Dia 2 — Windows e Arquivos</span>
+  </div>
+  <div class="topbar-right">
+    <span class="topbar-badge">23 de março · 13h–17h</span>
+    <div class="font-controls">
+      <button class="font-btn" id="fontDec" title="Diminuir fonte">A−</button>
+      <button class="font-btn" id="fontInc" title="Aumentar fonte">A+</button>
+    </div>
+    <button class="dark-toggle" id="darkToggleBtn" title="Alternar modo escuro">🌙</button>
+    <button class="slide-toggle" id="slideToggleBtn">📺 Modo Slide</button>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">Dia 2 de 4 · Mulheres 1000 · IFRN João Câmara</div>
+    <h1>📁 Windows e Arquivos</h1>
+    <p>Hoje vamos revisar o que aprendemos, e avançar para o mundo das pastas e arquivos no Windows — e dar os primeiros passos no Word. Você vai sair daqui sabendo organizar documentos no computador!</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-val">4</span>
+        <span class="hero-stat-label">Momentos</span>
+      </div>
+      <span class="hero-stat-sep">·</span>
+      <div class="hero-stat">
+        <span class="hero-stat-val">4h</span>
+        <span class="hero-stat-label">De aula</span>
+      </div>
+      <span class="hero-stat-sep">·</span>
+      <div class="hero-stat">
+        <span class="hero-stat-val">23/mar</span>
+        <span class="hero-stat-label">Data</span>
+      </div>
+      <span class="hero-stat-sep">·</span>
+      <div class="hero-stat">
+        <span class="hero-stat-val">1 ✅</span>
+        <span class="hero-stat-label">Publicada</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AGENDA DO DIA -->
+  <div class="section-card no-slide" style="padding: 0; overflow:hidden; margin-bottom: 1.5rem;">
+    <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display:flex; align-items:center; gap:.6rem;">
+      <span style="font-size:1.1rem;">📋</span>
+      <span style="font-size:.92rem; font-weight:700;">Agenda do Dia</span>
+    </div>
+    <div class="agenda">
+      <div class="agenda-item">
+        <div class="agenda-time">13h<br>13h20</div>
+        <div class="agenda-body">
+          <div class="agenda-icon">🔄</div>
+          <div class="agenda-info">
+            <div class="agenda-title">Revisão do Dia 1</div>
+            <div class="agenda-desc">Recapitulando: partes do computador, mouse e teclado. Dúvidas da semana.</div>
+          </div>
+          <span class="agenda-num">#01</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">13h20<br>14h30</div>
+        <div class="agenda-body">
+          <div class="agenda-icon">📂</div>
+          <div class="agenda-info">
+            <div class="agenda-title">Pastas e arquivos</div>
+            <div class="agenda-desc">Criar, renomear, mover, copiar e deletar. Analogia: pasta = caixa, arquivo = papel.</div>
+          </div>
+          <span class="agenda-num">#02</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time break-time">14h30<br>14h50</div>
+        <div class="agenda-body" style="background:#fffbf7">
+          <div class="agenda-icon">☕</div>
+          <div class="agenda-info">
+            <div class="agenda-title" style="color:#9a3412">Intervalo</div>
+            <div class="agenda-desc">Pausa para descanso.</div>
+          </div>
+          <span class="agenda-num break-badge">Pausa</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">14h50<br>15h50</div>
+        <div class="agenda-body">
+          <div class="agenda-icon">📝</div>
+          <div class="agenda-info">
+            <div class="agenda-title">Word básico</div>
+            <div class="agenda-desc">Abrir, digitar, formatar (negrito, itálico, fonte) e salvar. Salvar como PDF.</div>
+          </div>
+          <span class="agenda-num">#03</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">15h50<br>17h</div>
+        <div class="agenda-body">
+          <div class="agenda-icon">✍️</div>
+          <div class="agenda-info">
+            <div class="agenda-title">Exercício: meu primeiro documento</div>
+            <div class="agenda-desc">Criar um documento com nome, endereço e uma frase sobre si mesma. Salvar na pasta.</div>
+          </div>
+          <span class="agenda-num">#04</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MOMENTO 1: Revisão ── -->
+  <div id="momento1" class="section-card">
+    <div class="section-card-header">
+      <div class="section-card-icon icon-blue">🔄</div>
+      <div class="section-card-title">
+        <h2>Momento 1 — Revisão do Dia 1</h2>
+        <div class="time-badge">⏰ 13h – 13h20 &nbsp;·&nbsp; 20 minutos</div>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag">Revisão</span>
+      <span class="tag">Dúvidas</span>
+      <span class="tag">Fixação</span>
+    </div>
+
+    <p style="font-size:.88rem; color:var(--text-muted); line-height:1.7; margin-bottom:1rem;">
+      Antes de avançar, vamos relembrar o que aprendemos na semana passada. Sem pressa — se alguém ficou com dúvida, esse é o momento de perguntar!
+    </p>
+
+    <div class="highlight-box">
+      <strong>💬 Pergunta para a turma:</strong> <em>"O que vocês lembraram do Dia 1? Alguém tentou usar o computador em casa essa semana?"</em>
+    </div>
+
+    <!-- Recap das partes -->
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.2rem 0 .6rem;">🧠 O que o computador é composto?</h3>
+    <div class="recap-grid">
+      <div class="recap-item">
+        <div class="ri-icon">🧠</div>
+        <div class="ri-body">
+          <div class="ri-title">CPU / Processador</div>
+          <div class="ri-desc">O "cérebro" — faz todos os cálculos</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">🪑</div>
+        <div class="ri-body">
+          <div class="ri-title">Memória RAM</div>
+          <div class="ri-desc">A "mesa de trabalho" — o que está aberto agora</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">🗄️</div>
+        <div class="ri-body">
+          <div class="ri-title">HD / SSD</div>
+          <div class="ri-desc">O "armário" — guarda tudo para sempre</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">🪟</div>
+        <div class="ri-body">
+          <div class="ri-title">Monitor</div>
+          <div class="ri-desc">A "janela" — mostra o que acontece</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">🖱️</div>
+        <div class="ri-body">
+          <div class="ri-title">Mouse</div>
+          <div class="ri-desc">A "mão virtual" — aponta e clica</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">⌨️</div>
+        <div class="ri-body">
+          <div class="ri-title">Teclado</div>
+          <div class="ri-desc">A "voz digital" — digita textos e senhas</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revisão mouse -->
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">🖱️ Revisão rápida: botões do mouse</h3>
+    <table class="compare-table">
+      <tr>
+        <th>Ação</th>
+        <th>Como fazer</th>
+        <th>Para quê serve</th>
+      </tr>
+      <tr>
+        <td>Clique simples</td>
+        <td>1× botão esquerdo</td>
+        <td>Selecionar um item</td>
+      </tr>
+      <tr>
+        <td>Duplo clique</td>
+        <td>2× rápido no botão esquerdo</td>
+        <td>Abrir um programa ou arquivo</td>
+      </tr>
+      <tr>
+        <td>Botão direito</td>
+        <td>1× botão direito</td>
+        <td>Ver opções (menu de contexto)</td>
+      </tr>
+      <tr>
+        <td>Rolar a rodinha</td>
+        <td>Girar a rodinha</td>
+        <td>Subir e descer a página</td>
+      </tr>
+      <tr>
+        <td>Arrastar</td>
+        <td>Clicar + segurar + mover</td>
+        <td>Mover ícones e janelas</td>
+      </tr>
+    </table>
+
+    <!-- Quiz rápido -->
+    <h3 class="quiz-title">🧩 Quiz rápido — Dia 1</h3>
+    <p class="quiz-q">1. Qual parte do computador guarda as informações mesmo depois de desligar?</p>
+    <div class="quiz-options">
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">A</span> Memória RAM</div>
+      <div class="quiz-option" onclick="answer(this, true)"><span class="opt-letter">B</span> HD / SSD</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">C</span> Monitor</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">D</span> Processador</div>
+    </div>
+
+    <p class="quiz-q">2. Para <strong>abrir</strong> um programa, eu devo…</p>
+    <div class="quiz-options">
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">A</span> Clicar uma vez com o botão esquerdo</div>
+      <div class="quiz-option" onclick="answer(this, true)"><span class="opt-letter">B</span> Dar duplo clique com o botão esquerdo</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">C</span> Clicar com o botão direito</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">D</span> Rolar a rodinha do mouse</div>
+    </div>
+
+    <p class="quiz-q">3. Se eu quero apagar uma letra que escrevi errado, qual tecla eu uso?</p>
+    <div class="quiz-options">
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">A</span> Enter</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">B</span> Shift</div>
+      <div class="quiz-option" onclick="answer(this, true)"><span class="opt-letter">C</span> Backspace</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">D</span> Caps Lock</div>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Dica para o professor:</strong> Após o quiz, perguntar quem tem dúvida antes de avançar. O momento de revisão é flexível — se a turma estiver bem, pode ser mais curto e dar mais tempo para as próximas aulas.
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Abrir o Bloco de Notas</div>
+          <div class="step-desc">Menu Iniciar → digitar "Bloco de Notas" → Enter. Praticar por 3 minutos: cada aluna digita o próprio nome completo.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Tirar dúvidas abertas</div>
+          <div class="step-desc">Perguntar à turma: "Alguém ficou com dúvida da semana passada?" Responder com calma antes de continuar.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Anunciar o tema de hoje</div>
+          <div class="step-desc">"Hoje vamos aprender a organizar arquivos e dar os primeiros passos no Word. Ao final, cada uma vai sair com um documento salvo no computador com o próprio nome!"</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- fim momento 1 -->
+
+  <!-- ── MOMENTOS 2, 3 e 4 — Em breve ── -->
+  <div class="coming-soon-card">
+    <div class="cs-icon">📂</div>
+    <div class="cs-body">
+      <div class="cs-title">Momento 2 — Pastas e Arquivos</div>
+      <div class="cs-desc">Criar, renomear, mover, copiar e deletar pastas. Analogia: pasta = caixa, arquivo = papel.</div>
+      <span class="cs-badge">🔒 Em breve · 13h20–14h30</span>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div class="cs-icon">📝</div>
+    <div class="cs-body">
+      <div class="cs-title">Momento 3 — Word Básico</div>
+      <div class="cs-desc">Abrir, digitar, formatar (negrito, itálico, fonte) e salvar. Diferença entre Salvar e Salvar Como. Salvar como PDF.</div>
+      <span class="cs-badge">🔒 Em breve · 14h50–15h50</span>
+    </div>
+  </div>
+
+  <div class="coming-soon-card">
+    <div class="cs-icon">✍️</div>
+    <div class="cs-body">
+      <div class="cs-title">Momento 4 — Exercício: Meu Primeiro Documento</div>
+      <div class="cs-desc">Criar um documento com nome, endereço e uma frase sobre si mesma. Salvar na pasta com o próprio nome.</div>
+      <span class="cs-badge">🔒 Em breve · 15h50–17h</span>
+    </div>
+  </div>
+
+  <!-- NAV FOOTER -->
+  <div class="nav-footer">
+    <a href="dia1.html" class="nav-link">← Dia 1 — Conhecendo o Computador</a>
+    <a href="index.html" class="nav-link">📊 Dashboard</a>
+    <span class="nav-link disabled">Dia 3 — Em breve →</span>
+  </div>
+
+</div><!-- /wrapper -->
+
+<!-- Slide HUD -->
+<div class="slide-hud" id="slideHud">
+  <button class="hud-btn" id="prevSlide" title="Anterior">◀</button>
+  <span class="hud-counter" id="slideCounter">1 / 1</span>
+  <button class="hud-btn" id="nextSlide" title="Próximo">▶</button>
+  <button class="hud-exit" id="exitSlide">✕ Sair</button>
+</div>
+
+<script>
+  /* ── DARK MODE ── */
+  const darkBtn = document.getElementById('darkToggleBtn');
+  if (localStorage.getItem('darkMode') === '1') {
+    document.body.classList.add('dark-mode');
+    darkBtn.textContent = '☀️';
+  }
+  darkBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const on = document.body.classList.contains('dark-mode');
+    darkBtn.textContent = on ? '☀️' : '🌙';
+    localStorage.setItem('darkMode', on ? '1' : '0');
+  });
+
+  /* ── FONT SIZE ── */
+  let fontSize = parseFloat(localStorage.getItem('fontSize') || '16');
+  document.documentElement.style.fontSize = fontSize + 'px';
+  document.getElementById('fontInc').addEventListener('click', () => {
+    fontSize = Math.min(fontSize + 1, 22);
+    document.documentElement.style.fontSize = fontSize + 'px';
+    localStorage.setItem('fontSize', fontSize);
+  });
+  document.getElementById('fontDec').addEventListener('click', () => {
+    fontSize = Math.max(fontSize - 1, 13);
+    document.documentElement.style.fontSize = fontSize + 'px';
+    localStorage.setItem('fontSize', fontSize);
+  });
+
+  /* ── SLIDE MODE ── */
+  const slides = () => [...document.querySelectorAll('.section-card:not(.no-slide)')];
+  let cur = 0;
+  function showSlide(n) {
+    const s = slides();
+    s.forEach(el => el.classList.remove('slide-visible'));
+    cur = Math.max(0, Math.min(n, s.length - 1));
+    if (s[cur]) s[cur].classList.add('slide-visible');
+    document.getElementById('slideCounter').textContent = `${cur + 1} / ${s.length}`;
+  }
+  document.getElementById('slideToggleBtn').addEventListener('click', () => {
+    document.body.classList.add('slide-active');
+    cur = 0; showSlide(0);
+  });
+  document.getElementById('exitSlide').addEventListener('click', () => {
+    document.body.classList.remove('slide-active');
+    slides().forEach(el => el.classList.remove('slide-visible'));
+  });
+  document.getElementById('nextSlide').addEventListener('click', () => showSlide(cur + 1));
+  document.getElementById('prevSlide').addEventListener('click', () => showSlide(cur - 1));
+  document.addEventListener('keydown', e => {
+    if (!document.body.classList.contains('slide-active')) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') showSlide(cur + 1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   showSlide(cur - 1);
+    if (e.key === 'Escape') document.getElementById('exitSlide').click();
+  });
+
+  /* ── QUIZ ── */
+  function answer(el, correct) {
+    const group = el.closest('.quiz-options');
+    if (group.querySelector('.correct, .wrong')) return; // já respondeu
+    group.querySelectorAll('.quiz-option').forEach(opt => {
+      opt.style.pointerEvents = 'none';
+    });
+    el.classList.add(correct ? 'correct' : 'wrong');
+    if (!correct) {
+      // mostra a correta
+      group.querySelectorAll('.quiz-option').forEach(opt => {
+        if (opt.onclick.toString().includes('true')) opt.classList.add('correct');
+      });
+    }
+  }
+</script>
+</body>
+</html>
