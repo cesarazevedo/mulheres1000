@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dia 2 · M4 — Exercício: Meu Primeiro Documento · Mulheres 1000</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0;--accent:#3b82f6;--accent2:#8b5cf6;--done:#10b981;--tag-bg:#eff6ff;--tag-text:#1d4ed8;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 6px rgba(0,0,0,.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  .topbar{background:var(--card);border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow)}
+  .topbar-left{display:flex;align-items:center;gap:.75rem}
+  .topbar-right{display:flex;align-items:center;gap:.6rem}
+  .back-btn{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--accent);text-decoration:none;background:var(--tag-bg);border:1px solid #bfdbfe;border-radius:8px;padding:.3rem .7rem;font-weight:600;transition:background .15s}
+  .back-btn:hover{background:#dbeafe}
+  .topbar-title{font-size:.9rem;font-weight:600;color:var(--text-muted)}
+  .topbar-badge{font-size:.68rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:.2rem .6rem;border-radius:20px}
+  .slide-toggle{display:flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:700;padding:.35rem .85rem;border:2px solid var(--accent);border-radius:8px;background:transparent;color:var(--accent);cursor:pointer;transition:all .2s}
+  .slide-toggle:hover{background:var(--accent);color:#fff}
+  .font-controls{display:flex;gap:4px}
+  .font-btn{padding:.3rem .55rem;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--accent);font-weight:700;font-size:.78rem;cursor:pointer}
+  .font-btn:hover{background:var(--tag-bg);border-color:var(--accent)}
+  .dark-toggle{padding:.3rem .5rem;border:1px solid var(--border);border-radius:6px;background:var(--card);font-size:1rem;cursor:pointer;line-height:1}
+  body.dark-mode{--bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--text-muted:#94a3b8;--border:#334155;--tag-bg:#1e3a5f;--tag-text:#93c5fd;--shadow:0 1px 3px rgba(0,0,0,.3)}
+  body.dark-mode .momento-hero{background:linear-gradient(135deg,#1e3a8a 0%,#5b21b6 100%)}
+  body.dark-mode .compare-table th{background:#1e3a5f}
+  body.dark-mode .compare-table tr:nth-child(even) td{background:#1a2535}
+  body.dark-mode .key{background:#1e293b;border-color:#475569;border-bottom-color:#64748b;color:#e2e8f0}
+  body.dark-mode .key.important{background:#1e3a5f;border-color:#3b82f6;color:#93c5fd}
+  body.dark-mode .accent-card{background:#1e293b;border-color:#334155}
+  body.dark-mode .slide-toggle{border-color:#60a5fa;color:#60a5fa}
+  body.dark-mode .slide-toggle:hover{background:#60a5fa;color:#0f172a}
+  body.dark-mode .font-btn{background:#334155;border-color:#475569;color:#93c5fd}
+  body.dark-mode .dark-toggle{background:#334155;border-color:#475569}
+  body.dark-mode .nav-link{background:#1e293b}
+  body.dark-mode .nav-link:hover{background:#243148}
+  body.dark-mode .highlight-box{background:#1e3a5f;border-color:#1e40af;color:#93c5fd}
+  body.dark-mode .tip-box{background:#052e16;border-color:#166534;color:#86efac}
+  body.dark-mode .warn-box{background:#431407;border-color:#9a3412;color:#fdba74}
+  body.dark-mode .recap-item,.dark-mode .step{background:#1a2535}
+  body.dark-mode .quiz-option{background:#1a2535;border-color:#334155}
+  body.dark-mode .quiz-option:hover{background:#243148;border-color:#3b82f6}
+  body.dark-mode .quiz-option.correct{background:#052e16;border-color:#10b981}
+  body.dark-mode .quiz-option.wrong{background:#450a0a;border-color:#ef4444}
+  body.dark-mode .prat-card.pc-blue .pc-header{background:#1e3a5f;border-bottom-color:#1e40af}
+  body.dark-mode .prat-card.pc-pink .pc-header{background:#3b1230;border-bottom-color:#9d174d}
+  body.dark-mode .prat-card.pc-green .pc-header{background:#052e16;border-bottom-color:#166534}
+  body.dark-mode .prat-card.pc-orange .pc-header{background:#431407;border-bottom-color:#9a3412}
+  body.dark-mode .pc-steps kbd,body.dark-mode .pc-how-to kbd{background:#1e293b;border-color:#475569;color:#e2e8f0}
+  body.dark-mode .pc-how-to{background:#0f172a}
+  body.dark-mode .pc-checkpoint{background:#0f2318;border-left-color:#10b981;color:#cbd5e1}
+  body.dark-mode .btn-print{background:#2563eb}
+  body.slide-active{overflow:hidden}
+  body.slide-active .topbar,body.slide-active .nav-footer,body.slide-active .momento-hero{display:none}
+  body.slide-active .wrapper{max-width:100%;margin:0;padding:0;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1000;background:var(--bg)}
+  body.slide-active .section-card{display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:85vw;max-width:1050px;max-height:85vh;overflow-y:auto;padding:48px 56px;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.12);animation:slideIn .32s ease;margin-bottom:0}
+  body.slide-active .section-card.slide-visible{display:block}
+  body.slide-active .section-card h2{font-size:2em;margin-bottom:1.1rem}
+  body.slide-active .section-card p{font-size:1.2em;line-height:1.75}
+  @keyframes slideIn{from{opacity:0;transform:translate(-50%,-50%) scale(.96)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+  .slide-hud{display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:1001;background:var(--card);padding:10px 24px;border-radius:50px;box-shadow:0 4px 24px rgba(0,0,0,.14);align-items:center;gap:18px;border:1px solid var(--border)}
+  body.slide-active .slide-hud{display:flex}
+  .hud-btn{background:none;border:none;cursor:pointer;font-size:1.3rem;padding:4px 8px;border-radius:8px;color:var(--text)}
+  .hud-counter{font-size:.82rem;font-weight:600;color:var(--text-muted);min-width:56px;text-align:center}
+  .hud-exit{font-size:.75rem;font-weight:700;color:var(--accent);background:var(--tag-bg);border:1px solid #bfdbfe;border-radius:20px;padding:4px 14px;cursor:pointer}
+  .wrapper{max-width:860px;margin:0 auto;padding:2rem 1.5rem}
+  .momento-hero{background:linear-gradient(135deg,#1d4ed8 0%,#7c3aed 100%);border-radius:16px;padding:1.75rem 2rem;color:#fff;margin-bottom:1.5rem}
+  .momento-meta{font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:rgba(255,255,255,.18);display:inline-block;padding:.25rem .75rem;border-radius:20px;margin-bottom:.6rem}
+  .momento-num{font-size:.78rem;color:rgba(255,255,255,.75);font-weight:600;margin-bottom:.3rem}
+  .momento-hero h1{font-size:1.7rem;font-weight:800;margin-bottom:.4rem;line-height:1.2}
+  .momento-time{font-size:.82rem;color:rgba(255,255,255,.8);margin-bottom:.7rem}
+  .momento-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+  .momento-tags .tag{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)}
+  .section-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;margin-bottom:1.5rem;box-shadow:var(--shadow)}
+  .section-card-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+  .section-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+  .icon-blue{background:#dbeafe}.icon-purple{background:#ede9fe}.icon-green{background:#dcfce7}.icon-orange{background:#ffedd5}
+  .section-card-title h2{font-size:1rem;font-weight:700;color:var(--text)}
+  .time-badge{font-size:.68rem;color:var(--text-muted);font-weight:500;margin-top:2px}
+  .highlight-box{background:#eff6ff;border:1px solid #bfdbfe;border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.85rem;color:#1d4ed8;line-height:1.6}
+  .highlight-box strong{color:#1e40af}
+  .tip-box{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--done);border-radius:0 10px 10px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.85rem;color:#166534;line-height:1.6}
+  .warn-box{background:#fff7ed;border:1px solid #fed7aa;border-left:4px solid #f97316;border-radius:0 10px 10px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.85rem;color:#9a3412;line-height:1.6}
+  .steps{display:flex;flex-direction:column;gap:.85rem;margin:1.1rem 0}
+  .step{display:flex;gap:.85rem;align-items:flex-start;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem}
+  .step-num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .step-body{flex:1}.step-title{font-size:.84rem;font-weight:700;margin-bottom:3px}.step-desc{font-size:.76rem;color:var(--text-muted);line-height:1.5}
+  .recap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin:1rem 0}
+  .recap-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;display:flex;align-items:center;gap:.75rem}
+  .ri-icon{font-size:1.3rem;flex-shrink:0}.ri-title{font-weight:700;font-size:.83rem}.ri-desc{font-size:.72rem;color:var(--text-muted);margin-top:1px}
+  .compare-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.84rem;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+  .compare-table th{background:#1e3a5f;color:#e2e8f0;padding:.65rem 1rem;text-align:left;font-size:.78rem;font-weight:600}
+  .compare-table td{padding:.6rem 1rem;border-bottom:1px solid var(--border);color:var(--text)}
+  .compare-table tr:last-child td{border-bottom:none}
+  .compare-table tr:nth-child(even) td{background:#f8fafc}
+  .compare-table td:first-child{font-weight:600}
+  .badge-blue{background:#dbeafe;color:#1d4ed8;padding:2px 8px;border-radius:20px;font-size:.72em;font-weight:600}
+  .badge-green{background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:20px;font-size:.72em;font-weight:600}
+  .badge-orange{background:#ffedd5;color:#9a3412;padding:2px 8px;border-radius:20px;font-size:.72em;font-weight:600}
+  .tag-row{display:flex;flex-wrap:wrap;gap:.4rem;margin:.75rem 0}
+  .tag{font-size:.68rem;background:var(--tag-bg);color:var(--tag-text);padding:.15rem .55rem;border-radius:20px;font-weight:500;border:1px solid #bfdbfe}
+  .hw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.25rem 0}
+  .hw-card{border:1px solid var(--border);border-radius:12px;padding:1.1rem 1rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.5rem;transition:box-shadow .15s,transform .15s}
+  .hw-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+  .hw-card.hw-cpu{background:#eff6ff;border-color:#bfdbfe}.hw-card.hw-ram{background:#f0fdf4;border-color:#bbf7d0}
+  .hw-card.hw-hd{background:#fff7ed;border-color:#fed7aa}.hw-card.hw-mon{background:#fdf4ff;border-color:#e9d5ff}
+  .hw-card.hw-mouse{background:#fef2f2;border-color:#fecaca}.hw-card.hw-kb{background:#f8fafc;border-color:#e2e8f0}
+  .hw-icon{font-size:2rem}.hw-name{font-size:.88rem;font-weight:700;color:var(--text)}
+  .hw-analogy{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:.15rem .6rem;border-radius:20px}
+  .hw-cpu .hw-analogy{background:#bfdbfe;color:#1d4ed8}.hw-ram .hw-analogy{background:#bbf7d0;color:#15803d}
+  .hw-hd .hw-analogy{background:#fed7aa;color:#9a3412}.hw-mon .hw-analogy{background:#e9d5ff;color:#6b21a8}
+  .hw-mouse .hw-analogy{background:#fecaca;color:#991b1b}.hw-kb .hw-analogy{background:#e2e8f0;color:#475569}
+  .hw-desc{font-size:.75rem;color:var(--text-muted);line-height:1.4}
+  .mouse-layout{display:flex;gap:2rem;align-items:flex-start;margin:1.25rem 0;flex-wrap:wrap}
+  .mouse-drawing{flex-shrink:0;width:140px}
+  .mouse-svg-wrap{background:#f8fafc;border:1px solid var(--border);border-radius:12px;padding:1rem;text-align:center}
+  .mouse-buttons{flex:1;min-width:200px;display:flex;flex-direction:column;gap:.6rem}
+  .mouse-btn{display:flex;align-items:flex-start;gap:.75rem;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem}
+  .mouse-btn-icon{font-size:1.3rem;flex-shrink:0}
+  .mouse-btn-title{font-size:.84rem;font-weight:700;margin-bottom:2px}.mouse-btn-desc{font-size:.75rem;color:var(--text-muted);line-height:1.4}
+  .kb-sections{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin:1rem 0}
+  .kb-section{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.9rem 1rem}
+  .kb-section-title{font-size:.78rem;font-weight:700;margin-bottom:.6rem}
+  .kb-keys{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem}
+  .key{display:inline-flex;align-items:center;justify-content:center;background:#f8fafc;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:6px;padding:.3rem .6rem;font-size:.78rem;font-weight:600;color:var(--text);min-width:32px}
+  .key.wide{padding:.3rem 1.1rem}.key.important{background:#dbeafe;border-color:#93c5fd;border-bottom-color:#3b82f6;color:#1d4ed8}
+  .key-desc{font-size:.72rem;color:var(--text-muted);margin-top:.4rem;line-height:1.4}
+  .accent-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin:1rem 0}
+  .accent-card{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:.75rem .5rem;text-align:center}
+  .accent-formula{font-size:.8rem;color:var(--text-muted);margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:.2rem}
+  .accent-result{font-size:1.4rem;font-weight:700;color:var(--accent)}
+  .accent-name{font-size:.65rem;color:var(--text-muted);margin-top:2px}
+  .key-small{display:inline-flex;background:#fff;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 5px;font-size:.7rem;font-weight:600}
+  .plus{font-size:.65rem;color:#94a3b8}
+  .prat-section{margin-bottom:1.5rem}
+  .prat-section-header{display:flex;align-items:center;gap:.85rem;margin-bottom:1.1rem;padding:1rem 1.25rem;background:linear-gradient(135deg,#1e40af,#6d28d9);border-radius:12px;color:#fff}
+  .prat-section-icon{font-size:1.6rem;flex-shrink:0}
+  .prat-section-title{font-size:1rem;font-weight:700}.prat-section-sub{font-size:.75rem;color:rgba(255,255,255,.75);margin-top:2px}
+  .prat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:1rem;overflow:hidden;box-shadow:var(--shadow)}
+  .pc-header{display:flex;align-items:center;gap:.9rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border)}
+  .prat-card.pc-blue .pc-header{background:#eff6ff;border-bottom-color:#bfdbfe}
+  .prat-card.pc-pink .pc-header{background:#fdf2f8;border-bottom-color:#fbcfe8}
+  .prat-card.pc-green .pc-header{background:#f0fdf4;border-bottom-color:#bbf7d0}
+  .prat-card.pc-orange .pc-header{background:#fff7ed;border-bottom-color:#fed7aa}
+  .pc-num{width:32px;height:32px;border-radius:50%;font-size:.88rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+  .prat-card.pc-blue .pc-num{background:#3b82f6}.prat-card.pc-pink .pc-num{background:#ec4899}
+  .prat-card.pc-green .pc-num{background:#10b981}.prat-card.pc-orange .pc-num{background:#f97316}
+  .pc-app-icon{font-size:1.6rem;flex-shrink:0}.pc-info{flex:1}
+  .pc-title{font-size:.92rem;font-weight:700;color:var(--text)}.pc-meta{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.3rem}
+  .pc-badge{font-size:.67rem;font-weight:600;background:#f1f5f9;color:#475569;padding:.15rem .55rem;border-radius:20px;border:1px solid #e2e8f0}
+  .pc-badge.pc-easy{background:#dcfce7;color:#15803d;border-color:#bbf7d0}
+  .pc-badge.pc-medium{background:#fef9c3;color:#92400e;border-color:#fde68a}
+  .pc-how-to{margin:.85rem 1.25rem 0;font-size:.82rem;color:var(--text-muted);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.5rem .85rem;line-height:1.5}
+  .pc-how-label{font-weight:700;color:var(--text);margin-right:.3rem}
+  .pc-how-to kbd,.pc-steps kbd{background:#fff;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 5px;font-size:.78em;font-weight:600;color:var(--text)}
+  .pc-steps{margin:.85rem 1.25rem 0;padding-left:1.4rem;display:flex;flex-direction:column;gap:.55rem}
+  .pc-steps li{font-size:.84rem;color:var(--text);line-height:1.6;padding-left:.3rem}
+  .pc-steps li::marker{font-weight:700}
+  .prat-card.pc-blue .pc-steps li::marker{color:#3b82f6}.prat-card.pc-pink .pc-steps li::marker{color:#ec4899}
+  .prat-card.pc-green .pc-steps li::marker{color:#10b981}.prat-card.pc-orange .pc-steps li::marker{color:#f97316}
+  .pc-checkpoint{display:flex;align-items:flex-start;gap:.6rem;margin:.85rem 1.25rem 1.1rem;background:#f8fafc;border:1px solid var(--border);border-left:4px solid #10b981;border-radius:0 8px 8px 0;padding:.65rem .9rem;font-size:.82rem;line-height:1.5}
+  .pc-check-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+  .btn-print{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1.6rem;background:#1e40af;color:#fff;border:none;border-radius:10px;font-size:.88rem;font-weight:600;cursor:pointer;font-family:inherit}
+  .btn-print:hover{background:#1d4ed8}
+  .quiz-title{font-size:.88rem;font-weight:700;margin:1.2rem 0 .5rem}
+  .quiz-q{font-size:.84rem;font-weight:600;margin-bottom:.6rem;line-height:1.5}
+  .quiz-options{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.1rem}
+  .quiz-option{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;border:1.5px solid var(--border);border-radius:10px;font-size:.82rem;cursor:pointer;background:var(--bg);transition:all .15s;user-select:none}
+  .quiz-option:hover{border-color:var(--accent);background:#eff6ff}
+  .quiz-option.correct{border-color:#10b981;background:#f0fdf4;color:#166534;font-weight:600}
+  .quiz-option.wrong{border-color:#ef4444;background:#fef2f2;color:#991b1b}
+  .opt-letter{width:24px;height:24px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0}
+  .quiz-option.correct .opt-letter{background:#10b981;color:#fff}
+  .quiz-option.wrong .opt-letter{background:#ef4444;color:#fff}
+  .nav-footer{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);gap:.75rem}
+  .nav-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--accent);text-decoration:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.5rem 1rem;box-shadow:var(--shadow);transition:background .15s}
+  .nav-link:hover{background:#eff6ff}
+  .nav-link.disabled{color:var(--text-muted);pointer-events:none;opacity:.5}
+  @media(max-width:680px){.hw-grid{grid-template-columns:repeat(2,1fr)}.kb-sections{grid-template-columns:1fr}.accent-grid{grid-template-columns:repeat(2,1fr)}.recap-grid{grid-template-columns:1fr}.momento-hero h1{font-size:1.4rem}.wrapper{padding:1rem}.nav-footer{flex-direction:column;align-items:stretch}.nav-footer .nav-link{text-align:center;justify-content:center}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-left"><a href="index.html" class="back-btn">← Dashboard</a><span class="topbar-title">Dia 2 — Windows e Arquivos</span></div><div class="topbar-right"><span class="topbar-badge">23 de março · 13h–17h</span><div class="font-controls"><button class="font-btn" id="fontDec">A−</button><button class="font-btn" id="fontInc">A+</button></div><button class="dark-toggle" id="darkToggleBtn">🌙</button><button class="slide-toggle" id="slideToggleBtn">📺 Modo Slide</button></div></div>
+<div class="wrapper">
+<div class="momento-hero"><div class="momento-meta">Dia 2 · 23 de março · Mulheres 1000 · IFRN João Câmara</div><div class="momento-num">Momento 4 de 4</div><h1>✍️ Exercício: Meu Primeiro Documento</h1><div class="momento-time">⏰ 15h50 – 17h · 70 minutos</div><div class="momento-tags"><span class="tag">Word</span><span class="tag">Atividade</span><span class="tag">Formatação</span><span class="tag">PDF</span><span class="tag">Avaliação</span></div></div>
+<div class="section-card">
+  <div class="section-card-header"><div class="section-card-icon icon-blue">🎯</div><div class="section-card-title"><h2>O que vamos fazer</h2><div class="time-badge">⏰ 15h50 – 17h · 70 minutos</div></div></div>
+  <p style="font-size:.88rem;color:var(--text-muted);line-height:1.7;margin-bottom:1rem;">Chegou a hora de colocar em prática tudo o que aprendemos! Você vai criar seu <strong>primeiro documento real no Word</strong> — um mini currículo simples com seus dados pessoais.</p>
+  <div class="highlight-box"><strong>🏆 Objetivo:</strong> Ao final desta aula, você vai ter um documento Word com seu nome, dados e uma frase sobre você — formatado, salvo em .docx e exportado como .pdf.</div>
+  <h3 style="font-size:.88rem;font-weight:700;margin:1.25rem 0 .6rem;">📋 O que seu documento deve ter</h3>
+  <div class="recap-grid">
+    <div class="recap-item"><div class="ri-icon">👤</div><div><div class="ri-title">Seu nome completo</div><div class="ri-desc">Em negrito, tamanho 16, centralizado</div></div></div>
+    <div class="recap-item"><div class="ri-icon">📍</div><div><div class="ri-title">Endereço completo</div><div class="ri-desc">Rua, número, bairro, cidade — tamanho 12</div></div></div>
+    <div class="recap-item"><div class="ri-icon">📞</div><div><div class="ri-title">Telefone / WhatsApp</div><div class="ri-desc">Tamanho 12, alinhado à esquerda</div></div></div>
+    <div class="recap-item"><div class="ri-icon">💬</div><div><div class="ri-title">Uma frase sobre você</div><div class="ri-desc">Em itálico — algo que você gosta, seu objetivo ou sonho</div></div></div>
+  </div>
+</div>
+
+<div class="prat-section">
+  <div class="prat-section-header"><div class="prat-section-icon">🛠️</div><div><div class="prat-section-title">Passo a Passo — Mão na Massa!</div><div class="prat-section-sub">Siga cada etapa com calma · não há pressa</div></div></div>
+
+  <div class="prat-card pc-blue">
+    <div class="pc-header"><div class="pc-num">1</div><div class="pc-app-icon">📁</div><div class="pc-info"><div class="pc-title">Preparar a pasta</div><div class="pc-meta"><span class="pc-badge">⏱ ~5 min</span><span class="pc-badge pc-easy">Fácil</span></div></div></div>
+    <div class="pc-how-to"><span class="pc-how-label">Objetivo:</span> Criar a pasta onde vamos salvar o documento</div>
+    <ol class="pc-steps">
+      <li>Abra o <strong>Explorador de Arquivos</strong> com <kbd>⊞ Win</kbd>+<kbd>E</kbd>.</li>
+      <li>Vá para <strong>Documentos</strong>.</li>
+      <li>Se ainda não tiver, crie uma pasta com <strong>seu nome completo</strong> (botão direito → Novo → Pasta).</li>
+      <li>Dentro da sua pasta, crie mais uma pasta chamada <strong>"Dia 2 — Word"</strong>.</li>
+    </ol>
+    <div class="pc-checkpoint"><span class="pc-check-icon">✅</span><span>Pasta "Dia 2 — Word" criada dentro da sua pasta pessoal.</span></div>
+  </div>
+
+  <div class="prat-card pc-pink">
+    <div class="pc-header"><div class="pc-num">2</div><div class="pc-app-icon">📝</div><div class="pc-info"><div class="pc-title">Abrir o Word e digitar o conteúdo</div><div class="pc-meta"><span class="pc-badge">⏱ ~15 min</span><span class="pc-badge pc-easy">Fácil</span></div></div></div>
+    <div class="pc-how-to"><span class="pc-how-label">Como abrir:</span> Iniciar → Word → Documento em branco</div>
+    <ol class="pc-steps">
+      <li>Abra o Word e escolha <strong>Documento em branco</strong>.</li>
+      <li>Digite seu <strong>nome completo</strong> na primeira linha. Pressione <kbd>Enter</kbd>.</li>
+      <li>Digite seu <strong>endereço</strong> (rua, número, bairro, cidade, CEP). Pressione <kbd>Enter</kbd>.</li>
+      <li>Digite seu <strong>telefone</strong> ou número de WhatsApp. Pressione <kbd>Enter</kbd> duas vezes.</li>
+      <li>Digite uma <strong>frase sobre você</strong>. Exemplos:<div style="margin:.6rem 0 0;background:#eff6ff;border-left:3px solid #93c5fd;border-radius:0 6px 6px 0;padding:.65rem .9rem;font-family:Georgia,serif;font-size:.85rem;line-height:1.9;color:#1e3a5f;">"Gosto de aprender coisas novas e hoje dei meu primeiro passo no mundo digital."<br>"Moro em João Câmara e estou aprendendo informática para crescer profissionalmente."<br>"Acredito que nunca é tarde para aprender — e a tecnologia está aqui para me ajudar."</div></li>
+    </ol>
+    <div class="pc-checkpoint"><span class="pc-check-icon">✅</span><span>Texto completo digitado: nome, endereço, telefone e frase pessoal.</span></div>
+  </div>
+
+  <div class="prat-card pc-green">
+    <div class="pc-header"><div class="pc-num">3</div><div class="pc-app-icon">✨</div><div class="pc-info"><div class="pc-title">Formatar o documento</div><div class="pc-meta"><span class="pc-badge">⏱ ~15 min</span><span class="pc-badge pc-medium">Médio</span></div></div></div>
+    <div class="pc-how-to"><span class="pc-how-label">Lembre-se:</span> Selecione o texto antes de formatar</div>
+    <ol class="pc-steps">
+      <li>Selecione seu <strong>nome</strong> → mude o tamanho para <strong>18</strong> → clique em <strong>Negrito</strong> (<kbd>Ctrl+N</kbd>) → clique em <strong>Centralizar</strong> (<kbd>Ctrl+E</kbd>).</li>
+      <li>Selecione o <strong>endereço</strong> → tamanho <strong>12</strong> → <strong>Justificar</strong> (<kbd>Ctrl+J</kbd>).</li>
+      <li>Selecione o <strong>telefone</strong> → tamanho <strong>12</strong> → deixe <strong>alinhado à esquerda</strong> (<kbd>Ctrl+Q</kbd>).</li>
+      <li>Selecione a <strong>frase pessoal</strong> → clique em <strong>Itálico</strong> (<kbd>Ctrl+I</kbd>) → mude a cor para <strong>azul escuro</strong> (botão A colorido).</li>
+      <li><strong>Opcional:</strong> Adicione uma linha horizontal entre o nome e o endereço. Digite três traços <strong>---</strong> e pressione <kbd>Enter</kbd> — o Word transforma automaticamente!</li>
+    </ol>
+    <div class="pc-checkpoint"><span class="pc-check-icon">✅</span><span>Nome em negrito/centralizado, endereço justificado, frase em itálico azul.</span></div>
+  </div>
+
+  <div class="prat-card pc-orange">
+    <div class="pc-header"><div class="pc-num">4</div><div class="pc-app-icon">💾</div><div class="pc-info"><div class="pc-title">Salvar como .docx e como PDF</div><div class="pc-meta"><span class="pc-badge">⏱ ~10 min</span><span class="pc-badge pc-easy">Fácil</span></div></div></div>
+    <div class="pc-how-to"><span class="pc-how-label">Importante:</span> Salve primeiro em .docx, depois em .pdf</div>
+    <ol class="pc-steps">
+      <li>Pressione <kbd>F12</kbd> para abrir "Salvar Como".</li>
+      <li>Navegue até <strong>Documentos → sua pasta → Dia 2 — Word</strong>.</li>
+      <li>No campo <strong>Nome do arquivo</strong>, escreva: <strong>meu_documento_[seu_nome]</strong>.</li>
+      <li>Verifique que o <strong>Tipo</strong> está como <em>Documento do Word (*.docx)</em> e clique <strong>Salvar</strong>.</li>
+      <li>Pressione <kbd>F12</kbd> novamente. Desta vez, na caixa <strong>Tipo</strong>, escolha <strong>PDF (*.pdf)</strong> e clique <strong>Salvar</strong>.</li>
+    </ol>
+    <div class="pc-checkpoint"><span class="pc-check-icon">✅</span><span>Dois arquivos salvos na pasta: um .docx (editável) e um .pdf (para enviar).</span></div>
+  </div>
+</div>
+
+<div class="section-card">
+  <div class="section-card-header"><div class="section-card-icon icon-purple">📝</div><div class="section-card-title"><h2>Checklist de Avaliação</h2><div class="time-badge">Confira antes de entregar!</div></div></div>
+  <div class="steps">
+    <div class="step"><div class="step-num">☑</div><div class="step-body"><div class="step-title">Nome completo em negrito, tamanho 18, centralizado</div><div class="step-desc">Aparece na primeira linha do documento</div></div></div>
+    <div class="step"><div class="step-num">☑</div><div class="step-body"><div class="step-title">Endereço completo, tamanho 12, justificado</div><div class="step-desc">Rua, número, bairro, cidade</div></div></div>
+    <div class="step"><div class="step-num">☑</div><div class="step-body"><div class="step-title">Telefone / WhatsApp digitado corretamente</div><div class="step-desc">Tamanho 12, alinhado à esquerda</div></div></div>
+    <div class="step"><div class="step-num">☑</div><div class="step-body"><div class="step-title">Frase pessoal em itálico e com cor</div><div class="step-desc">Uma frase sua, verdadeira e com carinho 💙</div></div></div>
+    <div class="step"><div class="step-num">☑</div><div class="step-body"><div class="step-title">Arquivo .docx salvo na pasta correta</div><div class="step-desc">Documentos → seu nome → Dia 2 — Word</div></div></div>
+    <div class="step"><div class="step-num">☑</div><div class="step-body"><div class="step-title">Arquivo .pdf gerado na mesma pasta</div><div class="step-desc">Abra o PDF para conferir que ficou certinho</div></div></div>
+  </div>
+  <div class="highlight-box" style="margin-top:1.25rem;"><strong>🎉 Parabéns!</strong> Você criou e formatou seu primeiro documento no Word. Isso já é uma habilidade profissional — muitas vagas de emprego pedem exatamente isso!</div>
+  <div class="highlight-box"><strong>📅 Próxima semana (30/mar — Dia 3):</strong> Internet, Google e e-mail com Gmail. Traga suas dúvidas sobre o que viu esta semana! 🌐</div>
+</div>
+<div class="nav-footer"><a href="dia2-m3.html" class="nav-link">← Word Básico</a><a href="index.html" class="nav-link">📊 Dashboard</a><span class="nav-link disabled">Em breve →</span></div>
+</div>
+<div class="slide-hud"><button class="hud-btn" id="prevSlide">◀</button><span class="hud-counter" id="slideCounter">1 / 1</span><button class="hud-btn" id="nextSlide">▶</button><button class="hud-exit" id="exitSlide">✕ Sair</button></div>
+<script>
+  const darkBtn=document.getElementById('darkToggleBtn');
+  if(localStorage.getItem('darkMode')==='1'){document.body.classList.add('dark-mode');darkBtn.textContent='☀️';}
+  darkBtn.addEventListener('click',()=>{document.body.classList.toggle('dark-mode');const on=document.body.classList.contains('dark-mode');darkBtn.textContent=on?'☀️':'🌙';localStorage.setItem('darkMode',on?'1':'0');});
+  let fs2=parseFloat(localStorage.getItem('fontSize')||'16');document.documentElement.style.fontSize=fs2+'px';
+  document.getElementById('fontInc').addEventListener('click',()=>{fs2=Math.min(fs2+1,22);document.documentElement.style.fontSize=fs2+'px';localStorage.setItem('fontSize',fs2);});
+  document.getElementById('fontDec').addEventListener('click',()=>{fs2=Math.max(fs2-1,13);document.documentElement.style.fontSize=fs2+'px';localStorage.setItem('fontSize',fs2);});
+  const getSl=()=>[...document.querySelectorAll('.section-card')];let cur=0;
+  function showSl(n){const s=getSl();s.forEach(e=>e.classList.remove('slide-visible'));cur=Math.max(0,Math.min(n,s.length-1));if(s[cur])s[cur].classList.add('slide-visible');document.getElementById('slideCounter').textContent=(cur+1)+' / '+s.length;}
+  document.getElementById('slideToggleBtn').addEventListener('click',()=>{document.body.classList.add('slide-active');cur=0;showSl(0);});
+  document.getElementById('exitSlide').addEventListener('click',()=>{document.body.classList.remove('slide-active');getSl().forEach(e=>e.classList.remove('slide-visible'));});
+  document.getElementById('nextSlide').addEventListener('click',()=>showSl(cur+1));
+  document.getElementById('prevSlide').addEventListener('click',()=>showSl(cur-1));
+  document.addEventListener('keydown',e=>{if(!document.body.classList.contains('slide-active'))return;if(e.key==='ArrowRight'||e.key==='ArrowDown')showSl(cur+1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')showSl(cur-1);if(e.key==='Escape')document.getElementById('exitSlide').click();});
+</script>
+</body>
+</html>
