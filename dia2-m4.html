@@ -177,6 +177,7 @@
   .nav-link:hover{background:#eff6ff}
   .nav-link.disabled{color:var(--text-muted);pointer-events:none;opacity:.5}
   @media(max-width:680px){.hw-grid{grid-template-columns:repeat(2,1fr)}.kb-sections{grid-template-columns:1fr}.accent-grid{grid-template-columns:repeat(2,1fr)}.recap-grid{grid-template-columns:1fr}.momento-hero h1{font-size:1.4rem}.wrapper{padding:1rem}.nav-footer{flex-direction:column;align-items:stretch}.nav-footer .nav-link{text-align:center;justify-content:center}}
+  @media print{.topbar,.nav-footer,.slide-hud,.slide-toggle,.font-controls,.dark-toggle,.back-btn,.topbar-badge,.btn-print{display:none!important}.wrapper{max-width:100%;padding:0}.section-card,.prat-card,.prat-section-header{box-shadow:none;border:1px solid #ccc}.momento-hero{background:#1d4ed8!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.pc-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}body{background:#fff!important}}
 </style>
 </head>
 <body>
@@ -263,6 +264,9 @@
   </div>
   <div class="highlight-box" style="margin-top:1.25rem;"><strong>🎉 Parabéns!</strong> Você criou e formatou seu primeiro documento no Word. Isso já é uma habilidade profissional — muitas vagas de emprego pedem exatamente isso!</div>
   <div class="highlight-box"><strong>📅 Próxima semana (30/mar — Dia 3):</strong> Internet, Google e e-mail com Gmail. Traga suas dúvidas sobre o que viu esta semana! 🌐</div>
+  <div style="margin-top:1.5rem;display:flex;justify-content:center;">
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimir esta atividade</button>
+  </div>
 </div>
 <div class="nav-footer"><a href="dia2-m3.html" class="nav-link">← Word Básico</a><a href="index.html" class="nav-link">📊 Dashboard</a><span class="nav-link disabled">Em breve →</span></div>
 </div>
