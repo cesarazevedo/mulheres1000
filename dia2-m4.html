@@ -178,10 +178,51 @@
   .nav-link.disabled{color:var(--text-muted);pointer-events:none;opacity:.5}
   @media(max-width:680px){.hw-grid{grid-template-columns:repeat(2,1fr)}.kb-sections{grid-template-columns:1fr}.accent-grid{grid-template-columns:repeat(2,1fr)}.recap-grid{grid-template-columns:1fr}.momento-hero h1{font-size:1.4rem}.wrapper{padding:1rem}.nav-footer{flex-direction:column;align-items:stretch}.nav-footer .nav-link{text-align:center;justify-content:center}}
   @media print{
-    .topbar,.nav-footer,.nav-link,.slide-hud,.btn-print{display:none}
-    body{background:#fff}
-    .wrapper{max-width:100%}
-    .momento-hero,.section-card,.prat-card{box-shadow:none;page-break-inside:avoid}
+    /* — ocultar navegação e controles — */
+    .topbar,.nav-footer,.nav-link,.slide-hud,.btn-print,.section-card-icon,.prat-section-icon,.pc-app-icon{display:none!important}
+    /* — reset de página — */
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    body{background:#fff!important;font-family:'Segoe UI',Arial,sans-serif;color:#1a202c}
+    .wrapper{max-width:100%;padding:0;margin:0}
+    /* — hero → card branco com borda azul no topo (estilo lesson-hero) — */
+    .momento-hero{background:#fff!important;color:#1a202c!important;border-top:4px solid #1e40af;border-radius:16px;padding:32px 40px;box-shadow:none;margin-bottom:24px}
+    .momento-hero h1{color:#1e40af!important;font-size:1.7em;margin-bottom:8px}
+    .momento-meta{background:rgba(30,64,175,.1)!important;color:#1e40af!important}
+    .momento-num,.momento-time{color:#718096!important}
+    .momento-tags .tag{background:rgba(30,64,175,.08)!important;color:#1e40af!important;border-color:#93c5fd!important}
+    /* — section-card → content-card — */
+    .section-card{background:#fff;border:none;border-radius:16px;padding:28px 35px;box-shadow:none;margin-bottom:20px;page-break-inside:avoid}
+    .section-card-header{border-bottom:1px solid #e2e8f0;padding-bottom:12px;margin-bottom:14px}
+    .section-card-title h2{color:#1e40af;font-size:1.25em}
+    .time-badge{color:#718096}
+    /* — prat-section-header → linha azul limpa — */
+    .prat-section{margin-bottom:20px}
+    .prat-section-header{background:none!important;color:#1a202c!important;border:none;border-bottom:2px solid #1e40af;border-radius:0;padding:10px 0;margin-bottom:14px}
+    .prat-section-title{color:#1e40af!important;font-size:1.05em}
+    .prat-section-sub{color:#718096!important}
+    /* — prat-card → content-card — */
+    .prat-card{background:#fff!important;border:1px solid #e2e8f0!important;border-radius:12px;box-shadow:none;margin-bottom:16px;page-break-inside:avoid}
+    .prat-card.pc-blue .pc-header,.prat-card.pc-pink .pc-header,.prat-card.pc-green .pc-header,.prat-card.pc-orange .pc-header{background:#f8fafc!important;border-bottom:1px solid #e2e8f0!important}
+    .pc-header{padding:14px 20px}
+    .pc-num{background:#1e40af!important;color:#fff!important}
+    .pc-title{color:#1e40af!important}
+    .pc-badge{background:#f1f5f9!important;color:#475569!important;border-color:#e2e8f0!important}
+    .pc-how-to{background:#f8fafc!important;border-color:#e2e8f0!important;color:#4a5568!important}
+    .pc-steps li{color:#4a5568}
+    .pc-steps kbd,.pc-how-to kbd{background:#f1f5f9!important;border-color:#cbd5e1!important;color:#1a202c!important}
+    .pc-checkpoint{background:#f8fafc!important;border-left:3px solid #10b981!important;color:#1a202c!important}
+    /* — steps genéricos — */
+    .step{background:#fff!important;border:1px solid #e2e8f0!important;border-radius:8px}
+    .step-num{background:#1e40af!important;color:#fff!important}
+    /* — boxes — */
+    .highlight-box{background:rgba(30,64,175,.05)!important;border-left:4px solid #1e40af!important;color:#1a202c!important}
+    .tip-box{background:rgba(16,185,129,.05)!important;border-left:4px solid #10b981!important;color:#1a202c!important}
+    .warn-box{background:rgba(249,115,22,.05)!important;border-left:4px solid #f97316!important;color:#1a202c!important}
+    /* — recap grid — */
+    .recap-item{background:#fff!important;border:1px solid #e2e8f0!important}
+    /* — tabelas — */
+    .compare-table th{background:#1e40af!important;color:#fff!important}
+    .compare-table tr:nth-child(even) td{background:#f8fafc!important}
   }
 </style>
 </head>
