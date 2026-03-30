@@ -22,7 +22,6 @@
   .font-btn:hover{background:var(--tag-bg);border-color:var(--accent)}
   .dark-toggle{padding:.3rem .5rem;border:1px solid var(--border);border-radius:6px;background:var(--card);font-size:1rem;cursor:pointer;line-height:1}
   
-  /* Dark Mode Styles */
   body.dark-mode{--bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--text-muted:#94a3b8;--border:#334155;--tag-bg:#1e3a5f;--tag-text:#93c5fd;--shadow:0 1px 3px rgba(0,0,0,.3)}
   body.dark-mode .momento-hero{background:linear-gradient(135deg,#1e3a8a 0%,#5b21b6 100%)}
   body.dark-mode .compare-table th{background:#1e3a5f}
@@ -46,9 +45,7 @@
   body.dark-mode .prat-card.pc-green .pc-header{background:#052e16;border-bottom-color:#166534}
   body.dark-mode .pc-steps kbd,body.dark-mode .pc-how-to kbd{background:#1e293b;border-color:#475569;color:#e2e8f0}
   body.dark-mode .pc-how-to{background:#0f172a}
-  body.dark-mode .pc-checkpoint{background:#0f2318;border-left-color:#10b981;color:#cbd5e1}
   
-  /* Slide Mode Styles */
   body.slide-active{overflow:hidden}
   body.slide-active .topbar,body.slide-active .nav-footer,body.slide-active .momento-hero{display:none}
   body.slide-active .wrapper{max-width:100%;margin:0;padding:0;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1000;background:var(--bg)}
@@ -63,7 +60,6 @@
   .hud-counter{font-size:.82rem;font-weight:600;color:var(--text-muted);min-width:56px;text-align:center}
   .hud-exit{font-size:.75rem;font-weight:700;color:var(--accent);background:var(--tag-bg);border:1px solid #bfdbfe;border-radius:20px;padding:4px 14px;cursor:pointer}
   
-  /* Base Components */
   .wrapper{max-width:860px;margin:0 auto;padding:2rem 1.5rem}
   .momento-hero{background:linear-gradient(135deg,#1d4ed8 0%,#7c3aed 100%);border-radius:16px;padding:1.75rem 2rem;color:#fff;margin-bottom:1.5rem}
   .momento-meta{font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:rgba(255,255,255,.18);display:inline-block;padding:.25rem .75rem;border-radius:20px;margin-bottom:.6rem}
@@ -97,7 +93,6 @@
   .compare-table td:first-child{font-weight:600}
   .tag{font-size:.68rem;background:var(--tag-bg);color:var(--tag-text);padding:.15rem .55rem;border-radius:20px;font-weight:500;border:1px solid #bfdbfe}
   
-  /* Practice Cards */
   .prat-section{margin-bottom:1.5rem}
   .prat-section-header{display:flex;align-items:center;gap:.85rem;margin-bottom:1.1rem;padding:1rem 1.25rem;background:linear-gradient(135deg,#1e40af,#6d28d9);border-radius:12px;color:#fff}
   .prat-section-icon{font-size:1.6rem;flex-shrink:0}
@@ -118,14 +113,11 @@
   .pc-how-to{margin:.85rem 1.25rem 0;font-size:.82rem;color:var(--text-muted);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:.5rem .85rem;line-height:1.5}
   .pc-how-label{font-weight:700;color:var(--text);margin-right:.3rem}
   .pc-how-to kbd,.pc-steps kbd{background:#fff;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 5px;font-size:.78em;font-weight:600;color:var(--text)}
-  .pc-steps{margin:.85rem 1.25rem 0;padding-left:1.4rem;display:flex;flex-direction:column;gap:.55rem}
+  .pc-steps{margin:.85rem 1.25rem 1rem;padding-left:1.4rem;display:flex;flex-direction:column;gap:.55rem}
   .pc-steps li{font-size:.84rem;color:var(--text);line-height:1.6;padding-left:.3rem}
   .pc-steps li::marker{font-weight:700}
   .prat-card.pc-blue .pc-steps li::marker{color:#3b82f6}.prat-card.pc-pink .pc-steps li::marker{color:#ec4899}.prat-card.pc-green .pc-steps li::marker{color:#10b981}
-  .pc-checkpoint{display:flex;align-items:flex-start;gap:.6rem;margin:.85rem 1.25rem 1.1rem;background:#f8fafc;border:1px solid var(--border);border-left:4px solid #10b981;border-radius:0 8px 8px 0;padding:.65rem .9rem;font-size:.82rem;line-height:1.5}
-  .pc-check-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
   
-  /* Quiz */
   .quiz-q{font-size:.84rem;font-weight:600;margin-bottom:.6rem;line-height:1.5}
   .quiz-options{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.1rem}
   .quiz-option{display:flex;align-items:center;gap:.6rem;padding:.65rem 1rem;border:1.5px solid var(--border);border-radius:10px;font-size:.82rem;cursor:pointer;background:var(--bg);transition:all .15s;user-select:none}
@@ -136,7 +128,6 @@
   .quiz-option.correct .opt-letter{background:#10b981;color:#fff}
   .quiz-option.wrong .opt-letter{background:#ef4444;color:#fff}
   
-  /* Footer */
   .nav-footer{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);gap:.75rem}
   .nav-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--accent);text-decoration:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.5rem 1rem;box-shadow:var(--shadow);transition:background .15s}
   .nav-link:hover{background:#eff6ff}
@@ -305,10 +296,8 @@
         <div class="pc-how-to"><span class="pc-how-label">Como fazer:</span> Com o Excel aberto, clique na primeira célula lá em cima.</div>
         <ol class="pc-steps">
           <li>Use as setinhas do teclado para ir até a Coluna D.</li>
-          <li>Desça até a Linha 5.</li>
-          <li>Fale em voz alta em qual "endereço" você parou (D5).</li>
+          <li>Desça até a Linha 5 e observe o endereço (D5).</li>
         </ol>
-        <div class="pc-checkpoint"><span class="pc-check-icon">✅</span><div>A aluna conseguiu se localizar e entendeu como as letras e números formam o endereço da célula.</div></div>
       </div>
 
       <div class="prat-card pc-pink">
@@ -326,7 +315,6 @@
           <li>Na célula de baixo (A2), digite "Arroz" e aperte <kbd>Enter</kbd>.</li>
           <li>Na célula A3, digite "Feijão" e aperte <kbd>Enter</kbd>.</li>
         </ol>
-        <div class="pc-checkpoint"><span class="pc-check-icon">✅</span><div>A aluna percebeu que a tecla Enter ajuda a criar uma lista descendo as linhas rapidamente.</div></div>
       </div>
 
       <div class="prat-card pc-green">
@@ -344,7 +332,6 @@
           <li>Na célula B2 (do lado do Arroz), digite o número "5".</li>
           <li>Na célula B3 (do lado do Feijão), digite o número "2".</li>
         </ol>
-        <div class="pc-checkpoint"><span class="pc-check-icon">✅</span><div>Ao final, a turma já sabe inserir textos de um lado e números do outro, montando uma mini lista!</div></div>
       </div>
     </div>
 
