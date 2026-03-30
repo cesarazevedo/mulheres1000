@@ -364,15 +364,74 @@
       font-weight: 500;
     }
 
+    /* ── MOBILE NAV BAR ── */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--sidebar);
+      z-index: 200;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 0.4rem 0 calc(0.4rem + env(safe-area-inset-bottom));
+    }
+    .mobile-nav-inner {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .mobile-nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      background: none;
+      border: none;
+      color: var(--sidebar-text);
+      font-size: 0.6rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+      border-radius: 8px;
+      transition: color 0.15s;
+      min-width: 52px;
+    }
+    .mobile-nav-btn .mn-icon { font-size: 1.3rem; line-height: 1; }
+    .mobile-nav-btn.active { color: #60a5fa; }
+
     /* Responsive */
     @media (max-width: 768px) {
       .sidebar { display: none; }
       .main { margin-left: 0; }
-      .content { padding: 1rem; }
+      .content { padding: 1rem; padding-bottom: 5rem; }
+      .mobile-nav { display: block; }
+      .topbar-title { font-size: 0.78rem; }
+      #globalSearch { width: 130px; font-size: 0.78rem; }
+      .lessons-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+
+<!-- ══ MOBILE NAV ══ -->
+<nav class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-inner">
+    <button class="mobile-nav-btn active" data-target="overview">
+      <span class="mn-icon">📊</span>Geral
+    </button>
+    <button class="mobile-nav-btn" data-target="dia1">
+      <span class="mn-icon">🖥️</span>Dia 1
+    </button>
+    <button class="mobile-nav-btn" data-target="dia2">
+      <span class="mn-icon">📁</span>Dia 2
+    </button>
+    <button class="mobile-nav-btn" data-target="dia3">
+      <span class="mn-icon">📊</span>Dia 3
+    </button>
+    <button class="mobile-nav-btn" data-target="dia4">
+      <span class="mn-icon">🛠️</span>Dia 4
+    </button>
+  </div>
+</nav>
 
 <!-- ══ SIDEBAR ══ -->
 <aside class="sidebar">
@@ -806,12 +865,17 @@ document.addEventListener('DOMContentLoaded', function () {
   const navBtns = document.querySelectorAll('.nav-item[data-target]');
   const tabs = document.querySelectorAll('.tab-content');
 
+  const mobileNavBtns = document.querySelectorAll('.mobile-nav-btn[data-target]');
+
   function activateTab(id) {
     navBtns.forEach(b => b.classList.remove('active'));
+    mobileNavBtns.forEach(b => b.classList.remove('active'));
     tabs.forEach(t => t.classList.remove('active'));
     const btn = document.querySelector('.nav-item[data-target="' + id + '"]');
+    const mBtn = document.querySelector('.mobile-nav-btn[data-target="' + id + '"]');
     const tab = document.getElementById(id);
     if (btn) btn.classList.add('active');
+    if (mBtn) mBtn.classList.add('active');
     if (tab) tab.classList.add('active');
     history.replaceState(null, '', '#' + id);
   }
@@ -819,6 +883,13 @@ document.addEventListener('DOMContentLoaded', function () {
   navBtns.forEach(btn => {
     btn.addEventListener('click', function () {
       activateTab(this.getAttribute('data-target'));
+    });
+  });
+
+  mobileNavBtns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      activateTab(this.getAttribute('data-target'));
+      window.scrollTo(0, 0);
     });
   });
 
