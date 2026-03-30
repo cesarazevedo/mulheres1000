@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dia 3 — Microsoft Excel · Mulheres 1000</title>
+  <style>
+    :root {
+      --bg: #f0f4f8;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #3b82f6;
+      --accent2: #8b5cf6;
+      --done: #10b981;
+      --tag-bg: #eff6ff;
+      --tag-text: #1d4ed8;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .topbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: var(--shadow);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 0.75rem; }
+    .topbar-right { display: flex; align-items: center; gap: 0.6rem; }
+    .back-btn {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; color: var(--accent); text-decoration: none;
+      background: var(--tag-bg); border: 1px solid #bfdbfe;
+      border-radius: 8px; padding: 0.3rem 0.7rem; font-weight: 600;
+      transition: background 0.15s;
+    }
+    .back-btn:hover { background: #dbeafe; }
+    .topbar-title { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+    .topbar-badge {
+      font-size: 0.68rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; padding: 0.2rem 0.6rem; border-radius: 20px;
+    }
+    .slide-toggle {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.78rem; font-weight: 700; padding: 0.35rem 0.85rem;
+      border: 2px solid var(--accent); border-radius: 8px;
+      background: transparent; color: var(--accent); cursor: pointer; transition: all 0.2s;
+    }
+    .slide-toggle:hover { background: var(--accent); color: #fff; }
+    .font-controls { display: flex; gap: 4px; }
+    .font-btn {
+      padding: 0.3rem 0.55rem; border: 1px solid var(--border); border-radius: 6px;
+      background: var(--card); color: var(--accent); font-weight: 700;
+      font-size: 0.78rem; cursor: pointer; transition: all 0.2s;
+    }
+    .font-btn:hover { background: var(--tag-bg); border-color: var(--accent); }
+    .dark-toggle {
+      padding: 0.3rem 0.5rem; border: 1px solid var(--border); border-radius: 6px;
+      background: var(--card); font-size: 1rem; cursor: pointer;
+      transition: all 0.2s; line-height: 1;
+    }
+    .dark-toggle:hover { background: var(--tag-bg); border-color: var(--accent); }
+    body.dark-mode {
+      --bg: #0f172a; --card: #1e293b; --text: #e2e8f0;
+      --text-muted: #94a3b8; --border: #334155;
+      --tag-bg: #1e3a5f; --tag-text: #93c5fd;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+    }
+    body.dark-mode .hero { background: linear-gradient(135deg, #064e3b 0%, #065f46 100%); }
+    body.dark-mode .compare-table th { background: #1e3a5f; }
+    body.dark-mode .compare-table tr:nth-child(even) td { background: #1a2535; }
+    body.dark-mode .key { background: #1e293b; border-color: #475569; border-bottom-color: #64748b; color: #e2e8f0; }
+    body.dark-mode .key.important { background: #1e3a5f; border-color: #3b82f6; color: #93c5fd; }
+    body.dark-mode .accent-card { background: #1e293b; border-color: #334155; }
+    body.dark-mode .exercise-card { background: linear-gradient(135deg, #065f46 0%, #134e4a 100%); }
+    body.dark-mode .slide-toggle { border-color: #60a5fa; color: #60a5fa; }
+    body.dark-mode .slide-toggle:hover { background: #60a5fa; color: #0f172a; }
+    body.dark-mode .font-btn { background: #334155; border-color: #475569; color: #93c5fd; }
+    body.dark-mode .dark-toggle { background: #334155; border-color: #475569; }
+    body.dark-mode .nav-link { background: #1e293b; }
+    body.dark-mode .nav-link:hover { background: #243148; }
+    body.dark-mode .recap-item { background: #1a2535; }
+    body.dark-mode .quiz-option { background: #1a2535; border-color: #334155; }
+    body.dark-mode .quiz-option:hover { background: #243148; border-color: #3b82f6; }
+    body.dark-mode .quiz-option.correct { background: #052e16; border-color: #10b981; }
+    body.dark-mode .quiz-option.wrong { background: #450a0a; border-color: #ef4444; }
+    body.slide-active { overflow: hidden; }
+    body.slide-active .topbar,
+    body.slide-active .nav-footer,
+    body.slide-active .hero,
+    body.slide-active .agenda { display: none; }
+    body.slide-active .wrapper {
+      max-width: 100%; margin: 0; padding: 0;
+      position: fixed; top: 0; left: 0;
+      width: 100vw; height: 100vh; z-index: 1000; background: var(--bg);
+    }
+    body.slide-active .section-card.no-slide { display: none !important; }
+    body.slide-active .coming-soon-card { display: none !important; }
+    body.slide-active .section-card {
+      display: none; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); width: 85vw; max-width: 1050px;
+      max-height: 85vh; overflow-y: auto; padding: 48px 56px;
+      border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+      animation: slideIn 0.32s ease; margin-bottom: 0;
+    }
+    body.slide-active .section-card.slide-visible { display: block; }
+    body.slide-active .section-card h2 { font-size: 2em; margin-bottom: 1.1rem; }
+    body.slide-active .section-card p  { font-size: 1.2em; line-height: 1.75; }
+    body.slide-active .section-card li { font-size: 1.15em; line-height: 1.8; margin-bottom: 8px; }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.96); }
+      to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+    .slide-hud {
+      display: none; position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%); z-index: 1001; background: var(--card);
+      padding: 10px 24px; border-radius: 50px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.14);
+      align-items: center; gap: 18px; user-select: none; border: 1px solid var(--border);
+    }
+    body.slide-active .slide-hud { display: flex; }
+    .hud-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 1.3rem; padding: 4px 8px; border-radius: 8px;
+      transition: background 0.15s; color: var(--text);
+    }
+    .hud-btn:hover { background: var(--bg); }
+    .hud-counter { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); min-width: 56px; text-align: center; }
+    .hud-exit {
+      font-size: 0.75rem; font-weight: 700; color: var(--accent);
+      background: var(--tag-bg); border: 1px solid #bfdbfe;
+      border-radius: 20px; padding: 4px 14px; cursor: pointer;
+    }
+    .hud-exit:hover { background: #dbeafe; }
+    .wrapper { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .hero {
+      background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+      border-radius: 16px; padding: 2rem; color: #fff; margin-bottom: 1.5rem;
+    }
+    .hero-badge {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.07em;
+      text-transform: uppercase; background: rgba(255,255,255,0.18);
+      display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; margin-bottom: 0.85rem;
+    }
+    .hero h1 { font-size: 1.9rem; font-weight: 800; margin-bottom: 0.6rem; line-height: 1.2; }
+    .hero p { font-size: 0.88rem; color: rgba(255,255,255,0.85); line-height: 1.7; max-width: 640px; }
+    .hero-stats { display: flex; align-items: center; gap: 1rem; margin-top: 1.25rem; flex-wrap: wrap; }
+    .hero-stat { text-align: center; }
+    .hero-stat-val { display: block; font-size: 1.25rem; font-weight: 800; }
+    .hero-stat-label { font-size: 0.68rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.05em; }
+    .hero-stat-sep { opacity: 0.3; font-size: 1.3rem; }
+    .agenda { }
+    .agenda-item { display: flex; border-bottom: 1px solid var(--border); }
+    .agenda-item:last-child { border-bottom: none; }
+    .agenda-time {
+      min-width: 68px; padding: 0.9rem 1rem; font-size: 0.72rem; font-weight: 700;
+      color: var(--text-muted); line-height: 1.4; border-right: 1px solid var(--border); text-align: right;
+    }
+    .break-time { color: #f97316; background: #fff7ed; }
+    .agenda-body { flex: 1; display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; }
+    .agenda-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .agenda-info { flex: 1; }
+    .agenda-title { font-size: 0.84rem; font-weight: 700; }
+    .agenda-desc { font-size: 0.73rem; color: var(--text-muted); margin-top: 2px; line-height: 1.4; }
+    .agenda-num {
+      font-size: 0.68rem; font-weight: 700; background: var(--tag-bg);
+      color: var(--tag-text); padding: 0.2rem 0.55rem; border-radius: 20px; flex-shrink: 0;
+    }
+    .break-badge { background: #fff7ed; color: #9a3412; }
+    .section-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.75rem; margin-bottom: 1.5rem; box-shadow: var(--shadow);
+    }
+    .section-card-header {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);
+    }
+    .section-card-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+    .icon-blue   { background: #dbeafe; }
+    .icon-purple { background: #ede9fe; }
+    .icon-green  { background: #dcfce7; }
+    .icon-orange { background: #ffedd5; }
+    .icon-teal   { background: #ccfbf1; }
+    .section-card-title h2 { font-size: 1rem; font-weight: 700; color: var(--text); }
+    .section-card-title .time-badge { font-size: 0.68rem; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
+    .highlight-box {
+      background: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid var(--accent);
+      border-radius: 0 10px 10px 0; padding: 0.9rem 1.1rem; margin: 1rem 0;
+      font-size: 0.85rem; color: #1d4ed8; line-height: 1.6;
+    }
+    .highlight-box strong { color: #1e40af; }
+    .tip-box {
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--done);
+      border-radius: 0 10px 10px 0; padding: 0.9rem 1.1rem; margin: 1rem 0;
+      font-size: 0.85rem; color: #166534; line-height: 1.6;
+    }
+    .tip-box strong { color: #15803d; }
+    .warn-box {
+      background: #fff7ed; border: 1px solid #fed7aa; border-left: 4px solid #f97316;
+      border-radius: 0 10px 10px 0; padding: 0.9rem 1.1rem; margin: 1rem 0;
+      font-size: 0.85rem; color: #9a3412; line-height: 1.6;
+    }
+    body.dark-mode .highlight-box { background: #1e3a5f; border-color: #1e40af; color: #93c5fd; }
+    body.dark-mode .tip-box { background: #052e16; border-color: #166534; color: #86efac; }
+    body.dark-mode .warn-box { background: #431407; border-color: #9a3412; color: #fdba74; }
+    .recap-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1rem 0;
+    }
+    .recap-item {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+      padding: 0.85rem 1rem; display: flex; align-items: center; gap: 0.75rem; font-size: 0.83rem;
+    }
+    .recap-item .ri-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .recap-item .ri-title { font-weight: 700; color: var(--text); }
+    .recap-item .ri-desc { font-size: 0.72rem; color: var(--text-muted); margin-top: 1px; }
+    .steps { display: flex; flex-direction: column; gap: 0.85rem; margin: 1.1rem 0; }
+    .step {
+      display: flex; gap: 0.85rem; align-items: flex-start;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 1rem;
+    }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; font-size: 0.78rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .step-body { flex: 1; }
+    .step-title { font-size: 0.84rem; font-weight: 700; margin-bottom: 3px; }
+    .step-desc { font-size: 0.76rem; color: var(--text-muted); line-height: 1.5; }
+    .quiz-title { font-size: 0.88rem; font-weight: 700; margin: 1.2rem 0 0.5rem; }
+    .quiz-q { font-size: 0.84rem; color: var(--text); font-weight: 600; margin-bottom: 0.6rem; line-height: 1.5; }
+    .quiz-options { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.1rem; }
+    .quiz-option {
+      display: flex; align-items: center; gap: 0.6rem; padding: 0.65rem 1rem;
+      border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.82rem;
+      cursor: pointer; background: var(--bg); transition: all 0.15s; user-select: none;
+    }
+    .quiz-option:hover { border-color: var(--accent); background: #eff6ff; }
+    .quiz-option.correct { border-color: #10b981; background: #f0fdf4; color: #166534; font-weight: 600; }
+    .quiz-option.wrong   { border-color: #ef4444; background: #fef2f2; color: #991b1b; }
+    .quiz-option .opt-letter {
+      width: 24px; height: 24px; border-radius: 50%; background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 700; flex-shrink: 0;
+    }
+    .quiz-option.correct .opt-letter { background: #10b981; color: #fff; }
+    .quiz-option.wrong   .opt-letter { background: #ef4444; color: #fff; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0; }
+    .tag {
+      font-size: 0.68rem; background: var(--tag-bg); color: var(--tag-text);
+      padding: 0.15rem 0.55rem; border-radius: 20px; font-weight: 500; border: 1px solid #bfdbfe;
+    }
+    .compare-table {
+      width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.84rem;
+      border-radius: 10px; overflow: hidden; border: 1px solid var(--border);
+    }
+    .compare-table th {
+      background: #1e3a5f; color: #e2e8f0; padding: 0.65rem 1rem;
+      text-align: left; font-size: 0.78rem; font-weight: 600;
+    }
+    .compare-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); color: var(--text); }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table tr:nth-child(even) td { background: #f8fafc; }
+    .compare-table td:first-child { font-weight: 600; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; padding: 2px 8px; border-radius: 20px; font-size: 0.72em; font-weight: 600; }
+    .badge-green  { background: #dcfce7; color: #15803d; padding: 2px 8px; border-radius: 20px; font-size: 0.72em; font-weight: 600; }
+    .badge-orange { background: #ffedd5; color: #9a3412; padding: 2px 8px; border-radius: 20px; font-size: 0.72em; font-weight: 600; }
+    .coming-soon-card {
+      background: var(--card); border: 2px dashed var(--border); border-radius: 14px;
+      padding: 1.75rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.25rem; opacity: 0.6;
+    }
+    .cs-icon {
+      width: 52px; height: 52px; border-radius: 14px; background: var(--bg);
+      border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; flex-shrink: 0;
+    }
+    .cs-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 3px; }
+    .cs-desc { font-size: 0.78rem; color: var(--text-muted); }
+    .cs-badge {
+      font-size: 0.68rem; font-weight: 700; background: #f1f5f9; color: #64748b;
+      border: 1px solid var(--border); padding: 0.15rem 0.6rem; border-radius: 20px;
+      display: inline-block; margin-top: 6px;
+    }
+    .nav-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); gap: 1rem;
+    }
+    .nav-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; font-weight: 600; color: var(--accent); text-decoration: none;
+      background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.5rem 1rem; box-shadow: var(--shadow); transition: background 0.15s, box-shadow 0.15s;
+    }
+    .nav-link:hover { background: #eff6ff; box-shadow: var(--shadow-md); }
+    .nav-link.disabled { color: var(--text-muted); pointer-events: none; opacity: 0.5; }
+    @media (max-width: 680px) {
+      .recap-grid   { grid-template-columns: 1fr; }
+      .hero h1      { font-size: 1.5rem; }
+      .wrapper      { padding: 1rem; }
+      .coming-soon-card { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <a href="index.html" class="back-btn">← Dashboard</a>
+    <span class="topbar-title">Dia 3 — Microsoft Excel</span>
+  </div>
+  <div class="topbar-right">
+    <span class="topbar-badge">30 de março · 13h–17h</span>
+    <div class="font-controls">
+      <button class="font-btn" id="fontDec" title="Diminuir fonte">A−</button>
+      <button class="font-btn" id="fontInc" title="Aumentar fonte">A+</button>
+    </div>
+    <button class="dark-toggle" id="darkToggleBtn" title="Alternar modo escuro">🌙</button>
+    <button class="slide-toggle" id="slideToggleBtn">📺 Modo Slide</button>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">Dia 3 de 4 · Mulheres 1000 · IFRN João Câmara</div>
+    <h1>📊 Microsoft Excel</h1>
+    <p>Hoje vamos descobrir o Excel — o programa que organiza números e faz cálculos para você! Você vai aprender a criar tabelas, usar fórmulas simples e montar sua primeira planilha do zero.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-val">4</span>
+        <span class="hero-stat-label">Momentos</span>
+      </div>
+      <span class="hero-stat-sep">·</span>
+      <div class="hero-stat">
+        <span class="hero-stat-val">4h</span>
+        <span class="hero-stat-label">De aula</span>
+      </div>
+      <span class="hero-stat-sep">·</span>
+      <div class="hero-stat">
+        <span class="hero-stat-val">30/mar</span>
+        <span class="hero-stat-label">Data</span>
+      </div>
+      <span class="hero-stat-sep">·</span>
+      <div class="hero-stat">
+        <span class="hero-stat-val">4 ✅</span>
+        <span class="hero-stat-label">Publicadas</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AGENDA DO DIA -->
+  <div class="section-card no-slide" style="padding: 0; overflow:hidden; margin-bottom: 1.5rem;">
+    <div style="padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); display:flex; align-items:center; gap:.6rem;">
+      <span style="font-size:1.1rem;">📋</span>
+      <span style="font-size:.92rem; font-weight:700;">Agenda do Dia</span>
+    </div>
+    <div class="agenda">
+      <div class="agenda-item">
+        <div class="agenda-time">13h<br>13h20</div>
+        <div class="agenda-body">
+          <div class="agenda-icon">🔄</div>
+          <div class="agenda-info">
+            <div class="agenda-title">Revisão do Dia 2</div>
+            <div class="agenda-desc">Recapitulando: pastas, arquivos e Word. Dúvidas da semana.</div>
+          </div>
+          <span class="agenda-num">#01</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">13h20<br>14h30</div>
+        <div class="agenda-body">
+          <div class="agenda-icon">📊</div>
+          <div class="agenda-info">
+            <div class="agenda-title">Conhecendo o Excel</div>
+            <div class="agenda-desc">Células, linhas, colunas e endereços. Como digitar e navegar na planilha.</div>
+          </div>
+          <span class="agenda-num">#02</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time break-time">14h30<br>14h50</div>
+        <div class="agenda-body" style="background:#fffbf7">
+          <div class="agenda-icon">☕</div>
+          <div class="agenda-info">
+            <div class="agenda-title" style="color:#9a3412">Intervalo</div>
+            <div class="agenda-desc">Pausa para descanso.</div>
+          </div>
+          <span class="agenda-num break-badge">Pausa</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">14h50<br>15h50</div>
+        <div class="agenda-body">
+          <div class="agenda-icon">🧮</div>
+          <div class="agenda-info">
+            <div class="agenda-title">Fórmulas básicas</div>
+            <div class="agenda-desc">Soma, subtração, multiplicação e a função SOMA. O Excel calculando por você!</div>
+          </div>
+          <span class="agenda-num">#03</span>
+        </div>
+      </div>
+      <div class="agenda-item">
+        <div class="agenda-time">15h50<br>17h</div>
+        <div class="agenda-body">
+          <div class="agenda-icon">📋</div>
+          <div class="agenda-info">
+            <div class="agenda-title">Exercício: minha primeira planilha</div>
+            <div class="agenda-desc">Criar uma lista de gastos do mês com total automático. Formatar e salvar.</div>
+          </div>
+          <span class="agenda-num">#04</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MOMENTO 1: Revisão do Dia 2 ── -->
+  <div id="momento1" class="section-card">
+    <div class="section-card-header">
+      <div class="section-card-icon icon-blue">🔄</div>
+      <div class="section-card-title">
+        <h2>Momento 1 — Revisão do Dia 2</h2>
+        <div class="time-badge">⏰ 13h – 13h20 &nbsp;·&nbsp; 20 minutos</div>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag">Revisão</span>
+      <span class="tag">Dúvidas</span>
+      <span class="tag">Fixação</span>
+    </div>
+
+    <p style="font-size:.88rem; color:var(--text-muted); line-height:1.7; margin-bottom:1rem;">
+      Antes de começar o Excel, vamos relembrar o que vimos na semana passada. Alguém praticou em casa?
+    </p>
+
+    <div class="highlight-box">
+      <strong>💬 Pergunta para a turma:</strong> <em>"O que vocês lembraram do Dia 2? Alguém criou uma pasta ou usou o Word essa semana?"</em>
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.2rem 0 .6rem;">🗂️ O que aprendemos no Dia 2</h3>
+    <div class="recap-grid">
+      <div class="recap-item">
+        <div class="ri-icon">📁</div>
+        <div class="ri-body">
+          <div class="ri-title">Pastas</div>
+          <div class="ri-desc">Criei, renomeei e organizei pastas no Windows</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">📄</div>
+        <div class="ri-body">
+          <div class="ri-title">Arquivos</div>
+          <div class="ri-desc">Copiei, movi e deletei arquivos com segurança</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">🗑️</div>
+        <div class="ri-body">
+          <div class="ri-title">Lixeira</div>
+          <div class="ri-desc">Arquivos deletados ficam na lixeira — posso restaurar!</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">📝</div>
+        <div class="ri-body">
+          <div class="ri-title">Word</div>
+          <div class="ri-desc">Digitei, formatei e salvei meu primeiro documento</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">💾</div>
+        <div class="ri-body">
+          <div class="ri-title">Salvar × Salvar Como</div>
+          <div class="ri-desc">Ctrl+S salva. "Salvar Como" escolhe onde e como salvar</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">📕</div>
+        <div class="ri-body">
+          <div class="ri-title">Salvar como PDF</div>
+          <div class="ri-desc">O PDF não se edita facilmente — é para compartilhar</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="quiz-title">🧩 Quiz rápido — Dia 2</h3>
+
+    <p class="quiz-q">1. Quando eu deleto um arquivo, ele vai diretamente para o lixo e some para sempre?</p>
+    <div class="quiz-options">
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">A</span> Sim, some para sempre</div>
+      <div class="quiz-option" onclick="answer(this, true)"><span class="opt-letter">B</span> Não — vai para a Lixeira e posso recuperar</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">C</span> Depende do arquivo</div>
+    </div>
+
+    <p class="quiz-q">2. Qual atalho do teclado serve para <strong>copiar</strong> um arquivo ou texto?</p>
+    <div class="quiz-options">
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">A</span> Ctrl + V</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">B</span> Ctrl + X</div>
+      <div class="quiz-option" onclick="answer(this, true)"><span class="opt-letter">C</span> Ctrl + C</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">D</span> Ctrl + S</div>
+    </div>
+
+    <p class="quiz-q">3. Qual extensão de arquivo é criada pelo Word?</p>
+    <div class="quiz-options">
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">A</span> .mp3</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">B</span> .xlsx</div>
+      <div class="quiz-option" onclick="answer(this, true)"><span class="opt-letter">C</span> .docx</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">D</span> .jpg</div>
+    </div>
+
+  </div>
+  <!-- fim momento 1 -->
+
+  <!-- ── MOMENTO 2: Conhecendo o Excel ── -->
+  <div id="momento2" class="section-card">
+    <div class="section-card-header">
+      <div class="section-card-icon icon-green">📊</div>
+      <div class="section-card-title">
+        <h2>Momento 2 — Conhecendo o Excel</h2>
+        <div class="time-badge">⏰ 13h20 – 14h30 &nbsp;·&nbsp; 70 minutos</div>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag">Excel</span>
+      <span class="tag">Células</span>
+      <span class="tag">Planilha</span>
+      <span class="tag">Tabela</span>
+    </div>
+
+    <p style="font-size:.88rem; color:var(--text-muted); line-height:1.7; margin-bottom:1rem;">
+      O Excel é um programa que organiza informações em forma de tabela — como uma folha de papel quadriculada enorme. Parece complicado no começo, mas logo você vai ver que é muito útil no dia a dia!
+    </p>
+
+    <div class="highlight-box">
+      <strong>📦 Analogia do dia:</strong> Imagine uma <em>folha de caderno quadriculada</em>. Cada quadradinho é uma <strong>célula</strong>. As colunas são as letras (A, B, C…) e as linhas são os números (1, 2, 3…). O Excel é exatamente isso — só que no computador, e ele faz as contas por você!
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">🖥️ O que eu vejo quando abro o Excel</h3>
+    <div class="recap-grid">
+      <div class="recap-item">
+        <div class="ri-icon">📊</div>
+        <div class="ri-body">
+          <div class="ri-title">Células</div>
+          <div class="ri-desc">Os quadradinhos — cada um guarda um dado</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">➡️</div>
+        <div class="ri-body">
+          <div class="ri-title">Colunas (letras)</div>
+          <div class="ri-desc">Vão de A até Z, depois AA, AB… são verticais</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">⬇️</div>
+        <div class="ri-body">
+          <div class="ri-title">Linhas (números)</div>
+          <div class="ri-desc">São os números 1, 2, 3… são horizontais</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">🏠</div>
+        <div class="ri-body">
+          <div class="ri-title">Endereço da célula</div>
+          <div class="ri-desc">A1 = coluna A + linha 1. É o "endereço" da célula!</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">📝</div>
+        <div class="ri-body">
+          <div class="ri-title">Barra de fórmulas</div>
+          <div class="ri-desc">Mostra o que está digitado na célula selecionada</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">📑</div>
+        <div class="ri-body">
+          <div class="ri-title">Aba da planilha</div>
+          <div class="ri-desc">"Plan1" no rodapé — você pode ter várias planilhas</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">🏠 Entendendo o endereço da célula</h3>
+    <table class="compare-table">
+      <tr><th>Endereço</th><th>Significa</th><th>Onde fica</th></tr>
+      <tr><td>A1</td><td>Coluna A, Linha 1</td><td>Canto superior esquerdo</td></tr>
+      <tr><td>B3</td><td>Coluna B, Linha 3</td><td>Segunda coluna, terceira linha</td></tr>
+      <tr><td>C5</td><td>Coluna C, Linha 5</td><td>Terceira coluna, quinta linha</td></tr>
+    </table>
+
+    <div class="tip-box">
+      <strong>💡 Dica:</strong> Quando você clica numa célula, o endereço dela aparece na <strong>Caixa de Nome</strong> — o pequeno campo no canto superior esquerdo, antes da barra de fórmulas. Fique de olho nele!
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">⌨️ Como digitar no Excel</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Clique na célula desejada</div>
+          <div class="step-desc">Ela fica com uma borda azul/verde — significa que está selecionada.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Digite o que quiser</div>
+          <div class="step-desc">Texto, número ou data. O conteúdo aparece na célula e na barra de fórmulas.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Pressione Enter ou Tab para confirmar</div>
+          <div class="step-desc"><kbd style="background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 6px;font-size:.8em;font-weight:700;">Enter</kbd> vai para a célula de baixo. <kbd style="background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 6px;font-size:.8em;font-weight:700;">Tab</kbd> vai para a célula da direita.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Para corrigir, clique duas vezes na célula</div>
+          <div class="step-desc">Ou pressione <kbd style="background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 6px;font-size:.8em;font-weight:700;">F2</kbd> para entrar no modo de edição.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">📋 Texto × Número — qual a diferença?</h3>
+    <table class="compare-table">
+      <tr><th>Tipo</th><th>Exemplos</th><th>Alinhamento</th><th>Para que serve</th></tr>
+      <tr>
+        <td>📝 Texto</td>
+        <td>Nome, Endereço, "Arroz"</td>
+        <td>Esquerda</td>
+        <td>Descrições e títulos</td>
+      </tr>
+      <tr>
+        <td>🔢 Número</td>
+        <td>10, 3.50, 1500</td>
+        <td>Direita</td>
+        <td>Valores que serão calculados</td>
+      </tr>
+    </table>
+
+    <div class="warn-box">
+      <strong>⚠️ Atenção:</strong> No Excel, use <strong>vírgula</strong> para decimais (ex.: 3,50) — não ponto. Se você digitar 3.50 com ponto, o Excel pode entender como texto e não fazer o cálculo!
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">🔧 Ajustando a largura das colunas</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Posicione o mouse na borda entre duas letras de coluna</div>
+          <div class="step-desc">Por exemplo, entre o "A" e o "B" no topo. O cursor vira uma seta dupla ↔.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Clique e arraste para ajustar</div>
+          <div class="step-desc">Arraste para a direita para alargar, para a esquerda para estreitar.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Dica rápida: duplo clique para ajuste automático</div>
+          <div class="step-desc">Dê duplo clique na borda e o Excel ajusta a largura automaticamente para o conteúdo.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">💾 Salvando a planilha</h3>
+    <table class="compare-table">
+      <tr><th>Ação</th><th>Atalho</th><th>O que faz</th></tr>
+      <tr><td>Salvar</td><td><kbd style="background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 5px;font-size:.8em;font-weight:700;">Ctrl</kbd> + <kbd style="background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 5px;font-size:.8em;font-weight:700;">S</kbd></td><td>Salva na mesma pasta, com o mesmo nome</td></tr>
+      <tr><td>Salvar Como</td><td><kbd style="background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 5px;font-size:.8em;font-weight:700;">F12</kbd></td><td>Escolhe onde salvar e como nomear o arquivo</td></tr>
+    </table>
+
+    <div class="tip-box">
+      <strong>✅ Boa prática:</strong> Salve a planilha com um nome claro, como <em>gastos_marco_maria.xlsx</em>. Assim você encontra fácil depois!
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">🧪 Exercício prático — Lista de compras</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Abra o Excel e clique na célula A1</div>
+          <div class="step-desc">Digite <strong>Item</strong> e pressione <kbd style="background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 6px;font-size:.8em;font-weight:700;">Tab</kbd>. Na célula B1 digite <strong>Valor (R$)</strong>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">A partir de A2, liste 5 produtos</div>
+          <div class="step-desc">Exemplos: Arroz, Feijão, Azeite, Sabão, Café. Use Enter para pular de linha.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Na coluna B, coloque o preço de cada produto</div>
+          <div class="step-desc">Use vírgula para decimais. Ex: 6,50 — não 6.50.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Ajuste a largura da coluna A se necessário</div>
+          <div class="step-desc">Se o texto estiver cortado, dê duplo clique na borda entre A e B.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Salve com Ctrl+S</div>
+          <div class="step-desc">Salve na sua pasta com o nome <em>lista_compras_[seu_nome].xlsx</em>.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- fim momento 2 -->
+
+  <!-- ── MOMENTO 3: Fórmulas Básicas ── -->
+  <div id="momento3" class="section-card">
+    <div class="section-card-header">
+      <div class="section-card-icon icon-orange">🧮</div>
+      <div class="section-card-title">
+        <h2>Momento 3 — Fórmulas Básicas</h2>
+        <div class="time-badge">⏰ 14h50 – 15h50 &nbsp;·&nbsp; 60 minutos</div>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag">Fórmulas</span>
+      <span class="tag">SOMA</span>
+      <span class="tag">MÉDIA</span>
+      <span class="tag">Cálculos</span>
+    </div>
+
+    <p style="font-size:.88rem; color:var(--text-muted); line-height:1.7; margin-bottom:1rem;">
+      O segredo do Excel está aqui: as fórmulas! Elas fazem os cálculos automaticamente — você não precisa usar calculadora. Basta dizer para o Excel o que calcular.
+    </p>
+
+    <div class="highlight-box">
+      <strong>🔑 Regra de ouro:</strong> Toda fórmula no Excel começa com o sinal de <strong>=</strong> (igual). Sem ele, o Excel não entende que é um cálculo — ele trata como texto!
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">➕ Operações básicas</h3>
+    <table class="compare-table">
+      <tr><th>Operação</th><th>Símbolo</th><th>Exemplo</th><th>Resultado</th></tr>
+      <tr><td>Soma</td><td>+</td><td>=5+3 ou =A1+A2</td><td>8</td></tr>
+      <tr><td>Subtração</td><td>−</td><td>=10-4 ou =A1-A2</td><td>6</td></tr>
+      <tr><td>Multiplicação</td><td>*</td><td>=3*4 ou =A1*B1</td><td>12</td></tr>
+      <tr><td>Divisão</td><td>/</td><td>=20/4 ou =A1/B1</td><td>5</td></tr>
+    </table>
+
+    <div class="tip-box">
+      <strong>💡 Usando células nas fórmulas:</strong> Em vez de digitar os números diretamente, use o endereço da célula (ex: =A2+A3). Assim, se você mudar o valor na célula, o resultado se atualiza sozinho!
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">📐 Funções prontas — mais fácil ainda!</h3>
+    <p style="font-size:.88rem; color:var(--text-muted); line-height:1.7; margin-bottom:.75rem;">
+      Funções são fórmulas prontas que o Excel já sabe fazer. As mais usadas são:
+    </p>
+
+    <div class="recap-grid">
+      <div class="recap-item">
+        <div class="ri-icon">➕</div>
+        <div class="ri-body">
+          <div class="ri-title">=SOMA(A1:A5)</div>
+          <div class="ri-desc">Soma todos os valores de A1 até A5</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">📊</div>
+        <div class="ri-body">
+          <div class="ri-title">=MÉDIA(A1:A5)</div>
+          <div class="ri-desc">Calcula a média dos valores de A1 até A5</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">⬆️</div>
+        <div class="ri-body">
+          <div class="ri-title">=MÁXIMO(A1:A5)</div>
+          <div class="ri-desc">Encontra o maior valor do intervalo</div>
+        </div>
+      </div>
+      <div class="recap-item">
+        <div class="ri-icon">⬇️</div>
+        <div class="ri-body">
+          <div class="ri-title">=MÍNIMO(A1:A5)</div>
+          <div class="ri-desc">Encontra o menor valor do intervalo</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">🔢 Entendendo o "A1:A5"</h3>
+    <div class="highlight-box">
+      <strong>Os dois pontos ( : ) significam "até".</strong><br>
+      <strong>=SOMA(A1:A5)</strong> significa: "some de A1 <em>até</em> A5" — ou seja, A1, A2, A3, A4 e A5.<br>
+      É mais rápido do que digitar =A1+A2+A3+A4+A5!
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">📝 Como digitar uma fórmula — passo a passo</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Clique na célula onde quer o resultado</div>
+          <div class="step-desc">Por exemplo, clique em B7 para colocar o total da coluna B.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Digite = (igual)</div>
+          <div class="step-desc">O Excel já sabe que você vai digitar uma fórmula ou função.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Digite SOMA( e selecione o intervalo</div>
+          <div class="step-desc">Exemplo: =SOMA( e depois clique e arraste de B2 até B6. O Excel preenche o endereço!</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Feche o parêntese e pressione Enter</div>
+          <div class="step-desc">Digite ) e pressione Enter. O resultado aparece na hora!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      <strong>⚠️ Erro #VALOR!:</strong> Se aparecer <em>#VALOR!</em> na célula, é porque você tentou fazer uma conta com texto. Verifique se as células têm números — não texto com letras misturadas.
+    </div>
+
+    <h3 class="quiz-title">🧩 Quiz — Fórmulas</h3>
+
+    <p class="quiz-q">1. Por onde toda fórmula do Excel deve começar?</p>
+    <div class="quiz-options">
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">A</span> Com uma letra</div>
+      <div class="quiz-option" onclick="answer(this, true)"><span class="opt-letter">B</span> Com o sinal = (igual)</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">C</span> Com um número</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">D</span> Com um +</div>
+    </div>
+
+    <p class="quiz-q">2. O que faz a fórmula =SOMA(B2:B6)?</p>
+    <div class="quiz-options">
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">A</span> Calcula a média de B2 até B6</div>
+      <div class="quiz-option" onclick="answer(this, true)"><span class="opt-letter">B</span> Soma todos os valores de B2 até B6</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">C</span> Multiplica B2 por B6</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">D</span> Apaga os valores de B2 a B6</div>
+    </div>
+
+    <p class="quiz-q">3. No Excel, qual símbolo é usado para multiplicação?</p>
+    <div class="quiz-options">
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">A</span> ×</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">B</span> x</div>
+      <div class="quiz-option" onclick="answer(this, true)"><span class="opt-letter">C</span> *</div>
+      <div class="quiz-option" onclick="answer(this, false)"><span class="opt-letter">D</span> •</div>
+    </div>
+
+  </div>
+  <!-- fim momento 3 -->
+
+  <!-- ── MOMENTO 4: Exercício Final ── -->
+  <div id="momento4" class="section-card">
+    <div class="section-card-header">
+      <div class="section-card-icon icon-teal">📋</div>
+      <div class="section-card-title">
+        <h2>Momento 4 — Exercício: Minha Primeira Planilha</h2>
+        <div class="time-badge">⏰ 15h50 – 17h &nbsp;·&nbsp; 70 minutos</div>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag">Exercício</span>
+      <span class="tag">Planilha</span>
+      <span class="tag">SOMA</span>
+      <span class="tag">Formatação</span>
+    </div>
+
+    <p style="font-size:.88rem; color:var(--text-muted); line-height:1.7; margin-bottom:1rem;">
+      Agora é a hora de colocar tudo em prática! Vamos criar juntas uma planilha de gastos do mês — algo útil para usar em casa depois do curso.
+    </p>
+
+    <div class="highlight-box">
+      <strong>🎯 Objetivo:</strong> Criar uma planilha com os gastos do mês, calcular o total com a função SOMA, deixar o cabeçalho em destaque e salvar o arquivo.
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">📋 O que vamos criar</h3>
+    <table class="compare-table">
+      <tr>
+        <th>Célula</th><th>Coluna A — Item</th><th>Coluna B — Valor (R$)</th>
+      </tr>
+      <tr><td>Linha 1</td><td><strong>Item</strong> (cabeçalho)</td><td><strong>Valor (R$)</strong> (cabeçalho)</td></tr>
+      <tr><td>Linha 2</td><td>Aluguel</td><td>600,00</td></tr>
+      <tr><td>Linha 3</td><td>Mercado</td><td>350,00</td></tr>
+      <tr><td>Linha 4</td><td>Luz</td><td>85,00</td></tr>
+      <tr><td>Linha 5</td><td>Água</td><td>40,00</td></tr>
+      <tr><td>Linha 6</td><td>Internet</td><td>99,00</td></tr>
+      <tr><td>Linha 7</td><td>Transporte</td><td>120,00</td></tr>
+      <tr><td>Linha 8</td><td>Farmácia</td><td>75,00</td></tr>
+      <tr><td>Linha 9</td><td><strong>TOTAL</strong></td><td><strong>=SOMA(B2:B8)</strong></td></tr>
+    </table>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">🧪 Passo a passo completo</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Abra o Excel e crie um arquivo novo</div>
+          <div class="step-desc">Menu Iniciar → Excel → Pasta de Trabalho em Branco.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Digite os cabeçalhos na linha 1</div>
+          <div class="step-desc">Célula A1: <em>Item</em> &nbsp;|&nbsp; Célula B1: <em>Valor (R$)</em>. Pressione Tab para ir de A1 para B1.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Preencha os itens e valores (linhas 2 a 8)</div>
+          <div class="step-desc">Use os dados da tabela acima, ou coloque os seus próprios gastos! Lembre: vírgula para decimais.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Na célula A9 escreva TOTAL</div>
+          <div class="step-desc">Pressione Tab para ir para B9.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Na célula B9 digite a fórmula: =SOMA(B2:B8)</div>
+          <div class="step-desc">Pressione Enter. O total aparece automaticamente!</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="step-title">Formate o cabeçalho em negrito</div>
+          <div class="step-desc">Selecione A1:B1 (clique em A1 e arraste até B1). Pressione <kbd style="background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 5px;font-size:.8em;font-weight:700;">Ctrl</kbd>+<kbd style="background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 5px;font-size:.8em;font-weight:700;">N</kbd> para negrito.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <div class="step-title">Também formate a linha TOTAL em negrito</div>
+          <div class="step-desc">Selecione A9:B9 e pressione <kbd style="background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 5px;font-size:.8em;font-weight:700;">Ctrl</kbd>+<kbd style="background:#f1f5f9;border:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;border-radius:4px;padding:1px 5px;font-size:.8em;font-weight:700;">N</kbd>.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">8</div>
+        <div class="step-body">
+          <div class="step-title">Salve o arquivo</div>
+          <div class="step-desc">Ctrl+S → escolha sua pasta → nomeie como <em>gastos_marco_[seu_nome].xlsx</em>.</div>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:.88rem; font-weight:700; margin:1.25rem 0 .6rem;">🏆 Desafio extra (para quem terminar antes)</h3>
+    <div class="tip-box">
+      <strong>Tente fazer isso:</strong><br>
+      1. Adicione uma <strong>Coluna C</strong> com o título <em>Necessário?</em><br>
+      2. Para cada item, escreva <em>Sim</em> ou <em>Não</em><br>
+      3. Em A11 escreva <em>Média dos gastos</em> e em B11 coloque <strong>=MÉDIA(B2:B8)</strong><br>
+      4. Veja qual é o maior gasto: em B12 coloque <strong>=MÁXIMO(B2:B8)</strong>
+    </div>
+
+    <div class="tip-box">
+      <strong>🎉 Parabéns!</strong> Você criou sua primeira planilha no Excel — com dados reais, fórmula automática e formatação. Isso é algo que muita gente usa no dia a dia para organizar a vida financeira!
+    </div>
+
+  </div>
+  <!-- fim momento 4 -->
+
+  <!-- NAV FOOTER -->
+  <div class="nav-footer">
+    <a href="dia2.html" class="nav-link">← Dia 2 — Windows e Arquivos</a>
+    <a href="index.html" class="nav-link">📊 Dashboard</a>
+    <span class="nav-link disabled">Dia 4 — Em breve →</span>
+  </div>
+
+</div><!-- /wrapper -->
+
+<!-- Slide HUD -->
+<div class="slide-hud" id="slideHud">
+  <button class="hud-btn" id="prevSlide" title="Anterior">◀</button>
+  <span class="hud-counter" id="slideCounter">1 / 1</span>
+  <button class="hud-btn" id="nextSlide" title="Próximo">▶</button>
+  <button class="hud-exit" id="exitSlide">✕ Sair</button>
+</div>
+
+<script>
+  const darkBtn = document.getElementById('darkToggleBtn');
+  if (localStorage.getItem('darkMode') === '1') {
+    document.body.classList.add('dark-mode');
+    darkBtn.textContent = '☀️';
+  }
+  darkBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const on = document.body.classList.contains('dark-mode');
+    darkBtn.textContent = on ? '☀️' : '🌙';
+    localStorage.setItem('darkMode', on ? '1' : '0');
+  });
+
+  let fontSize = parseFloat(localStorage.getItem('fontSize') || '16');
+  document.documentElement.style.fontSize = fontSize + 'px';
+  document.getElementById('fontInc').addEventListener('click', () => {
+    fontSize = Math.min(fontSize + 1, 22);
+    document.documentElement.style.fontSize = fontSize + 'px';
+    localStorage.setItem('fontSize', fontSize);
+  });
+  document.getElementById('fontDec').addEventListener('click', () => {
+    fontSize = Math.max(fontSize - 1, 13);
+    document.documentElement.style.fontSize = fontSize + 'px';
+    localStorage.setItem('fontSize', fontSize);
+  });
+
+  const slides = () => [...document.querySelectorAll('.section-card:not(.no-slide)')];
+  let cur = 0;
+  function showSlide(n) {
+    const s = slides();
+    s.forEach(el => el.classList.remove('slide-visible'));
+    cur = Math.max(0, Math.min(n, s.length - 1));
+    if (s[cur]) s[cur].classList.add('slide-visible');
+    document.getElementById('slideCounter').textContent = `${cur + 1} / ${s.length}`;
+  }
+  document.getElementById('slideToggleBtn').addEventListener('click', () => {
+    document.body.classList.add('slide-active');
+    cur = 0; showSlide(0);
+  });
+  document.getElementById('exitSlide').addEventListener('click', () => {
+    document.body.classList.remove('slide-active');
+    slides().forEach(el => el.classList.remove('slide-visible'));
+  });
+  document.getElementById('nextSlide').addEventListener('click', () => showSlide(cur + 1));
+  document.getElementById('prevSlide').addEventListener('click', () => showSlide(cur - 1));
+  document.addEventListener('keydown', e => {
+    if (!document.body.classList.contains('slide-active')) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') showSlide(cur + 1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   showSlide(cur - 1);
+    if (e.key === 'Escape') document.getElementById('exitSlide').click();
+  });
+
+  function answer(el, correct) {
+    const group = el.closest('.quiz-options');
+    if (group.querySelector('.correct, .wrong')) return;
+    group.querySelectorAll('.quiz-option').forEach(opt => { opt.style.pointerEvents = 'none'; });
+    el.classList.add(correct ? 'correct' : 'wrong');
+    if (!correct) {
+      group.querySelectorAll('.quiz-option').forEach(opt => {
+        if (opt.onclick.toString().includes('true')) opt.classList.add('correct');
+      });
+    }
+  }
+</script>
+</body>
+</html>
