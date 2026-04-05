@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Exercícios — Dia 4 · Empregabilidade Digital · Mulheres 1000</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+  :root {
+    --accent: #3b82f6;
+    --accent2: #7c3aed;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* ── TELA ── */
+  .page-wrap {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.1);
+    overflow: hidden;
+  }
+
+  .print-btn-bar {
+    background: #f1f5f9;
+    padding: .75rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: .5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .print-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: .45rem 1.2rem;
+    font-size: .82rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .print-btn:hover { background: #2563eb; }
+
+  .sheet { padding: 2.5rem 2.5rem 3rem; }
+
+  /* ── CABEÇALHO ── */
+  .header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 1rem;
+    margin-bottom: 1.75rem;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .header h1 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .header h1 span { color: var(--accent); }
+  .header-meta {
+    font-size: .72rem;
+    color: var(--muted);
+    margin-top: .3rem;
+  }
+  .header-badge {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-size: .7rem;
+    font-weight: 700;
+    padding: .3rem .85rem;
+    border-radius: 20px;
+    white-space: nowrap;
+    align-self: flex-start;
+  }
+
+  .student-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem 2rem;
+    margin-top: 1.1rem;
+    padding: .75rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .student-field { font-size: .75rem; color: var(--muted); }
+  .student-field span {
+    display: block;
+    border-bottom: 1px solid #94a3b8;
+    min-height: 1.4rem;
+    margin-top: .2rem;
+  }
+
+  /* ── BLOCOS ── */
+  .block { margin-bottom: 2rem; }
+  .block-header {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    border-radius: 8px;
+    padding: .55rem 1rem;
+    margin-bottom: 1.1rem;
+  }
+  .block-icon { font-size: 1.1rem; }
+  .block-title { font-size: .88rem; font-weight: 700; }
+  .block-sub { font-size: .7rem; opacity: .85; margin-top: 1px; }
+
+  /* ── QUESTÕES ── */
+  .q { margin-bottom: 1.25rem; }
+  .q-num {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-size: .68rem;
+    font-weight: 700;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    margin-right: .4rem;
+    flex-shrink: 0;
+  }
+  .q-text {
+    font-size: .84rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: .55rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+  }
+  .q-type {
+    font-size: .65rem;
+    font-weight: 600;
+    color: var(--muted);
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: .1rem .45rem;
+    margin-left: .5rem;
+    white-space: nowrap;
+  }
+
+  /* múltipla escolha */
+  .options { display: flex; flex-direction: column; gap: .35rem; padding-left: 1.6rem; }
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .8rem;
+    color: var(--text);
+  }
+  .opt-circle {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 1.5px solid #94a3b8;
+    flex-shrink: 0;
+  }
+
+  /* linha de resposta */
+  .answer-line {
+    border-bottom: 1px solid #94a3b8;
+    min-height: 1.4rem;
+    margin: .3rem 0 .3rem 1.6rem;
+    width: calc(100% - 1.6rem);
+  }
+  .answer-lines { padding-left: 1.6rem; display: flex; flex-direction: column; gap: .5rem; }
+  .answer-lines .answer-line { margin: 0; width: 100%; }
+
+  /* verdadeiro/falso */
+  .vf-row {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .8rem;
+    padding-left: 1.6rem;
+    margin-bottom: .25rem;
+  }
+  .vf-box {
+    display: flex;
+    gap: .75rem;
+    font-size: .78rem;
+    font-weight: 600;
+  }
+  .vf-opt {
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+  }
+  .vf-square {
+    width: 13px; height: 13px;
+    border: 1.5px solid #94a3b8;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* completar */
+  .fill-blank {
+    font-size: .82rem;
+    padding-left: 1.6rem;
+    line-height: 2;
+  }
+  .blank {
+    display: inline-block;
+    border-bottom: 1.5px solid #94a3b8;
+    min-width: 80px;
+    margin: 0 3px;
+  }
+
+  /* ── GABARITO ── */
+  .gabarito {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 2px dashed var(--border);
+  }
+  .gabarito-header {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: .75rem;
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+  }
+  .gabarito-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: .4rem;
+  }
+  .gab-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .3rem .5rem;
+    font-size: .75rem;
+    text-align: center;
+  }
+  .gab-item strong { color: var(--accent); display: block; font-size: .68rem; }
+
+  /* ── IMPRESSÃO ── */
+  @media print {
+    body { background: #fff; font-size: 11.5px; }
+    .print-btn-bar { display: none; }
+    .page-wrap { box-shadow: none; border-radius: 0; margin: 0; max-width: 100%; }
+    .sheet { padding: 1.5cm 2cm 2cm; }
+    .block { break-inside: avoid; }
+    .q { break-inside: avoid; }
+    @page { margin: 1cm; size: A4; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="print-btn-bar">
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+  </div>
+
+  <div class="sheet">
+
+    <!-- CABEÇALHO -->
+    <div class="header">
+      <div class="header-top">
+        <div>
+          <h1>Lista de Exercícios — <span>Dia 4</span></h1>
+          <div class="header-meta">💼 Empregabilidade Digital · Mulheres 1000 · IFRN João Câmara · 06 de abril de 2025</div>
+        </div>
+        <div class="header-badge">Prof. César Azevedo</div>
+      </div>
+      <div class="student-box">
+        <div class="student-field">Nome da aluna<span></span></div>
+        <div class="student-field">Data<span></span></div>
+      </div>
+    </div>
+
+    <!-- BLOCO 1: REVISÃO GERAL -->
+    <div class="block">
+      <div class="block-header">
+        <div class="block-icon">🔄</div>
+        <div>
+          <div class="block-title">Bloco 1 — Revisão geral dos 3 dias</div>
+          <div class="block-sub">Hardware · Windows · Excel</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">1</span>O que é a memória RAM do computador?<span class="q-type">Múltipla escolha</span></div>
+        <div class="options">
+          <div class="opt"><div class="opt-circle"></div> É onde guardamos os arquivos permanentemente</div>
+          <div class="opt"><div class="opt-circle"></div> É como a mesa de trabalho — guarda o que o computador está usando agora</div>
+          <div class="opt"><div class="opt-circle"></div> É a tela do computador</div>
+          <div class="opt"><div class="opt-circle"></div> É o programa para navegar na internet</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">2</span>Para criar uma nova pasta no Windows, devo...<span class="q-type">Múltipla escolha</span></div>
+        <div class="options">
+          <div class="opt"><div class="opt-circle"></div> Clicar duas vezes com o botão esquerdo na área de trabalho</div>
+          <div class="opt"><div class="opt-circle"></div> Clicar com o botão direito → Novo → Pasta</div>
+          <div class="opt"><div class="opt-circle"></div> Pressionar a tecla Delete</div>
+          <div class="opt"><div class="opt-circle"></div> Abrir o Bloco de Notas e digitar o nome</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">3</span>Complete as frases:<span class="q-type">Complete</span></div>
+        <div class="fill-blank">
+          a) A CPU é o <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> do computador, pois processa todas as informações.<br>
+          b) Para desfazer uma ação no computador, uso o atalho <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.<br>
+          c) No Excel, cada quadrinho da planilha é chamado de <span class="blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>.
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">4</span>Marque Verdadeiro (V) ou Falso (F):<span class="q-type">V ou F</span></div>
+        <div class="vf-row">
+          <div class="vf-box"><div class="vf-opt"><div class="vf-square"></div>V</div><div class="vf-opt"><div class="vf-square"></div>F</div></div>
+          O Excel só serve para empresas e contadores.
+        </div>
+        <div class="vf-row">
+          <div class="vf-box"><div class="vf-opt"><div class="vf-square"></div>V</div><div class="vf-opt"><div class="vf-square"></div>F</div></div>
+          Para renomear um arquivo, clico nele com o botão direito e escolho "Renomear".
+        </div>
+        <div class="vf-row">
+          <div class="vf-box"><div class="vf-opt"><div class="vf-square"></div>V</div><div class="vf-opt"><div class="vf-square"></div>F</div></div>
+          No Excel, uma fórmula sempre começa com o sinal de igual (=).
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCO 2: CURRÍCULO -->
+    <div class="block">
+      <div class="block-header">
+        <div class="block-icon">📄</div>
+        <div>
+          <div class="block-title">Bloco 2 — Currículo no Word</div>
+          <div class="block-sub">Estrutura · Formatação · Boas práticas</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">5</span>Quais informações devem estar em um currículo? (marque todas que se aplicam)<span class="q-type">Múltipla escolha</span></div>
+        <div class="options">
+          <div class="opt"><div class="opt-circle"></div> Nome completo e telefone</div>
+          <div class="opt"><div class="opt-circle"></div> Objetivo profissional</div>
+          <div class="opt"><div class="opt-circle"></div> Nome dos filhos e religião</div>
+          <div class="opt"><div class="opt-circle"></div> Escolaridade e cursos</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">6</span>O objetivo profissional no currículo serve para...<span class="q-type">Múltipla escolha</span></div>
+        <div class="options">
+          <div class="opt"><div class="opt-circle"></div> Listar todos os empregos anteriores em detalhes</div>
+          <div class="opt"><div class="opt-circle"></div> Descrever sua personalidade e gostos pessoais</div>
+          <div class="opt"><div class="opt-circle"></div> Mostrar qual vaga ou área você está buscando</div>
+          <div class="opt"><div class="opt-circle"></div> Apresentar o histórico escolar completo</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">7</span>Escreva um exemplo de objetivo profissional para uma vaga de <strong>atendente de loja</strong>:<span class="q-type">Aberta</span></div>
+        <div class="answer-lines">
+          <div class="answer-line"></div>
+          <div class="answer-line"></div>
+          <div class="answer-line"></div>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">8</span>Para salvar um documento do Word como PDF, o caminho correto é:<span class="q-type">Múltipla escolha</span></div>
+        <div class="options">
+          <div class="opt"><div class="opt-circle"></div> Editar → Copiar → Colar</div>
+          <div class="opt"><div class="opt-circle"></div> Arquivo → Salvar Como → PDF</div>
+          <div class="opt"><div class="opt-circle"></div> Inserir → Imagem → Salvar</div>
+          <div class="opt"><div class="opt-circle"></div> Exibir → Zoom → Exportar</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCO 3: VAGAS -->
+    <div class="block">
+      <div class="block-header">
+        <div class="block-icon">🔍</div>
+        <div>
+          <div class="block-title">Bloco 3 — Vagas de emprego online</div>
+          <div class="block-sub">Indeed · Catho · InfoJobs · Boas práticas</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">9</span>Quais destes são sites de busca de empregos?<span class="q-type">Múltipla escolha</span></div>
+        <div class="options">
+          <div class="opt"><div class="opt-circle"></div> Indeed e Catho</div>
+          <div class="opt"><div class="opt-circle"></div> YouTube e Netflix</div>
+          <div class="opt"><div class="opt-circle"></div> WhatsApp e Instagram</div>
+          <div class="opt"><div class="opt-circle"></div> Google Drive e OneDrive</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">10</span>Marque Verdadeiro (V) ou Falso (F):<span class="q-type">V ou F</span></div>
+        <div class="vf-row">
+          <div class="vf-box"><div class="vf-opt"><div class="vf-square"></div>V</div><div class="vf-opt"><div class="vf-square"></div>F</div></div>
+          O Indeed cobra para quem busca emprego.
+        </div>
+        <div class="vf-row">
+          <div class="vf-box"><div class="vf-opt"><div class="vf-square"></div>V</div><div class="vf-opt"><div class="vf-square"></div>F</div></div>
+          Um perfil completo no site de vagas aumenta as chances de ser chamado.
+        </div>
+        <div class="vf-row">
+          <div class="vf-box"><div class="vf-opt"><div class="vf-square"></div>V</div><div class="vf-opt"><div class="vf-square"></div>F</div></div>
+          O alerta de vagas avisa quando surgem novas oportunidades do meu interesse.
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">11</span>Para que serve o alerta de vagas em sites como o Indeed?<span class="q-type">Múltipla escolha</span></div>
+        <div class="options">
+          <div class="opt"><div class="opt-circle"></div> Para bloquear candidatos de outras cidades</div>
+          <div class="opt"><div class="opt-circle"></div> Para receber automaticamente novas vagas do meu interesse</div>
+          <div class="opt"><div class="opt-circle"></div> Para enviar meu currículo para todas as empresas ao mesmo tempo</div>
+          <div class="opt"><div class="opt-circle"></div> Para saber quantas pessoas se candidataram à mesma vaga</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="q-text"><span class="q-num">12</span>Cite duas dicas importantes para se destacar ao se candidatar a uma vaga online:<span class="q-type">Aberta</span></div>
+        <div class="answer-lines">
+          <div class="answer-line"></div>
+          <div class="answer-line"></div>
+          <div class="answer-line"></div>
+          <div class="answer-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GABARITO -->
+    <div class="gabarito">
+      <div class="gabarito-header">✂️ &nbsp;Gabarito — recorte antes de entregar</div>
+      <div class="gabarito-grid">
+        <div class="gab-item"><strong>Q1</strong> B</div>
+        <div class="gab-item"><strong>Q2</strong> B</div>
+        <div class="gab-item"><strong>Q3</strong> Ver abaixo</div>
+        <div class="gab-item"><strong>Q4</strong> F · V · V</div>
+        <div class="gab-item"><strong>Q5</strong> A, B, D</div>
+        <div class="gab-item"><strong>Q6</strong> C</div>
+        <div class="gab-item"><strong>Q7</strong> Aberta</div>
+        <div class="gab-item"><strong>Q8</strong> B</div>
+        <div class="gab-item"><strong>Q9</strong> A</div>
+        <div class="gab-item"><strong>Q10</strong> F · V · V</div>
+        <div class="gab-item"><strong>Q11</strong> B</div>
+        <div class="gab-item"><strong>Q12</strong> Aberta</div>
+      </div>
+      <div style="font-size:.72rem;color:var(--muted);margin-top:.75rem;padding-left:.25rem;">
+        <strong>Q3:</strong> a) cérebro &nbsp;·&nbsp; b) Ctrl+Z &nbsp;·&nbsp; c) célula
+      </div>
+    </div>
+
+  </div><!-- /sheet -->
+</div><!-- /page-wrap -->
+
+</body>
+</html>
