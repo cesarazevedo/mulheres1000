@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dia 4 · M4 — Encerramento e certificado · Mulheres 1000</title>
+<style>
+  :root{--bg:#f0f4f8;--card:#fff;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0;--accent:#3b82f6;--accent2:#8b5cf6;--done:#10b981;--tag-bg:#eff6ff;--tag-text:#1d4ed8;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 6px rgba(0,0,0,.07)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+  .topbar{background:var(--card);border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--shadow)}
+  .topbar-left{display:flex;align-items:center;gap:.75rem}
+  .topbar-right{display:flex;align-items:center;gap:.6rem}
+  .back-btn{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--accent);text-decoration:none;background:var(--tag-bg);border:1px solid #bfdbfe;border-radius:8px;padding:.3rem .7rem;font-weight:600;transition:background .15s}
+  .back-btn:hover{background:#dbeafe}
+  .topbar-title{font-size:.9rem;font-weight:600;color:var(--text-muted)}
+  .topbar-badge{font-size:.68rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:.2rem .6rem;border-radius:20px}
+  .slide-toggle{display:flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:700;padding:.35rem .85rem;border:2px solid var(--accent);border-radius:8px;background:transparent;color:var(--accent);cursor:pointer;transition:all .2s}
+  .slide-toggle:hover{background:var(--accent);color:#fff}
+  .font-controls{display:flex;gap:4px}
+  .font-btn{padding:.3rem .55rem;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--accent);font-weight:700;font-size:.78rem;cursor:pointer}
+  .font-btn:hover{background:var(--tag-bg);border-color:var(--accent)}
+  .dark-toggle{padding:.3rem .5rem;border:1px solid var(--border);border-radius:6px;background:var(--card);font-size:1rem;cursor:pointer;line-height:1}
+  body.dark-mode{--bg:#0f172a;--card:#1e293b;--text:#e2e8f0;--text-muted:#94a3b8;--border:#334155;--tag-bg:#1e3a5f;--tag-text:#93c5fd;--shadow:0 1px 3px rgba(0,0,0,.3)}
+  body.dark-mode .momento-hero{background:linear-gradient(135deg,#1e3a8a 0%,#5b21b6 100%)}
+  body.dark-mode .compare-table th{background:#1e3a5f}
+  body.dark-mode .compare-table tr:nth-child(even) td{background:#1a2535}
+  body.dark-mode .accent-card{background:#1e293b;border-color:#334155}
+  body.dark-mode .slide-toggle{border-color:#60a5fa;color:#60a5fa}
+  body.dark-mode .slide-toggle:hover{background:#60a5fa;color:#0f172a}
+  body.dark-mode .font-btn{background:#334155;border-color:#475569;color:#93c5fd}
+  body.dark-mode .dark-toggle{background:#334155;border-color:#475569}
+  body.dark-mode .nav-link{background:#1e293b}
+  body.dark-mode .nav-link:hover{background:#243148}
+  body.dark-mode .highlight-box{background:#1e3a5f;border-color:#1e40af;color:#93c5fd}
+  body.dark-mode .tip-box{background:#052e16;border-color:#166534;color:#86efac}
+  body.dark-mode .warn-box{background:#431407;border-color:#9a3412;color:#fdba74}
+  body.dark-mode .recap-item,.dark-mode .step{background:#1a2535}
+  body.slide-active{overflow:hidden}
+  body.slide-active .topbar,body.slide-active .nav-footer,body.slide-active .momento-hero{display:none}
+  body.slide-active .wrapper{max-width:100%;margin:0;padding:0;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1000;background:var(--bg)}
+  body.slide-active .section-card{display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:85vw;max-width:1050px;max-height:85vh;overflow-y:auto;padding:48px 56px;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.12);animation:slideIn .32s ease;margin-bottom:0}
+  body.slide-active .section-card.slide-visible{display:block}
+  body.slide-active .section-card h2{font-size:2em;margin-bottom:1.1rem}
+  body.slide-active .section-card p{font-size:1.2em;line-height:1.75}
+  @keyframes slideIn{from{opacity:0;transform:translate(-50%,-50%) scale(.96)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+  .slide-hud{display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:1001;background:var(--card);padding:10px 24px;border-radius:50px;box-shadow:0 4px 24px rgba(0,0,0,.14);align-items:center;gap:18px;border:1px solid var(--border)}
+  body.slide-active .slide-hud{display:flex}
+  .hud-btn{background:none;border:none;cursor:pointer;font-size:1.3rem;padding:4px 8px;border-radius:8px;color:var(--text)}
+  .hud-counter{font-size:.82rem;font-weight:600;color:var(--text-muted);min-width:56px;text-align:center}
+  .hud-exit{font-size:.75rem;font-weight:700;color:var(--accent);background:var(--tag-bg);border:1px solid #bfdbfe;border-radius:20px;padding:4px 14px;cursor:pointer}
+  .wrapper{max-width:860px;margin:0 auto;padding:2rem 1.5rem}
+  .momento-hero{background:linear-gradient(135deg,#1d4ed8 0%,#7c3aed 100%);border-radius:16px;padding:1.75rem 2rem;color:#fff;margin-bottom:1.5rem}
+  .momento-meta{font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;background:rgba(255,255,255,.18);display:inline-block;padding:.25rem .75rem;border-radius:20px;margin-bottom:.6rem}
+  .momento-num{font-size:.78rem;color:rgba(255,255,255,.75);font-weight:600;margin-bottom:.3rem}
+  .momento-hero h1{font-size:1.7rem;font-weight:800;margin-bottom:.4rem;line-height:1.2}
+  .momento-time{font-size:.82rem;color:rgba(255,255,255,.8);margin-bottom:.7rem}
+  .momento-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+  .momento-tags .tag{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)}
+  .section-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;margin-bottom:1.5rem;box-shadow:var(--shadow)}
+  .section-card-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+  .section-card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+  .icon-blue{background:#dbeafe}.icon-purple{background:#ede9fe}.icon-green{background:#dcfce7}.icon-orange{background:#ffedd5}
+  .section-card-title h2{font-size:1rem;font-weight:700;color:var(--text)}
+  .time-badge{font-size:.68rem;color:var(--text-muted);font-weight:500;margin-top:2px}
+  .highlight-box{background:#eff6ff;border:1px solid #bfdbfe;border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.85rem;color:#1d4ed8;line-height:1.6}
+  .highlight-box strong{color:#1e40af}
+  .tip-box{background:#f0fdf4;border:1px solid #bbf7d0;border-left:4px solid var(--done);border-radius:0 10px 10px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.85rem;color:#166534;line-height:1.6}
+  .warn-box{background:#fff7ed;border:1px solid #fed7aa;border-left:4px solid #f97316;border-radius:0 10px 10px 0;padding:.9rem 1.1rem;margin:1rem 0;font-size:.85rem;color:#9a3412;line-height:1.6}
+  .steps{display:flex;flex-direction:column;gap:.85rem;margin:1.1rem 0}
+  .step{display:flex;gap:.85rem;align-items:flex-start;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem}
+  .step-num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .step-body{flex:1}.step-title{font-size:.84rem;font-weight:700;margin-bottom:3px}.step-desc{font-size:.76rem;color:var(--text-muted);line-height:1.5}
+  .recap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin:1rem 0}
+  .recap-item{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;display:flex;align-items:center;gap:.75rem}
+  .ri-icon{font-size:1.3rem;flex-shrink:0}.ri-title{font-weight:700;font-size:.83rem}.ri-desc{font-size:.72rem;color:var(--text-muted);margin-top:1px}
+  .tag-row{display:flex;flex-wrap:wrap;gap:.4rem;margin:.75rem 0}
+  .tag{font-size:.68rem;background:var(--tag-bg);color:var(--tag-text);padding:.15rem .55rem;border-radius:20px;font-weight:500;border:1px solid #bfdbfe}
+  .compare-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.84rem;border-radius:10px;overflow:hidden;border:1px solid var(--border)}
+  .compare-table th{background:#1e3a5f;color:#e2e8f0;padding:.65rem 1rem;text-align:left;font-size:.78rem;font-weight:600}
+  .compare-table td{padding:.6rem 1rem;border-bottom:1px solid var(--border);color:var(--text)}
+  .compare-table tr:last-child td{border-bottom:none}
+  .compare-table tr:nth-child(even) td{background:#f8fafc}
+  .compare-table td:first-child{font-weight:600}
+  .depoimento-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:.75rem}
+  .depoimento-q{font-size:.85rem;font-weight:600;color:var(--text);line-height:1.5;padding-left:1rem;border-left:3px solid var(--accent2)}
+  .nav-footer{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);gap:.75rem}
+  .nav-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:600;color:var(--accent);text-decoration:none;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.5rem 1rem;box-shadow:var(--shadow);transition:background .15s}
+  .nav-link:hover{background:#eff6ff}
+  @media(max-width:680px){.recap-grid{grid-template-columns:1fr}.momento-hero h1{font-size:1.4rem}.wrapper{padding:1rem}.nav-footer{flex-direction:column;align-items:stretch}.nav-footer .nav-link{text-align:center;justify-content:center}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topbar-left"><a href="index.html" class="back-btn">← Dashboard</a><span class="topbar-title">Dia 4 — Empregabilidade Digital</span></div><div class="topbar-right"><span class="topbar-badge">06 de abril · 13h–17h</span><div class="font-controls"><button class="font-btn" id="fontDec">A−</button><button class="font-btn" id="fontInc">A+</button></div><button class="dark-toggle" id="darkToggleBtn">🌙</button><button class="slide-toggle" id="slideToggleBtn">📺 Modo Slide</button></div></div>
+
+<div class="wrapper">
+<div class="momento-hero">
+  <div class="momento-meta">Dia 4 · 06 de abril · Mulheres 1000 · IFRN João Câmara</div>
+  <div class="momento-num">Momento 4 de 4</div>
+  <h1>🏆 Encerramento e certificado</h1>
+  <div class="momento-time">⏰ 15h50 – 17h · 70 minutos</div>
+  <div class="momento-tags"><span class="tag">Encerramento</span><span class="tag">Certificado</span><span class="tag">Próximos Passos</span></div>
+</div>
+
+<div class="section-card">
+  <div class="section-card-header"><div class="section-card-icon icon-blue">📚</div><div class="section-card-title"><h2>O que você aprendeu em 4 dias</h2><div class="time-badge">Uma jornada completa</div></div></div>
+  <p style="font-size:.88rem;color:var(--text-muted);line-height:1.7;margin-bottom:1rem;">Em apenas 4 encontros, você percorreu um caminho incrível. Veja tudo que aprendeu:</p>
+  <div class="recap-grid">
+    <div class="recap-item"><div class="ri-icon">🖥️</div><div><div class="ri-title">Dia 1</div><div class="ri-desc">Hardware, mouse e teclado — entender o computador por dentro e por fora.</div></div></div>
+    <div class="recap-item"><div class="ri-icon">📁</div><div><div class="ri-title">Dia 2</div><div class="ri-desc">Windows, pastas e internet — organizar arquivos e navegar na rede com confiança.</div></div></div>
+    <div class="recap-item"><div class="ri-icon">📊</div><div><div class="ri-title">Dia 3</div><div class="ri-desc">Excel básico e planilhas — criar tabelas, fórmulas e controlar gastos.</div></div></div>
+    <div class="recap-item"><div class="ri-icon">💼</div><div><div class="ri-title">Dia 4</div><div class="ri-desc">Currículo, vagas e empregabilidade — se apresentar e buscar oportunidades online.</div></div></div>
+  </div>
+  <div class="highlight-box"><strong>Você percorreu um caminho incrível.</strong> Essas habilidades fazem diferença na vida profissional e no dia a dia. Parabéns por cada passo dado!</div>
+</div>
+
+<div class="section-card">
+  <div class="section-card-header"><div class="section-card-icon icon-purple">🎓</div><div class="section-card-title"><h2>Onde continuar aprendendo — de graça</h2><div class="time-badge">Recursos gratuitos para continuar</div></div></div>
+  <p style="font-size:.88rem;color:var(--text-muted);line-height:1.7;margin-bottom:1rem;">Terminar o curso é apenas o começo! Veja onde você pode continuar aprendendo sem pagar nada:</p>
+  <table class="compare-table">
+    <thead><tr><th>Plataforma</th><th>O que tem</th><th>Como acessar</th></tr></thead>
+    <tbody>
+      <tr><td>YouTube</td><td>Tutoriais de Word, Excel, internet</td><td>youtube.com</td></tr>
+      <tr><td>Coursera</td><td>Cursos gratuitos com certificado</td><td>coursera.org</td></tr>
+      <tr><td>Google Ateliê Digital</td><td>Marketing e internet para negócios</td><td>atelierdigital.google</td></tr>
+      <tr><td>SENAI / SENAC</td><td>Cursos técnicos presenciais e online</td><td>senai.br / senac.br</td></tr>
+    </tbody>
+  </table>
+  <div class="tip-box"><strong>💡 Dica:</strong> procure no YouTube: <strong>"Excel para iniciantes"</strong>, <strong>"Word básico"</strong> — há centenas de vídeos gratuitos em português, explicados do zero!</div>
+</div>
+
+<div class="section-card">
+  <div class="section-card-header"><div class="section-card-icon icon-green">💬</div><div class="section-card-title"><h2>Roda de depoimentos</h2><div class="time-badge">Compartilhe sua experiência</div></div></div>
+  <p style="font-size:.88rem;color:var(--text-muted);line-height:1.7;margin-bottom:1rem;">Agora é a hora de cada uma compartilhar o que viveu neste curso. Não existe resposta certa — existe a sua experiência!</p>
+  <div class="depoimento-card"><div class="depoimento-q">O que você aprendeu que nunca sabia antes?</div></div>
+  <div class="depoimento-card"><div class="depoimento-q">O que você vai usar no dia a dia?</div></div>
+  <div class="depoimento-card"><div class="depoimento-q">O que você contaria para uma amiga sobre este curso?</div></div>
+  <div class="highlight-box"><strong>Cada resposta é uma conquista.</strong> Não existe resposta certa — existe a sua experiência. Falar sobre o que aprendemos ajuda a fixar e a inspirar outras pessoas.</div>
+</div>
+
+<div class="section-card">
+  <div class="section-card-header"><div class="section-card-icon icon-orange">🏅</div><div class="section-card-title"><h2>Certificado e próximos passos</h2><div class="time-badge">Celebração e continuidade</div></div></div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">Entrega do certificado de conclusão</div><div class="step-desc">Parabéns! Você concluiu o curso de Informática Básica do programa Mulheres 1000 — IFRN João Câmara.</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">Salve o certificado como PDF</div><div class="step-desc">Guarde uma cópia no seu e-mail e em uma pasta segura no computador. Assim você nunca perde!</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Mencione o curso no seu currículo</div><div class="step-desc">Adicione em "Cursos complementares": <strong>Informática Básica — IFRN João Câmara</strong>. Isso valoriza seu currículo!</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">Continue praticando</div><div class="step-desc">Abra o computador toda semana. Pratique o que aprendeu. Cada vez fica mais fácil e natural!</div></div></div>
+  </div>
+  <div class="tip-box"><strong>💡 Lembre-se:</strong> "A tecnologia muda, mas quem aprende a aprender nunca fica para trás."</div>
+  <div class="warn-box">🌟 <strong>Você chegou até aqui. Isso já é uma vitória!</strong> Muita gente tem medo de começar — você não só começou, como terminou. Orgulhe-se disso.</div>
+</div>
+
+<div class="nav-footer">
+  <a href="dia4-m3.html" class="nav-link">← Vagas de emprego</a>
+  <a href="index.html" class="nav-link">🏠 Finalizar Dia 4</a>
+</div>
+</div>
+
+<div class="slide-hud"><button class="hud-btn" id="prevSlide">◀</button><span class="hud-counter" id="slideCounter">1 / 1</span><button class="hud-btn" id="nextSlide">▶</button><button class="hud-exit" id="exitSlide">✕ Sair</button></div>
+
+<script>
+  const darkBtn=document.getElementById('darkToggleBtn');
+  if(localStorage.getItem('darkMode')==='1'){document.body.classList.add('dark-mode');darkBtn.textContent='☀️';}
+  darkBtn.addEventListener('click',()=>{document.body.classList.toggle('dark-mode');const on=document.body.classList.contains('dark-mode');darkBtn.textContent=on?'☀️':'🌙';localStorage.setItem('darkMode',on?'1':'0');});
+  let fs2=parseFloat(localStorage.getItem('fontSize')||'16');document.documentElement.style.fontSize=fs2+'px';
+  document.getElementById('fontInc').addEventListener('click',()=>{fs2=Math.min(fs2+1,22);document.documentElement.style.fontSize=fs2+'px';localStorage.setItem('fontSize',fs2);});
+  document.getElementById('fontDec').addEventListener('click',()=>{fs2=Math.max(fs2-1,13);document.documentElement.style.fontSize=fs2+'px';localStorage.setItem('fontSize',fs2);});
+  const getSl=()=>[...document.querySelectorAll('.section-card')];let cur=0;
+  function showSl(n){const s=getSl();s.forEach(e=>e.classList.remove('slide-visible'));cur=Math.max(0,Math.min(n,s.length-1));if(s[cur])s[cur].classList.add('slide-visible');document.getElementById('slideCounter').textContent=(cur+1)+' / '+s.length;}
+  document.getElementById('slideToggleBtn').addEventListener('click',()=>{document.body.classList.add('slide-active');cur=0;showSl(0);});
+  document.getElementById('exitSlide').addEventListener('click',()=>{document.body.classList.remove('slide-active');getSl().forEach(e=>e.classList.remove('slide-visible'));});
+  document.getElementById('nextSlide').addEventListener('click',()=>showSl(cur+1));
+  document.getElementById('prevSlide').addEventListener('click',()=>showSl(cur-1));
+  document.addEventListener('keydown',e=>{if(!document.body.classList.contains('slide-active'))return;if(e.key==='ArrowRight'||e.key==='ArrowDown')showSl(cur+1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')showSl(cur-1);if(e.key==='Escape')document.getElementById('exitSlide').click();});
+</script>
+</body>
+</html>
