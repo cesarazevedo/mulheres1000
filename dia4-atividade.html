@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Atividade Prática — Dia 4 · Mulheres 1000</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+  :root {
+    --accent: #3b82f6;
+    --accent2: #7c3aed;
+    --green: #10b981;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .page-wrap {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.1);
+    overflow: hidden;
+  }
+
+  .print-btn-bar {
+    background: #f1f5f9;
+    padding: .75rem 2rem;
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid var(--border);
+  }
+  .print-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: .45rem 1.2rem;
+    font-size: .82rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .print-btn:hover { background: #2563eb; }
+
+  .sheet { padding: 2.5rem 2.5rem 3rem; }
+
+  /* CABEÇALHO */
+  .header {
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 1.1rem;
+    margin-bottom: 1.75rem;
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: .9rem;
+  }
+  .header h1 { font-size: 1.3rem; font-weight: 800; line-height: 1.2; }
+  .header h1 span { color: var(--accent2); }
+  .header-meta { font-size: .72rem; color: var(--muted); margin-top: .3rem; }
+  .header-badge {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-size: .7rem;
+    font-weight: 700;
+    padding: .3rem .9rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .concept-box {
+    background: linear-gradient(135deg, #eff6ff, #f5f3ff);
+    border: 1.5px solid #c7d2fe;
+    border-radius: 10px;
+    padding: .9rem 1.1rem;
+    font-size: .82rem;
+    line-height: 1.65;
+    color: #3730a3;
+    margin-bottom: 1rem;
+  }
+  .concept-box strong { color: #1e1b4b; }
+
+  .student-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem 2rem;
+    padding: .75rem 1rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .student-field { font-size: .75rem; color: var(--muted); }
+  .student-field span {
+    display: block;
+    border-bottom: 1px solid #94a3b8;
+    min-height: 1.4rem;
+    margin-top: .2rem;
+  }
+
+  /* ETAPAS */
+  .etapa { margin-bottom: 1.75rem; }
+
+  .etapa-header {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: 1rem;
+  }
+  .etapa-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    font-size: .95rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .etapa-title { font-size: .95rem; font-weight: 700; color: var(--text); }
+  .etapa-sub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+  .etapa-body {
+    padding-left: 3rem;
+  }
+
+  /* CHECKLIST */
+  .checklist { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .85rem; }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: .6rem;
+    font-size: .81rem;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .check-box {
+    width: 15px; height: 15px;
+    border: 1.5px solid #94a3b8;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* CAMPOS */
+  .field-row {
+    margin-bottom: .65rem;
+  }
+  .field-label {
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: .2rem;
+  }
+  .field-line {
+    border-bottom: 1.5px solid #94a3b8;
+    min-height: 1.5rem;
+    width: 100%;
+  }
+  .field-line.short { width: 60%; }
+  .field-line.long { min-height: 2.8rem; }
+
+  /* DICA */
+  .tip {
+    background: #f0fdf4;
+    border-left: 3px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: .6rem .9rem;
+    font-size: .78rem;
+    color: #166534;
+    margin: .75rem 0;
+    line-height: 1.55;
+  }
+  .tip strong { color: #14532d; }
+
+  .warn {
+    background: #fff7ed;
+    border-left: 3px solid #f97316;
+    border-radius: 0 8px 8px 0;
+    padding: .6rem .9rem;
+    font-size: .78rem;
+    color: #9a3412;
+    margin: .75rem 0;
+    line-height: 1.55;
+  }
+
+  .info {
+    background: #eff6ff;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: .6rem .9rem;
+    font-size: .78rem;
+    color: #1d4ed8;
+    margin: .75rem 0;
+    line-height: 1.55;
+  }
+
+  /* DIVISOR */
+  .divider {
+    border: none;
+    border-top: 1.5px dashed var(--border);
+    margin: 1.5rem 0;
+  }
+
+  /* CONEXÃO CURRICULO + LINKEDIN */
+  .connection-box {
+    border: 2px solid #c7d2fe;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.75rem;
+  }
+  .connection-header {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff;
+    padding: .65rem 1.1rem;
+    font-size: .88rem;
+    font-weight: 700;
+  }
+  .connection-body {
+    padding: 1rem 1.1rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: center;
+  }
+  .conn-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .75rem;
+    font-size: .78rem;
+    text-align: center;
+  }
+  .conn-card-icon { font-size: 1.4rem; margin-bottom: .3rem; }
+  .conn-card-title { font-weight: 700; margin-bottom: .2rem; font-size: .8rem; }
+  .conn-card-desc { color: var(--muted); font-size: .7rem; }
+  .conn-arrow { font-size: 1.3rem; color: var(--accent2); text-align: center; }
+
+  /* PERFIL MOCKUP */
+  .profile-mockup {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: .85rem 0;
+    font-size: .78rem;
+  }
+  .profile-banner {
+    height: 36px;
+    background: linear-gradient(135deg, #1d4ed8, #7c3aed);
+  }
+  .profile-info {
+    padding: .5rem .85rem .75rem;
+    position: relative;
+  }
+  .profile-photo {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: #e2e8f0;
+    border: 2px solid #fff;
+    position: absolute;
+    top: -18px; left: .85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .9rem;
+  }
+  .profile-name-area { margin-top: 1.2rem; }
+  .profile-field {
+    border-bottom: 1px dashed #94a3b8;
+    min-height: 1.3rem;
+    margin: .2rem 0 .5rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .profile-field-label {
+    font-size: .65rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  /* RESUMO FINAL */
+  .summary-box {
+    background: linear-gradient(135deg, #f0fdf4, #eff6ff);
+    border: 1.5px solid #a7f3d0;
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin-top: 1.5rem;
+  }
+  .summary-title {
+    font-size: .85rem;
+    font-weight: 700;
+    color: #065f46;
+    margin-bottom: .6rem;
+  }
+  .summary-list {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+  }
+  .summary-item {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .79rem;
+    color: var(--text);
+  }
+  .summary-check {
+    width: 18px; height: 18px;
+    border: 1.5px solid #94a3b8;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  @media print {
+    body { background: #fff; font-size: 11.5px; }
+    .print-btn-bar { display: none; }
+    .page-wrap { box-shadow: none; border-radius: 0; margin: 0; max-width: 100%; }
+    .sheet { padding: 1.5cm 2cm 2cm; }
+    .etapa { break-inside: avoid; }
+    .connection-box { break-inside: avoid; }
+    @page { margin: 1cm; size: A4; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+  <div class="print-btn-bar">
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+  </div>
+
+  <div class="sheet">
+
+    <!-- CABEÇALHO -->
+    <div class="header">
+      <div class="header-top">
+        <div>
+          <h1>Atividade Prática — <span>Meu Currículo Online</span></h1>
+          <div class="header-meta">💼 Dia 4 · Empregabilidade Digital · Mulheres 1000 · IFRN João Câmara · 06 de abril de 2025</div>
+        </div>
+        <div class="header-badge">Prof. César Azevedo</div>
+      </div>
+
+      <div class="concept-box">
+        💡 <strong>Ideia central desta atividade:</strong> o LinkedIn é o seu currículo online. Tudo o que você coloca no Word também vai para o LinkedIn — e o link do seu perfil pode aparecer no currículo impresso. Assim, quem recebe o seu currículo pode clicar e ver muito mais sobre você.
+      </div>
+
+      <div class="student-box">
+        <div class="student-field">Nome da aluna<span></span></div>
+        <div class="student-field">Data<span></span></div>
+      </div>
+    </div>
+
+    <!-- CONEXÃO VISUAL -->
+    <div class="connection-box">
+      <div class="connection-header">🔗 Como currículo e LinkedIn se conectam</div>
+      <div class="connection-body">
+        <div class="conn-card">
+          <div class="conn-card-icon">📄</div>
+          <div class="conn-card-title">Currículo no Word</div>
+          <div class="conn-card-desc">Documento impresso ou em PDF. Entregue pessoalmente ou em sites de vaga.</div>
+        </div>
+        <div class="conn-arrow">⟷</div>
+        <div class="conn-card">
+          <div class="conn-card-icon">💼</div>
+          <div class="conn-card-title">Perfil no LinkedIn</div>
+          <div class="conn-card-desc">Currículo online, sempre atualizado. Qualquer pessoa pode ver pelo link.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ETAPA 1 -->
+    <div class="etapa">
+      <div class="etapa-header">
+        <div class="etapa-num">1</div>
+        <div>
+          <div class="etapa-title">Planeje seu conteúdo antes de digitar</div>
+          <div class="etapa-sub">Escreva aqui — você vai usar nas duas etapas seguintes</div>
+        </div>
+      </div>
+      <div class="etapa-body">
+        <div class="tip"><strong>💡 Por que planejar antes?</strong> As informações do currículo e do LinkedIn são as mesmas. Se você escrever primeiro no papel, fica mais fácil digitar depois.</div>
+
+        <div class="field-row">
+          <div class="field-label">Seu nome completo</div>
+          <div class="field-line short"></div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Telefone para contato</div>
+          <div class="field-line short"></div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Cidade onde mora</div>
+          <div class="field-line short"></div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Objetivo profissional — que tipo de vaga você busca?</div>
+          <div class="field-line"></div>
+          <div class="field-line" style="margin-top:.4rem"></div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Último emprego ou atividade (pode ser serviço informal, cuidado da família, voluntariado…)</div>
+          <div class="field-line"></div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Escolaridade (último grau concluído ou em andamento)</div>
+          <div class="field-line short"></div>
+        </div>
+        <div class="field-row">
+          <div class="field-label">Um curso ou habilidade que você tem (ex: informática básica, culinária, artesanato…)</div>
+          <div class="field-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ETAPA 2 -->
+    <div class="etapa">
+      <div class="etapa-header">
+        <div class="etapa-num">2</div>
+        <div>
+          <div class="etapa-title">Monte o currículo no Word</div>
+          <div class="etapa-sub">Use as informações que você escreveu na Etapa 1</div>
+        </div>
+      </div>
+      <div class="etapa-body">
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div> Abri o Word e criei um documento em branco</div>
+          <div class="check-item"><div class="check-box"></div> Digitei meu nome em destaque (fonte maior, negrito)</div>
+          <div class="check-item"><div class="check-box"></div> Adicionei telefone e cidade</div>
+          <div class="check-item"><div class="check-box"></div> Escrevi meu objetivo profissional</div>
+          <div class="check-item"><div class="check-box"></div> Listei minha experiência ou atividade mais recente</div>
+          <div class="check-item"><div class="check-box"></div> Adicionei minha escolaridade</div>
+          <div class="check-item"><div class="check-box"></div> Salvei o arquivo com meu nome (ex: <em>curriculo_maria.docx</em>)</div>
+          <div class="check-item"><div class="check-box"></div> Salvei também como PDF (Arquivo → Salvar Como → PDF)</div>
+        </div>
+        <div class="warn">⚠️ <strong>Deixe um espaço em branco</strong> no currículo para adicionar o link do LinkedIn depois — você vai pegar esse link na Etapa 3.</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ETAPA 3 -->
+    <div class="etapa">
+      <div class="etapa-header">
+        <div class="etapa-num">3</div>
+        <div>
+          <div class="etapa-title">Crie seu perfil no LinkedIn</div>
+          <div class="etapa-sub">Use as mesmas informações do currículo</div>
+        </div>
+      </div>
+      <div class="etapa-body">
+        <div class="tip"><strong>🌐 Como acessar:</strong> abra o navegador e acesse <strong>linkedin.com</strong> → clique em "Cadastre-se".</div>
+
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div> Acessei o LinkedIn e cliquei em "Cadastre-se"</div>
+          <div class="check-item"><div class="check-box"></div> Criei a conta com meu nome e uma senha</div>
+          <div class="check-item"><div class="check-box"></div> Adicionei minha <strong>foto</strong> (opcional, mas recomendado)</div>
+          <div class="check-item"><div class="check-box"></div> Preenchi o <strong>cargo / título</strong> (ex: "Atendente" ou "Auxiliar Administrativa")</div>
+          <div class="check-item"><div class="check-box"></div> Escrevi um <strong>resumo</strong> com meu objetivo profissional</div>
+          <div class="check-item"><div class="check-box"></div> Adicionei minha <strong>experiência</strong> (pode ser serviço informal ou doméstico)</div>
+          <div class="check-item"><div class="check-box"></div> Adicionei minha <strong>escolaridade</strong></div>
+          <div class="check-item"><div class="check-box"></div> Adicionei o curso de Informática Básica — IFRN João Câmara</div>
+        </div>
+
+        <div class="profile-mockup">
+          <div class="profile-banner"></div>
+          <div class="profile-info">
+            <div class="profile-photo">👩</div>
+            <div class="profile-name-area">
+              <div class="profile-field-label">Nome completo</div>
+              <div class="profile-field"></div>
+              <div class="profile-field-label">Cargo / Título profissional</div>
+              <div class="profile-field"></div>
+              <div class="profile-field-label">Resumo / Objetivo</div>
+              <div class="profile-field" style="min-height:2.2rem"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info">ℹ️ <strong>Como pegar o link do seu perfil:</strong> clique em "Eu" → "Ver perfil" → copie o endereço que aparece na barra do navegador (começa com <em>linkedin.com/in/</em>).</div>
+
+        <div class="field-row" style="margin-top:.5rem">
+          <div class="field-label">Cole aqui o link do seu perfil no LinkedIn</div>
+          <div class="field-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- ETAPA 4 -->
+    <div class="etapa">
+      <div class="etapa-header">
+        <div class="etapa-num">4</div>
+        <div>
+          <div class="etapa-title">Conecte os dois — coloque o LinkedIn no currículo</div>
+          <div class="etapa-sub">A última peça do quebra-cabeça</div>
+        </div>
+      </div>
+      <div class="etapa-body">
+        <div class="tip"><strong>💡 Por que isso importa?</strong> Quando um recrutador vê o link do LinkedIn no currículo, ele pode clicar e ver mais detalhes, recomendações e a sua história completa. É como ter um currículo que nunca fica sem espaço.</div>
+        <div class="checklist">
+          <div class="check-item"><div class="check-box"></div> Voltei ao Word com meu currículo aberto</div>
+          <div class="check-item"><div class="check-box"></div> Adicionei o link do LinkedIn na área de contatos (ex: <em>linkedin.com/in/maria-silva</em>)</div>
+          <div class="check-item"><div class="check-box"></div> Salvei o currículo novamente (Word e PDF)</div>
+        </div>
+        <div class="warn">⚠️ <strong>Atenção:</strong> certifique-se de que seu perfil está como <strong>público</strong> no LinkedIn, senão o recrutador não conseguirá ver ao clicar no link.</div>
+      </div>
+    </div>
+
+    <!-- RESUMO FINAL -->
+    <div class="summary-box">
+      <div class="summary-title">✅ Checklist final — o que eu entreguei hoje</div>
+      <div class="summary-list">
+        <div class="summary-item"><div class="summary-check"></div> Currículo salvo no Word (.docx)</div>
+        <div class="summary-item"><div class="summary-check"></div> Currículo salvo como PDF</div>
+        <div class="summary-item"><div class="summary-check"></div> Perfil no LinkedIn criado e preenchido</div>
+        <div class="summary-item"><div class="summary-check"></div> Link do LinkedIn adicionado ao currículo</div>
+        <div class="summary-item"><div class="summary-check"></div> Entendo que meu currículo e meu LinkedIn contam a mesma história</div>
+      </div>
+    </div>
+
+  </div><!-- /sheet -->
+</div><!-- /page-wrap -->
+
+</body>
+</html>
