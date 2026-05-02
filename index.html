@@ -398,6 +398,46 @@
     .mobile-nav-btn .mn-icon { font-size: 1.3rem; line-height: 1; }
     .mobile-nav-btn.active { color: #60a5fa; }
 
+    /* Dicas de estudo */
+    .study-tips-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.4rem;
+      margin-bottom: 1.75rem;
+      box-shadow: var(--shadow);
+    }
+    .study-tips-card h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .study-tips-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.6rem;
+    }
+    .study-tips-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.81rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+    }
+    .study-tips-list li .tip-bullet {
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .sidebar { display: none; }
@@ -562,6 +602,19 @@
       <div class="tip-card">
         <span class="tip-icon">💡</span>
         <span class="tip-text" id="motivationText">Carregando dica...</span>
+      </div>
+
+      <!-- Dicas de estudo -->
+      <div class="study-tips-card">
+        <h3>📚 Dicas de Estudo</h3>
+        <ul class="study-tips-list">
+          <li><span class="tip-bullet">🕐</span> Reserve 15 minutos por dia para praticar no computador — a constância vale mais do que longas sessões.</li>
+          <li><span class="tip-bullet">✍️</span> Anote no caderno os atalhos que aprender. Revisar na semana seguinte ajuda a fixar.</li>
+          <li><span class="tip-bullet">🔁</span> Repita cada exercício pelo menos duas vezes: uma com ajuda e outra sozinha.</li>
+          <li><span class="tip-bullet">🙋</span> Não tenha medo de errar — no computador quase tudo tem um "desfazer" (Ctrl+Z)!</li>
+          <li><span class="tip-bullet">👩‍👧</span> Ensine alguém em casa o que aprendeu. Explicar é a melhor forma de aprender.</li>
+          <li><span class="tip-bullet">🎯</span> Foque em uma habilidade por vez: domine o mouse antes de avançar para o teclado.</li>
+        </ul>
       </div>
 
       <!-- Contato -->
